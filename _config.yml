@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: wwh
-subtitle: wwh
+title: leollon
+subtitle: leollon
 description: Keep It Simple,Stupid
 keywords: Python Limux c/cpp algorithm
 author: leollon
@@ -74,12 +74,11 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: cactus-dark
+theme: cactus
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  #repo: git@45.76.210.197:/home/git/blog.git
-  repo: https://github.com/leollon/leollon.github.io.git
+  repo: git@github.com:leollon/leollon.github.io.git
   branch: master
   message: Site updated:{{ now('YYYY-MM-DD HH:mm:ss') }}
