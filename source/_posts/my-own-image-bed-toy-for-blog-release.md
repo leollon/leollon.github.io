@@ -11,8 +11,8 @@ tags: [flask, picbed, imgbed, 图床]
 
 <!-- more -->
 
-![9959d97e729d41e3.png](https://picbed.quantuminit.com/9959d97e729d41e3.png)
-![660b0825915b4dad.png](https://picbed.quantuminit.com/660b0825915b4dad.png)
+![9959d97e729d41e3.png](https://i.quantuminit.com/9959d97e729d41e3.png)
+![660b0825915b4dad.png](https://i.quantuminit.com/660b0825915b4dad.png)
 
 
 解决问题过程中的链接
