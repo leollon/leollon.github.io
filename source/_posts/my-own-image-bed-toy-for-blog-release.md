@@ -1,7 +1,7 @@
 ---
 title: '[picbed]my-own-image-bed-toy-for-blog-release'
 date: 2018-09-21 12:09:52
-category: Flask
+categories: Flask
 tags: [flask, picbed, imgbed, 图床]
 ---
 

@@ -1,8 +1,8 @@
 ---
 title: '[Ubuntu 16.04] - build python3.6.4 from source code'
 date: 2018-01-18 10:43:08
-category: log
-tags: [Ubuntu 16.04, Python3.6.4, build-Python3.6.4, Debian8]
+categories: log
+tags: [Ubuntu16.04, build-Python3.6.4, Debian8]
 ---
 
 刚开始我是按常规的编译安装方法：

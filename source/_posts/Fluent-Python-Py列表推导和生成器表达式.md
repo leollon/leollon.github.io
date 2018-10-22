@@ -1,7 +1,7 @@
 ---
 title: Fluent_Python - Py列表推导和生成器表达式
 date: 2017-08-17 11:03:47
-category: Notes
+categories: Notes
 tags: [Python, notes]
 ---
 

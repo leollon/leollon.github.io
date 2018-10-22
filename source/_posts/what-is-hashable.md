@@ -1,7 +1,7 @@
 ---
 title: what_is_hashable
 date: 2017-11-15 22:16:32
-Category: Python
+categories: Python
 tags: [Python, notes]
 ---
 

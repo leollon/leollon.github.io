@@ -1,7 +1,7 @@
 ---
 title: Python-dunder_slots_magic_method
 date: 2017-11-21 13:52:45
-category: Python
+categories: Python
 tags: [Python, notes, IHaveNoIdea]
 ---
 

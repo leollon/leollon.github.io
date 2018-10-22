@@ -1,7 +1,7 @@
 ---
 title: command ln and man
 date: 2017-11-16 16:34:22
-category: Notes
+categories: Notes
 tags: [Linux, ln, man]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: MongoDB-Performance-IndexRelated-(2)
 date: 2017-11-12 11:26:00
-category: MongoDB
+categories: MongoDB
 tags: [MongoDB, notes, nosql]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: MongoDB-Performance-Log_Slow_Queries
 date: 2017-11-13 16:56:35
-category: MongoDB
+categories: MongoDB
 tags: [MongoDB, nosql, notes]
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: '[MySQL] - How to reset root''s password'
 date: 2018-01-16 22:13:40
-category: MySQL
+categories: MySQL
 tags: [notes, 笔记, MySQL]
 ---
 刚开始的时候方法：

@@ -1,8 +1,8 @@
 ---
 title: GNU/Linux-Debian-server-configuration
 date: 2018-01-12 22:53:36
-category: Linux
-tags: [Debian, server, vps, configuration, GNU/Linux, Linux]
+categories: Linux
+tags: [Debian, vps, configuration, GNU/Linux]
 ---
 
 前几天买了个小鸡，坐标位于中欧的一个小国家吧。

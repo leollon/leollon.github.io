@@ -1,7 +1,7 @@
 ---
 title: MongoDB-Performance-Covered_Queries
 date: 2017-11-11 23:33:31
-category: MongoDB
+categories: MongoDB
 tags: ['MongoDB', 'notes']
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: MongoDB-Performance-Profiler,Tools&Sharding
 date: 2017-11-14 11:08:14
-category: MongoDB
+categories: MongoDB
 tags: [MongoDB, nosql, notes]
 ---
 

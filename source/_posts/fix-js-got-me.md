@@ -1,7 +1,7 @@
 ---
 title: '<fix>:(front-end):js got me'
 date: 2018-08-04 12:42:38
-category: FrontEnd
+categories: FrontEnd
 tags: ["前端","input","disabled","事件委托"]
 ---
 

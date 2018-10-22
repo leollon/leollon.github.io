@@ -1,7 +1,7 @@
 ---
 title: Python-debugging-module-pdb
 date: 2017-11-20 10:34:39
-category: Python
+categories: Python
 tags: [Python, notes, bug, debug, pdb]
 ---
 
