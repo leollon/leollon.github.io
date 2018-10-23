@@ -8,13 +8,12 @@ tags: [Ubuntu16.04, build-Python3.6.4, Debian8]
 刚开始我是按常规的编译安装方法：
 ```bash
 1. $ ./configure --prefix=/usr/local/
-2. $ ./configure --enable-optimizations # 这个是上一步结束给的提示，索性也就运行这条命令，意思大概说的就是开启优化之类的
+2. $ ./configure --enable-optimizations # 这个是上一步结束给的提示，索性也就运行这条命令，就是开启优化的一个选项
 3. $ make -j 8   # 开八个线程进行编译，超快，慢就慢在一些test， test example高达400+项。
 4. $ sudo make install
 ```
 安装完后，在python3.6 console里面`import ssl`的时候，就会找不到对应的模块。
 在编译完之后，还有提示其他模块没有找到的，比如`readline`啥。这些在开始test之前都可以找得到。
-下面的方法都能够解决。
 
 
 下面是推荐的做法
