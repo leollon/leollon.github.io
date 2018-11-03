@@ -95,5 +95,30 @@ coro.send(10)
 
 > `Python 3.3` 引入 `yield from` 结构的主要原因之一与把异常传入嵌套的协程有关。另一个原因是让协程更方便地返回值。
 
+### 使用yield from
+
+在生成器`gen`中使用`yield from subgen()`时，subgen会获得控制权，把产出的值传给`gen`调用方，即调用方可以直接控制`subgen`。与此同时，`gen`会阻塞，等待`subgen`终止。
+
+```Python
+def gen():
+    for c in 'AB':
+        yield c
+    for i in range(1, 3):
+        yield from i
+
+list(gen())  # ['A', 'B', 1, 2]
+```
+
+改写
+
+```Python
+def gen():
+    # parent gen
+    yield from 'AB' # subgen
+    yield from range(1, 3) # subgen
+
+list(gen())  # ['A', 'B', 1, 2]
+```
 
 
+事件驱动框架(如`Tornado` 和 `asyncio`)的运作方式：在单线程中使用一个主循环驱动写成执行并发活动。使用写成做面向事件编程是，协程或不断把控制权让步给主循环，激活并向前运行其他协程，从而执行各个并发活动。
