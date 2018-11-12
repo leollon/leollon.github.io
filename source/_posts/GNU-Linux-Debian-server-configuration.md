@@ -40,8 +40,9 @@ locale: Cannot set LC_ALL to default locale: No such file or directory
 因为我使用的shell是`zsh`，所以我是这么设置的：
 当然如果使用的shell是`bash`，只需要替换`.zshrc` 为`.bashrc`即可。
 fix:
-
+```
   $ echo -e "export LC_ALL=en_US.UTF-8\nexport LANGUAGE=en_US.UTF-8 >> .zshrc
+```
 
 完了之后
 
