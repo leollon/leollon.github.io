@@ -23,3 +23,8 @@ class SelectionSort:
             if min != i:
                 l[min], l[i] = l[i], l[min]
 ```
+
+特点
+  - 运行时间与输入无关
+  - 数据移动是最少
+    交换次数和数据的大小是线性关系的，即f(n) = n
