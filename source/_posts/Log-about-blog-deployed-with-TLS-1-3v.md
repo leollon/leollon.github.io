@@ -1,5 +1,5 @@
 ---
-title: Log abount Nginx build with openssl 1.1.1 on Debian jessie
+title: Log about Nginx build with openssl 1.1.1 on Debian jessie
 date: 2018-11-12 17:00:58
 categories: Blog
 tags: [Blog, openssl 1.1.1, Nginx, TLS 1.3v]
