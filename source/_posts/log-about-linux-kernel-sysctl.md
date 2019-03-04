@@ -4,12 +4,11 @@ date: 2018-12-04 16:45:57
 categories: Linux
 tags: [Linux, 系统性能调优]
 ---
-
 ## vfs_cache_pressure
 ------------------
 这个参数用于控制内核回收缓存目录和索引节点对象的频率。
 
-它的默认值是100，内核相对于页缓存和交换缓存回收，将尝试以一种相对好的速率尝试回收目录数据结构和索引节点。降低`vfs_cache_pressure`使得内核更倾向于保存目录数据结构和索引节点缓存。当`vfs_cache_pressure`为0的时候，由于内存的压力的原因，系统内核将不回收目录数据结构和索引信息节点，这很容易就导致内存不足的情况。提高`vfs_cache_pressure`到100以上，将会导致内核提高回收目录数据结构和索引节点的速率，这可能对系统性能产生负面的影响。回收代码需要耗费多种锁去查找自由的目录和索引节点对象。如果`vfs_cache_pressure`=100，这将会查找比现有的自由对象多十倍。
+它的默认值是100，相对于页缓存和交换缓存回收，内核将尝试以一种相对快的频率试图回收目录条目(dentries)和inode。降低`vfs_cache_pressure`使得内核更偏向于保存目录条目(dentry)和inode。当`vfs_cache_pressure`为0的时候，由于内存压力的原因，系统内核将不回收目录数据结构和索引信息节点，这很容易就导致内存不足的情况。提高`vfs_cache_pressure`到100以上，将会导致内核提高回收目录条目(dentry)和inode的频率，这可能对系统性能产生负面的影响。回收代码需要耗费多种锁去查找可释放的目录条目(dentry)和inode对象。如果`vfs_cache_pressure`=1000，这将会查找比现有的可释放对象多十倍。
 
 
 ## swappiness
@@ -28,3 +27,4 @@ References:
 - [https://wiki.archlinux.org/index.php/Swap#VFS_cache_pressure](https://wiki.archlinux.org/index.php/Swap#VFS_cache_pressure)
 - [https://wiki.archlinux.org/index.php/Swap#Swappiness](https://wiki.archlinux.org/index.php/Swap#Swappiness)
 - [https://www.kernel.org/doc/Documentation/sysctl/vm.txt](https://www.kernel.org/doc/Documentation/sysctl/vm.txt)
+- [https://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.memory.html#cha.tuning.memory.vm.reclaim](https://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.memory.html#cha.tuning.memory.vm.reclaim)
