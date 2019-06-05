@@ -182,4 +182,63 @@ ssh
   # 和上面一样，使用重命名，如果可用的话：
   rename 's/\.bak$//' *.bak
   ```
+  - 正如man page所言，`rsync`很快并且是非常优秀的多文件拷贝工具。因可以在机器之间进行同步而得名但也可用于本地同步。当有安全限制的时候，使用`rsync`而不是`scp`，它支持恢复传输而不需要重新开始。也是删除大量文件[最快的方式](https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html)：
+  ```shell
+  mkdir empty && rsync -r --delete empty/ some-dir && rmdir some-dir
+  ```
+  - 显示文件处理的进度，可用`pv`，`pycp`，`progress`，`rsync --progress`，或使用`dd status=progross`进行块级别的复制。
+  - 使用`shuf`打乱或随机选择来自文件的内容行。
+  - 知道`sorg`选选项。对于数字，使用`-n`，或 `-h` 来处理成人类可读的数字（比如，`du -h`）。知道`-t` 和 `-k`。特别注意只通过第一个字段进行排序时，使用的`-k1,1`；`-k1`的意思是根据正行进行排序。稳定排序(`sort -s`)可能有用处。例如，根据第二个字段进行排序，然后根据字段1，可以这样子写`sort -k1,1 | sort -k2,2`。
+  - 如果需要在bash的命令行中输入制表符（例如，`sort`的`-t`参数），可以这么输入**ctrl-v [Tab]**或者写入`$'\t'`（后面的更好一些就好像复制/粘贴一样）。
+  - 给源文件进行打补丁标准的工具是`diff` 和 `patch`。`diffstat`是一个diff的汇总统计工具，`sdiff`并排进行比较。注意`diff -r`用户整个目录。`diff -r tree1 tree2 | diffstat` 汇总变化。使用`vimdiff`来比较文件并进行编辑。
+ ```shell
+  echo -e 'halo\nhello' > file1
+  echo -e 'halo' > file2
+  diff file1 file2 > diff_fil1_file2
+  patch file1 file2
+  diffstat diff_file1_file2
+  sdiff file1 file2
+  ```
+  - 二进制文件，`hd`，`hexdump`，`xxd`用来简单导出十六进制，`bvi`，`hexedit`，`biew`用于二进制编辑。
+  - `strings`（加上`grep`，等等）可用于找到二进制文件中的文本位。
+  - 比较二进制（增量压缩），使用`xdelta3`。
+  - 使用`iconv`转换文本编码。或更高级的使用，可以选择`uconv`。它支持一些高级的Unicode。例如：
+  ```shell
+  # 显示十六进制编码哦人字符的实际名字（对于调试能够起到帮助）：
+  uconv -f utf-8 -t utf-8 -x '::Any-Hex;' < input.txt
+  uconv -f utf-8 -t utf-8 -x '::Any-name;' < input.txt
+  # 转换成小写并且一处所有的发音（通过扩大和丢弃）：
+  uconv -f utf-8 -t utf-8 -x '::Any-Lower; ::Any-NFD; [:Nonspacing Mark:] >; ::Any-nFC;' < input.txt > output.txt
+  ```
+  - 进行文件进行分割成小部分，使用`split`（根据大小）和 `csplit`（根据一种模式）。
+  - 日期与时间：按照[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)获取当前日期和时间的，可以这样子`date -u +"%Y-%m-%dT%H:%M:%SZ"`（其他选项是[有](https://stackoverflow.com/questions/7216358/date-command-on-os-x-doesnt-have-iso-8601-i-option)[问题](https://unix.stackexchange.com/questions/164826/date-command-iso-8601-option)的）。使用`dateutils`的`dateadd`，`datediff`，`strptime`等等来操作日期和时间表达式。
+  - 使用`zless`，`zmore`，`zcat` 和 `zgrep`来操作压缩的文件。
+  - 通过`chatrr`设置文件的属性并且提供更低级的选择给文件权限。例如，阻止文件的误删除：`sudo chattr -i /path/to/file/or/directory`。
+  - 使用`getacl` 和 `setfacl` 来保存和恢复文件权限。例如:
+  ```shell
+  getfacl -R /some/path > permissions.txt
+  setfacl --restore=permissions.txt
+  ```
+  - `truncate`（创建[稀疏文件](https://en.wikipedia.org/wiki/Sparse_file)）,`fallocate`（ext4, xfs, btrfs 和 ocfs2 文件系统），`xfs_mkfile`（几乎任何文件系统，存在于xfsprogs包中），`mkfile`（在类似于Solaris，Mac OS的Unix-like系统中）。
 
+# 系统调试
+  - 网页调试，`curl` 和 `curl -I`很便捷，或与之相匹配的`wget`，或者更加新颖的[`httpie`](https://github.com/jkbrzt/httpie)。
+  - 获取当前cpu/disk状态，经典的工具是`top`（或者更好`htop`），`iostat`，和 `iotop`。使用`iostat -mxz 15`获取基本的CPU和详细化的每个分区的磁盘状态和性能观察。
+  - 网络连接详细信息，使用`netstat` 和 `ss`
+  - 快速预览系统现在运行的情况，`dstat`能够提供很大的帮助。更为详细的系统运行情况，使用[`glances`](https://github.com/nicolargo/glances)。
+  - 获取内存状态，运行并理解`free` 和 `vmstat` 的输出。注意这个“cached”的值是被Linux内核像文件缓存一样占有的内存数量，因此这个有效的内存计数是“free”对应的值。
+  - Java系统调试是一个不同的，但关于Oracle和其他Java虚拟机的一些简单的技巧是你可以跑`kill -3 <pid>`并且一个完整的栈跟踪和堆概况（包含分代垃圾回收细节，这些细节非常有用）将会导出到标准错误（stderr）/日志（logs）。JDK的`jps`，`jstat`，`jstack`，`jmap`都能够提供帮助。[JSK 工具集](https://github.com/aragozin/jvm-tools)更高级。
+  - 使用[`mtr`](http://www.bitwizard.nl/mtr/)作为更好的路由追踪工具，可以识别出网络问题。
+  - 查找磁盘满了的原因，比起像`du -sh *`这样的常用的命令，`ncdu`能够节省很多时间。
+  - 查看那个socket或进程占用带宽，使用[]`iftop`](http://www.ex-parrot.com/~pdw/iftop/) 和 [`nethogs`](https://github.com/raboof/nethogs)。
+  - `ab`(与Apache一起的)工具对于web服务器性能压力测试非常有帮助。更高级的负载测试，可尝试使用`siege`。
+  - 更多严重的网络调试，使用`wireshark`，`tshark`，或 `ngrep`。
+  - 知道`strace` 和 `ltrace`。如果一个程序执行失败，挂起，崩溃并且不知道原因，或者想知道程序的性能，可以使用它们来提供帮助。注意测试选项（`-c`），并且能够分离一个运行中的进程（`-p`）。使用追踪子选项（`-f`）避免丢失重要的调用。
+  - 使用`ldd`检查共享库等等——但[不能用来跑未被信任的文件](http://www.catonmat.net/blog/ldd-arbitrary-code-execution/)。
+  - 知道如何使用`gdb`连接一个进程并且获取它的栈跟踪。
+  - 使用`/proc`，当调试线上问题的时候，它可以无与伦比的帮助。例如：`/proc/cpuinfo`，`/proc/meminfo`，`/proc/cmdline`，`/proc/xxx/exe`，`/proc/xxx/fd/`，`/proc/xxx/smaps`（xxx是进程id或pid）。
+  - 当调试过去发生的错误的时候，[`sar`]()可以提供很有用的帮助。它能展示关于CPU，内存，网络等等的历史数据。
+  - 更深层次的系统性能分析，查看`stap`（SystemTap），[`perf`](https://en.wikipedia.org/wiki/Perf_%28Linux%29) 和 [`sysdig`](https://github.com/draios/sysdig)。
+  - 检查操作系统相关信息，使用`uname` 或 `uname -a`（通常是Unix/内核信息）或者 `lsb_release -a`（Linux发行版信息）。
+  - 无论什么时候，发生什么奇怪的事情时（可能是硬件或驱动的问题），使用`dmesg`。
+  - 如果删除了一个文件并且没有释放由`du`显示的预期磁盘空间，检查这个文件是否正在被一个进程使用：`lsof | grep deleted | grep "filename-of-my-big-file"`
