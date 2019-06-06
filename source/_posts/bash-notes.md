@@ -241,4 +241,21 @@ ssh
   - 更深层次的系统性能分析，查看`stap`（SystemTap），[`perf`](https://en.wikipedia.org/wiki/Perf_%28Linux%29) 和 [`sysdig`](https://github.com/draios/sysdig)。
   - 检查操作系统相关信息，使用`uname` 或 `uname -a`（通常是Unix/内核信息）或者 `lsb_release -a`（Linux发行版信息）。
   - 无论什么时候，发生什么奇怪的事情时（可能是硬件或驱动的问题），使用`dmesg`。
-  - 如果删除了一个文件并且没有释放由`du`显示的预期磁盘空间，检查这个文件是否正在被一个进程使用：`lsof | grep deleted | grep "filename-of-my-big-file"`
+  - 如果删除了一个文件并且没有释放由`du`报告的预期磁盘空间，检查这个文件是否正在被一个进程使用：`lsof | grep deleted | grep "filename-of-my-big-file"`
+
+# 一行命令
+  - 通过`sort`/`uniq`求集合的交集，并集和文本的不同之处。假设`a`，`b`是唯一的文本文件。在大小随意的文件上面都可以很快的完成，文件大小可以达到百万字节以上。（排序不受内存限制，尽管可以使用`-T`选项，如果`/tmp`在很小的根分区下面。）注意`LC_ALL`和`sort`的`-u`选项（下面将进行说明）
+  ```shell
+  sort a b | uniq > c  # c 是a，的并集
+  sort a b | uniq -d c  # c 是a，b的交集
+  sort a b b | uniq -u > c # c 是a-b的差集
+  ```
+  - 优雅地打印出JSON文件，规范化它们的语法，然后用颜色和分区显示结果:
+  ```shell
+  diff < (jq --sort-keys . < file1.json) < (jq --sort-keys . < file2.json) | colordiff | less -R
+  ```
+  - `grep . *` 快速测试当前目录下的所有文件内容（所以每一行与文件名进行匹配），或者`head -100 *`（输出中带有文件名的标题）。在比如`/sys`，`/proc`，`/etc`那些充满配置设置文件的所有目录中，使用上这些会非常有帮助。
+  - 对文本文件中第三列的所有数字进行求和（比起使用Python，这个要快上三倍并且才三分之一的代码）：
+  ```shell
+  awk '{x += $3}' END { print x }' | myfile
+  ```
