@@ -6,8 +6,8 @@
     },
     {
         "name": "mysite",
-        "url": "https://github.com/leollon/mysite",
-        "desc": "developping based on Django 1.11.x && Python3.6"
+        "url": "https://github.com/leollon/mysite-project",
+        "desc": "developping based on Django 2.1.x && Python3.6"
     },
     {
         "name": "algorithms",
