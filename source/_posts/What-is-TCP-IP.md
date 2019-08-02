@@ -136,3 +136,5 @@ Router：通过logical address转发数据的网络设备，并且也能够用�
 - Router可以用于划分子网的网络设备，属于硬件范畴。
 - TCP/IP去中心化的两个特性：端节点验证以及动态路由。
 - ARP和RARP负责在logical address 和 physical address之间进行相互解析。
+
+[下一篇](/How-TCP-IP-works)

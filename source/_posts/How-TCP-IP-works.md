@@ -58,7 +58,7 @@ Presentation layer：翻译数据成标准格式；管理加密和数据压缩
 
 其他层与原TCP/IP四层模型相似。
 
-其中最相似的是Transport 和 Internet（在OSI中称为Network) layers.
+其中最相似之处在Transport 和 Internet（在OSI中称为Network) layers。这些层包含了最容易识别并且可区分的协议系统的部分。
 
 ## 数据包（data package）
 
@@ -75,3 +75,43 @@ Presentation layer：翻译数据成标准格式；管理加密和数据压缩
 - 在封装Application layer message的Transport layer创建出来的数据包称为**segment**，如果数据包来自Transport layer的TCP协议。如果数据包来自Transport layer's 的User Datagram Protocol(UDP)协议，则称之为**datagram**。
 - 在封装Transport layer **segment**的网络层的数据包称为datagram。
 - 在封装并且可能细分datagram的Network Access layer的数据包被称为**frame**。然后这个**frame**在Network Access layer的最底层变成比特流。
+
+## 快速浏览TCP/IP网络
+
+首先，谈论协议层而不是协议会向一个已经很抽象的主题引入一个额外的抽象。
+第二，在协议层这个更大的话内，分项列出不同的协议做为子标题可能给出一种错误的印象是所有的协议是同等重要的。
+而事实上，大部分的TCP/IP系统中的功能就只能就它的小部分最重要的协议而言。
+
+基本的场景有如下：
+
+- 通过TCP或UDP传递来自一个协议，网络服务或是在Application layer的API操作的数据到Transport layer协议的两者之一（TCP 或 UDP）。根据编程的需要，程序能够通过TCP或UDP访问网络：
+
+  - **TCP**是一个面向连接的协议，比起无连接协议，它提供了更可靠的流控制以及错误控制。TCP用了大量的努力来保证数据的
+      传输，相比UDP，TCP更可靠，但是错误检查以及流控制使得TCP比UDP更慢。
+  - **UDP**是无连接的协议。比起TCP更快，但不可靠。UDP将错误控制交给应用程序来负责。
+
+- 数据段传到IP协议提供logical address 信息以及包装数据成为数据报的网络层。
+
+- IP数据报进入到传递能与物理网络交互的已经设计好的软件组建的Network Access layer。Network Access layer 创建为了进入physical network而设计的一个或更多的数据帧（frame）。在LAN系统的例子中，比如以太网，帧可能含有通过[**ARP**](https://quantuminit.com/What-is-TCP-IP/#Logical-addressing)协议从维护的表获取来的physical address的信息。
+
+- 数据帧被转换成可以通过网络媒介传输的比特流。
+
+基本的TCP/IP协议网络系统：
+
+![6b826ab818a64712.svg](https://i.quantuminit.com/6b826ab818a64712.svg)
+
+## 小小的总结
+
+- OSI模型的physical 和 data link layer与TCP/IP的Network access layer相对应。
+
+- TCP/IP 的 Internet layer 负责将数据从一个网络段route到另外一个网络段。
+
+- UDP 够简单并且更快但是没有TCP的错误检查以及流控制。
+
+- 数据封装意思是在数据被往下传递之前，往数据中附加当前层相关的头部。
+
+- TCP可靠是因为TCP含有错误检查以及通知服务来确保TCP段能够被传输。
+
+[上一篇](/What-is-TCP-IP)
+
+[下一篇](/The-Network-Access-Layer)
