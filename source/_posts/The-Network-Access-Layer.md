@@ -81,7 +81,8 @@ Network Access layer 接受来自Internet Layer的数据报并转换成与物理
 数据转换步骤：
 
 1. 如有必要，将Internet layer的数据分割成可以放在在太网帧的数据字段中发送出去的更小的块。以太网帧的总共大小
-在64 bytes 到 1518 bytes，不包含preamble。（一些系统支持更大的可达到9000bytes的帧大小。这是所谓的jumpbo frames 提高了效率，但是引入了一些兼容性问题并且不是普遍地支持）
+在64 bytes 到 1518 bytes，不包含preamble。（一些系统支持更大的可达到9000bytes的帧大小。
+这是所谓的jumpbo frames 提高了效率，但是引入了一些兼容性问题并且不是普遍地被支持）
 
 2. 打包数据块成帧。每一帧除了包含数据还有以太网需要处理帧时的网络适配器的其他信息。
     一个IEEE 802.3以太网帧包含数据如下：
@@ -104,9 +105,9 @@ Network Access layer 接受来自Internet Layer的数据报并转换成与物理
 - Network Access layer 含有服务以及管理访问物理网络过程的规范。
 - CRC是有发送帧的计算机进行计算帧而得出，在帧中编码该CRC值。接受帧的计算机重新计算帧的CRC，然后检查帧中的FCS字段是否匹配。
 - 以太网的物理地址是6-byte（48-bit）的长度。
-- ARP通过Logical address解析出physical address。
+- ARP使用Logical address来解析出physical address。
 - MAC layer 提供接口给网络适配器。Logical Link Control layer 提供帧的错误检查以及管理子网上网络结点之间连接。
 
 [上一篇](/How-TCP-IP-works)
 
-[下一篇](Internet-Layer)
+[下一篇](The-Internet-Layer)
