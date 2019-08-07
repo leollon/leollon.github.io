@@ -1,8 +1,8 @@
 ---
 title: The-Internet-Layer
 date: 2019-08-05 10:02:41
-categories:
-tags:
+categories: Sams-Teach-yourself-TCP/IP-in-24-hours
+tags: [notes, TCP/IP, Networks]
 ---
 
 这里将围绕整个互联网使用的32-bit 二进制的的IPv4 address。而如今这个网络世界正过渡到新的128-bit 地址系统，它提供增强的
@@ -22,7 +22,7 @@ physical address scheme 能够很好地在个人的LAN段中正常工作。除�
 
 不巧的是，在路由网络上，不可能通过physical address 传输数据。发现过程需要通过physical address来传递并不能通过router interface。即使能成功通过physical address 传输，也会是非常麻烦的，因为被内置永久physical address 的网卡不允许在地址空间上施加逻辑结构。
 
-TCP/IP隐藏了physical address，而是围绕一个logical，hierarchical addressing scheme组织网络。Internet layer的**IP protocol**维护着称之为**IP address**的logical address。还有一个称为**Address Resolution Protocol（ARP）的Internet layer protocol，它维护一张IP addresses 到 physical address 的表。
+TCP/IP隐藏了physical address，而是围绕一个logical，hierarchical addressing scheme来组织网络。Internet layer的**IP protocol**维护着称之为**IP address**的logical address。还有一个称为**Address Resolution Protocol（ARP）的Internet layer protocol，它维护一张IP addresses 到 physical address 的表。
 
 在一个路由网络上上，TCP/IP在网络上发送数据的策略：
 
@@ -63,9 +63,9 @@ IP address 被分割成两部分：
 
 三类IP地址：
 
-- A类网络地址： 使用IP address 的前8bits作为network ID, 剩余的24-bit用做host ID。
-- B类网络地址： 使用IP address 的前16bits作为network ID, 剩余的16-bit用做host ID。
-- C类网络地址： 使用IP address 的前24bits作为network ID, 剩余的8-bit用做host ID。
+- A类网络地址： 使用IP address 的前8 bits作为network ID, 剩余的24 bits用做host ID。
+- B类网络地址： 使用IP address 的前16 bits作为network ID, 剩余的16 bits用做host ID。
+- C类网络地址： 使用IP address 的前24 bits作为network ID, 剩余的8 bits用做host ID。
 
 通过子网划分特性来扩展控制区域网络结构的系统。
 Classless InterDomain Routing（CIDR）提供了简单，灵活并且无二异性的用于指定多少bit位属于network ID的标记法。
@@ -92,11 +92,11 @@ IP实现简单的在这个点段填满0。
 - Identification: 16-bit的字段是一个被添加到源IP发送的消息中的递增序列数字。当一则消息被发往IP layer时并且消息太大而不能放入一个数据报中，IP 将这个消息分成多个数据报，给所有的数据相同的识别数字。这个数字在接收端被用来重组原消息。
 - Flags: Flags 字段表示分片的可能性。第一位（bit）不会被使用并且总是为0。下一位是*DF*（Don't Fragment）标记。这个标记暗示分片是允许的（value=0）还是不允许（value=1）。再接着下一位是*MF*（More Fragments）标记，它它告诉接收方还有更多的分片进来。*MF*为0时，没有更多的分片需要被发送了或者数据报没有被分片。
 - Fragment Offset: 这个13-bit的字段是一个被分配给每个连续分片的数值。目的网络层使用这个这个值来重组分片形成合适的顺序。这里找到偏移值一个8-byte单位的数字表示偏移量。
-- Time to Live (TTL): 这个位字段表示数据被丢弃之前能生存或者路由跳跃（hop）的时间（用秒表示）。每个路由器检测并且按至少1为单位或者数据报在路由器中被延迟的秒数来减少这个字段。当这个字段为0时，将数据报丢弃。Hop表示的是数据报到目的地之前经过
+- Time to Live (TTL): 这个位字段表示数据被丢弃之前能生存或者路由跳跃（hop）的时间（用秒表示）。每个路由器检测并且按至少1为单位或者数据报在路由器中被延迟的秒数来减少这个字段。当这个字段为0时，将数据报丢弃。Hop表示的是数据报前往目的地中经过
 的路由器数量。
 - Protocol: 8-bit协议字段暗示将收到数据载荷的协议。带有协议标识6（二进制 00000110）的一个数据报被往栈朝上传递
 到达TCP模块 。
-普遍的协议标识值：
+常见的协议标识值：
 
 |协议名|协议标识值|
 |:----|:----|
@@ -122,9 +122,9 @@ IP实现简单的在这个点段填满0。
 
 地址翻译规则：
 
-- 32-bit 二进制地址以0开头，则这个地址A类地址
-- 32-bit 二进制地址以10开头，则这个地址B类地址
-- 32-bit 二进制地址以110开头，则这个地址C类地址
+- 32-bit 二进制地址以0开头，则这个地址是A类地址
+- 32-bit 二进制地址以10开头，则这个地址是B类地址
+- 32-bit 二进制地址以110开头，则这个地址是C类地址
 
 三类网络地址的范围表：
 
@@ -189,13 +189,13 @@ Reverse ARP 与 ARP相反，知道物理地址，但是不知道IP地址时，�
 工作站。
 
 **BOOTP** (Boot PROM)
-许多网络适配器有一个可以用来插入一个集成电路（boot PROM)的插槽。boot PROM一旦计算机开机，它也跟这启动。将从一个网络服务器加载一个操作系统到这台计算机中，而不是通过本地磁盘。
+许多网络适配器有一个可以用来插入一个集成电路（boot PROM)的插槽。boot PROM一旦计算机开机，它也跟这启动。将从一个网络服务器加载一个操作系统到这台计算机中，而不是通过本地磁盘。操作系统载入到这个预先配置好指定IP地址的BOOTP设备中。
 
 ## Internet Control Message Protocol
 
 routers使用 Internet Control Message（ICMP）消息来通知源IP，发送数据过程中出现的问题。
 
-最普遍的ICMP消息：
+最常见的ICMP消息：
 
 - Echo Request and Echo Reply: ICMP 经常在测试期间被使用。例如`ping`命令用来检测网络的连通性。`ping`命令往目的IP地址发送一个数据报并且请求目的计算机在发送的响应数据报中返回数据。
 - Source Quench: 假设一台超快的计算机往远程电脑发送大量的数据，这些数据量可能超过路由器的处理能力。此时路由器使用ICMP
@@ -208,4 +208,23 @@ routers使用 Internet Control Message（ICMP）消息来通知源IP，发送数
 
 ## Other Internet Layer Protocols
 
-比如，IPsec protocols在IPv4中是可选的，但确实IPv6的完整的一部分，提供安全的加密通信。其他Internet layer 协议协助完成任务，比如多播。
+比如，IPsec protocols在IPv4中是可选的，但确是IPv6整体的一部分，提供安全的加密通信。其他Internet layer 协议协助完成任务，比如多播。
+
+## 小小的总结
+
+- IP header的最小值是20 bytes。
+- IP Header中的TTL用于说明数据报在被丢弃之前存活的时间，或者路由跳跃的时间。
+- A类地址网络ID必须是以0开头的8位二进制，主机ID是24位二进制。
+- 最常见的ICMP消息: Echo Request and Echo Reply, Source Quench, Destination Unreachable, Time Exceeded, Fragment Needed.
+- 0开头的8 bit 的 network ID 以及 24 bit 的 host ID 的A类地址。
+- 10开头的16 bit 的 network ID 以及 16 bit host ID 的B类地址。
+- 110开头的24 bit 的 network ID 以及 8 bit host ID 的C类地址。
+- 1110开头的32 bit 的用于多播的D类地址。
+- 11110开头的32 bit 的用于使用实验性但是没在生产环境中使用的E类地址。
+- ARP通过IP地址解析出MAC地址，RARP通过MAC地址访问远程主机设置本地的IP地址。
+- 数据包的目的地址不存在路由表中时，将向网络上的所有结点发送广播，发送广播的时，也一同发送该结点的物理地址以及IP地址，含有该目的地址的结点通过该物理地址发送该数据目的地址给发送广播的主机并更新主机的路由表。
+- 路由表中的条目有过期的时候，过期的条目将从路由表中移除，下一次更新路由表是在发送数据到过期条目的IP地址时进行。
+
+[上一篇](/The-Network-Access-Layer)
+
+[下一篇](/Subnetting-and-CIDR)
