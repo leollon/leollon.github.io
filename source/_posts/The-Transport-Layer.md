@@ -137,5 +137,82 @@ TCP 数据格式图示
 
 ![d19083c8683f40c6.svg](https://i.quantuminit.com/d19083c8683f40c6.svg)
 
+字段说明：
+
+- Source Port (16-bit): 在源机器上分配给应用的数据源端口号码
+- Destination Port (16 bit): 在目的机器上分配给应用的数据目的端口号码
+- Sequence Number (32-bit): 除非*SYN*标记设计为1，否则在特定的段中，她将会是第一个字节的序列号。如果*SYN*设
+置为1,序列号字段提供初始的序列数字（ISN），它用来同步序列号。如果*SYN*设置为1，第一个八位字节的序列号比出现在这个
+字段中的数字要大（换句话说，就是ISN + 1）。
+- Acknowledgment Number (32-bit): ACK号声明收到的段。这个值是接受计算机希望收到的下一个序列号的值。换句话
+说，就是最后的一个收到的字节的序列号 + 1。
+- Data offset (4 bits): 告诉接收的TCP软件header有多长以及数据从何处开始的字段。这个字段用一个32-bit字长的整数来表示。
+- Reserved (6 bits): 为未来的使用而预留。预留字段为适应将来的TCP发展提供空间并且全部是0.
+- Control flags (1 bit each): 声明关于段的的特殊信息。
+- URG: 值为1的字段，声明该段是紧急的并且Urgent Pointer 是有意义的。
+- ACK: 值为1的ACK声明Acknoledgement Number字段是重要的。
+- PSH: 值为的字段告诉TCP软件推送到目前为止通过管道发送的所有数据到接收应用的中。
+- RST: 重新设置连接的值为1的字段。
+- SYN: 值为1的字段声明被同步的序列号，标记连接开始。[three-way handshake](./)
+- FIN: 值为1的字段暗示发送端没有更多的数据要传输了。这个标记被用于关闭一个连接。
+- Window (16-bit): 用于流控制的参数。除了发送端自由传送且没有跟进一步通知的最后的acknowledged的序列号之外，
+window定义了序列号的范围。
+- Checksum (16-bit): 用于检查段的完整性的字段。接收端执行段的checksum计算并且比较这个计算出来的值与存储在字段
+中的值。TCP和UDP在checksum计算中包含有一个含有IP地址信息的伪头部。[UDP 伪头部讨论](./)
+- Urgent Pointer (16-bit): 指向标记任何紧急信息开头的序列号的偏移指针。
+- Options: 指定小部分可选设置中一个。
+- Padding: 确保数据起始于32-bit边界的额外的0 bits（根据需要）位。
+- Data: 和段一起被传送的数据。
+
+TCP需要所有这些字段来完成管理，通知以及验证网络传输。
+
+### TCP Connections
+
+TCP中的一切都发生在连接的上下文中。TCP支持两种连接打开状态：
+
+- 被动打开：应用进程通知TCP准备通过一个TCP端口来接收到来的连接。因此，从TCP到应用的路径在到来的连接请求之前被打开。
+- 主动打开：应用请求TCP初始化与另一台处于被动打开状态的的计算机的连接。（实际上，TCP也能够初始化一个连接到处于主动打开状态的计算机的连接，万一两台计算机都在马上尝试打开一个连接。）
+
+客户端是一台计算机请求或收到来自网络上的另一台计算机的服务，服务器是一台计算机给网络上的其他计算机提供服务。
+
+TCP发送变长的段；给数据的每个字节分配一个序列号。接收端必须为它收到的每个字节发送一个通知。因此，TCP通信是一个传输
+以及确认的系统。TCP头部的Sequence Number 以及Acknowledgement Number 字段提供关于传输状态的常规更新给通信的
+TCP软件。
+
+单独的学历好不会和每个独立的字节一起被编码。而是，header中的Sequence Number 字段给出段中数据的第一个字节的序列
+号。如果段出现在连接的开头（[three-way handshake](#Establing a Connection)描述），Sequence Number字段包含ISN，它的值要比段中数
+据第一个字节的序列号少1。（也就是第一个字节等于ISN + 1。）
+如果成功收到段，接收的计算机使用Acknowledgement Number字段告诉发送的计算机已经收到那个字节了。
+acknowledgement 信息中的Acknowledgement Number
+字段被设置为最后收到的sequence number + 1。换句话说，Acknowledgement Number 字段定义了接收的计算机下一次接
+收的sequence number。
+如果在指定的时间周期内，未收到一个acknowledgement，发送的计算机重传以最后一个被通知的字节的那个字节为开始的数
+据。
+
+### Establing a Connection
+
+计算机B必须要知道计算机A使用什么ISN（初始序列号）来起始序列号。计算机A必须要知道计算机B将会使用什么ISN来为计算机B
+传输的任何数据起始序列号号。序列号的同步成为一次**three-way handshake**。它总是出现在TCP连接开始时。
+
+![b705d93f85a341cc.svg](https://i.quantuminit.com/b705d93f85a341cc.svg)
+
+在结束three-way handshake之后，连接建立了，并且TCP模块使用sequence 以及acknowledgemen 方案进行传输和接受数
+据。
+
+### TCP Flow Control
+
+TCP header中的Window字段为连接提供流控制机制。Window字段的目的是确保发送端别太快地发送太多的数据，这可能因为接
+收端的处理速度不能和发送端的发送速度一样尽可能快地处理来到的数据段，从而导致出现数据丢失的情况。TCP使用的流控制方
+法成为**滑动窗口**方法。除了发送端认可传输的最后的acknowledged sequence number之外，接收端使用
+Window字段（也称之为**缓冲区大小**字段）来定义序列号。
+
+### Closing a Connection
+
+当是时候关闭连接的是偶，计算机初始化关闭，计算机A在队列中放置一个*FIN*设置为1的数据段。
+应用程序进入到**fin-wait 状态**。在fin-wait状态中，计算机A的TCP软件继续接受数据段并且处理已经在队列中的数据
+段，但是不会接收来自应用程序的额外的数据。当计算机B收到*FIN*数据段时，它返回一个acknowledgement来响应*FIN*，并
+发送任何剩余的数据段以及通知本地的应用程序，收到了一个*FIN*。计算机B发送一个*FIN*数据段给计算机A，这个数据段计算机A会确认并且关闭连接。
+
 [上一篇](/Subnetting-and-CIDR)
+
 [下一篇](/The-Application-Layer)
