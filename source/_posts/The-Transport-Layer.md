@@ -17,7 +17,7 @@ Transport layer用途：
 - 解释传输层如何通过ports以及sockets给网络应用提供接口
 - 描述TCP以及UDP的异同
 - 识别构成TCP header的字段
-- 描述TCP如何打开开启并关闭连接
+- 描述TCP如何开启和关闭连接
 - 描述TCP如何序列并且通知数据传输
 - 识别构成UDP header的四个字段
 
@@ -35,7 +35,7 @@ TCP/IP开发者知道他们需要在能够与IP协作的网络层（Internet lay
 
 **Transmission COntrol Protocol (TCP)**: TCP 提供广泛的错误控制和流控制以及验证数据的成功传递。**TCP是面向连接的协议**。
 
-**User Datagram Protocol (UDP)**: UDP提供及其基本的错误检查并且被设计用于没必要使用TCP广泛的控制特性的时
+**User Datagram Protocol (UDP)**: UDP提供极其基本的错误检查并且被设计用于没必要使用TCP广泛的控制特性的时
 候。**UDP是一个无连接的协议**。
 
 ## Transport Layer Concepts
@@ -100,7 +100,7 @@ TCP/IP开发者知道他们需要在能够与IP协作的网络层（Internet lay
 
 多路复用/反多路复用使得TCP/IP协议栈的更底层能够处理数据而不用管是哪个应用初始化的。所有和原始应用的关联都在Transport layer进行设置，并且数据以单独，应用独立的管道传向或来自Internet Layer。
 
-多路复用和反多路复用的关键是有IP地址和端口（port）号组成的socket地址，它提供了一个识别特定机器上特定应用程序的独
+多路复用和反多路复用的关键是由IP地址和端口（port）号组成的socket地址，它提供了一个识别特定机器上特定应用程序的独
 一无二的身份。
 
 ## Understanding TCP and UDP
@@ -141,24 +141,24 @@ TCP 数据格式图示
 
 - Source Port (16-bit): 在源机器上分配给应用的数据源端口号码
 - Destination Port (16 bit): 在目的机器上分配给应用的数据目的端口号码
-- Sequence Number (32-bit): 除非*SYN*标记设计为1，否则在特定的段中，她将会是第一个字节的序列号。如果*SYN*设
+- Sequence Number (32-bit): 除非*SYN*标记设计为1，否则在特定的段中，它将会是第一个字节的序列号。如果*SYN*设
 置为1,序列号字段提供初始的序列数字（ISN），它用来同步序列号。如果*SYN*设置为1，第一个八位字节的序列号比出现在这个
 字段中的数字要大（换句话说，就是ISN + 1）。
 - Acknowledgment Number (32-bit): ACK号声明收到的段。这个值是接受计算机希望收到的下一个序列号的值。换句话
 说，就是最后的一个收到的字节的序列号 + 1。
 - Data offset (4 bits): 告诉接收的TCP软件header有多长以及数据从何处开始的字段。这个字段用一个32-bit字长的整数来表示。
-- Reserved (6 bits): 为未来的使用而预留。预留字段为适应将来的TCP发展提供空间并且全部是0.
+- Reserved (6 bits): 为未来的使用而预留的空间。预留字段为适应将来的TCP发展提供空间并且全部是0.
 - Control flags (1 bit each): 声明关于段的的特殊信息。
 - URG: 值为1的字段，声明该段是紧急的并且Urgent Pointer 是有意义的。
 - ACK: 值为1的ACK声明Acknoledgement Number字段是重要的。
-- PSH: 值为的字段告诉TCP软件推送到目前为止通过管道发送的所有数据到接收应用的中。
+- PSH: 值为1的字段告诉TCP软件推送到目前为止通过管道发送的所有数据到接收应用的中。
 - RST: 重新设置连接的值为1的字段。
-- SYN: 值为1的字段声明被同步的序列号，标记连接开始。[three-way handshake](./)
+- SYN: 值为1的字段声明被同步的序列号，标记连接开始。[three-way handshake](/#Establing-a-Connection)
 - FIN: 值为1的字段暗示发送端没有更多的数据要传输了。这个标记被用于关闭一个连接。
 - Window (16-bit): 用于流控制的参数。除了发送端自由传送且没有跟进一步通知的最后的acknowledged的序列号之外，
 window定义了序列号的范围。
 - Checksum (16-bit): 用于检查段的完整性的字段。接收端执行段的checksum计算并且比较这个计算出来的值与存储在字段
-中的值。TCP和UDP在checksum计算中包含有一个含有IP地址信息的伪头部。[UDP 伪头部讨论](./)
+中的值。TCP和UDP在checksum计算中包含有一个含有IP地址信息的伪头部。[UDP 伪头部讨论](/#UDP-The-Connection-Transport-Protocol)
 - Urgent Pointer (16-bit): 指向标记任何紧急信息开头的序列号的偏移指针。
 - Options: 指定小部分可选设置中一个。
 - Padding: 确保数据起始于32-bit边界的额外的0 bits（根据需要）位。
@@ -175,26 +175,26 @@ TCP中的一切都发生在连接的上下文中。TCP支持两种连接打开�
 
 客户端是一台计算机请求或收到来自网络上的另一台计算机的服务，服务器是一台计算机给网络上的其他计算机提供服务。
 
-TCP发送变长的段；给数据的每个字节分配一个序列号。接收端必须为它收到的每个字节发送一个通知。因此，TCP通信是一个传输
+TCP发送变长的段；数据的每个字节被分配一个序列号。接收端必须为它收到的每个字节发送一个通知。因此，TCP通信是一个传输
 以及确认的系统。TCP头部的Sequence Number 以及Acknowledgement Number 字段提供关于传输状态的常规更新给通信的
 TCP软件。
 
-单独的学历好不会和每个独立的字节一起被编码。而是，header中的Sequence Number 字段给出段中数据的第一个字节的序列
-号。如果段出现在连接的开头（[three-way handshake](#Establing a Connection)描述），Sequence Number字段包含ISN，它的值要比段中数
-据第一个字节的序列号少1。（也就是第一个字节等于ISN + 1。）
+分开的序列号不会和每个独立的字节一起被编码。而是，header中的Sequence Number 字段给出段中数据的第一个字节的序列
+号。
+如果段出现在连接的开头（在[three-way handshake](/#Establing-a-Connection)中描述），Sequence Number
+字段包含ISN，它的值要比段中数据第一个字节的序列号少1。（也就是第一个字节等于ISN + 1。）
 如果成功收到段，接收的计算机使用Acknowledgement Number字段告诉发送的计算机已经收到那个字节了。
-acknowledgement 信息中的Acknowledgement Number
-字段被设置为最后收到的sequence number + 1。换句话说，Acknowledgement Number 字段定义了接收的计算机下一次接
-收的sequence number。
+acknowledgement 信息中的Acknowledgement Number字段被设置为最后收到的sequence number + 1。换句话说，
+Acknowledgement Number 字段定义了接收的计算机下一次接收的sequence number。
 如果在指定的时间周期内，未收到一个acknowledgement，发送的计算机重传以最后一个被通知的字节的那个字节为开始的数
 据。
 
 ### Establing a Connection
 
 计算机B必须要知道计算机A使用什么ISN（初始序列号）来起始序列号。计算机A必须要知道计算机B将会使用什么ISN来为计算机B
-传输的任何数据起始序列号号。序列号的同步成为一次**three-way handshake**。它总是出现在TCP连接开始时。
+传输的任何数据起始序列号号。序列号的同步称为一次**three-way handshake**。它总是出现在TCP连接开始时。
 
-![b705d93f85a341cc.svg](https://i.quantuminit.com/b705d93f85a341cc.svg)
+![a2b94c3679534b47.svg](https://i.quantuminit.com/a2b94c3679534b47.svg)
 
 在结束three-way handshake之后，连接建立了，并且TCP模块使用sequence 以及acknowledgemen 方案进行传输和接受数
 据。
@@ -203,26 +203,33 @@ acknowledgement 信息中的Acknowledgement Number
 
 TCP header中的Window字段为连接提供流控制机制。Window字段的目的是确保发送端别太快地发送太多的数据，这可能因为接
 收端的处理速度不能和发送端的发送速度一样尽可能快地处理来到的数据段，从而导致出现数据丢失的情况。TCP使用的流控制方
-法成为**滑动窗口**方法。除了发送端认可传输的最后的acknowledged sequence number之外，接收端使用
+法称为**滑动窗口**方法。除了发送端认可传输的最后的acknowledged sequence number之外，接收端使用
 Window字段（也称之为**缓冲区大小**字段）来定义序列号。
 
 ### Closing a Connection
 
-当是时候关闭连接的是偶，计算机初始化关闭，计算机A在队列中放置一个*FIN*设置为1的数据段。
+当是时候关闭连接时，计算机初始化关闭操作，计算机A在队列中放置一个*FIN*设置为1的数据段。
 应用程序进入到**fin-wait 状态**。在fin-wait状态中，计算机A的TCP软件继续接受数据段并且处理已经在队列中的数据
 段，但是不会接收来自应用程序的额外的数据。当计算机B收到*FIN*数据段时，它返回一个acknowledgement来响应*FIN*，并
-发送任何剩余的数据段以及通知本地的应用程序，收到了一个*FIN*。计算机B发送一个*FIN*数据段给计算机A，这个数据段计算机A会确认并且关闭连接。
+发送任何剩余的数据段以及通知本地的应用程序，收到了一个*FIN*。计算机B发送一个*FIN*数据段给计算机A，这个数据段计算
+机A会确认(acknowledge)并且关闭连接。关闭连接图示：
+
+![85a28dee69f444e8.svg](https://i.quantuminit.com/85a28dee69f444e8.svg)
 
 ## UDP: The Connection Transport Protocol
 
-UDP要比TCP更简单。关于UDP，有些东西值得关注。首先尽管UDP有时候和描述的一样没有错误检查的能力，事实上，它能够执行
-基本的错误检查。最好将UDP描述成具有限的错误检查能力。UDP数据报包含一个接收端能够用于测试数据完整性的checksum值。
-（checksum测试是可选的并且能够在接收端被关闭来加速处理进来的数据。）UDP数据报包含一个含有数据报目的地址的伪头部，因此，也提供了检查错误数据报的方式。并且，如果接收端模块接收到一个传到未激活或未定义的UDP端口，则返回ICMP消息来通
-知数据报源计算机，端口不可达。第二，UDP不提供TCP提供的数据重新排序功能。大型网络上，重新排序最具有重要意义。比如，在互联网中，数据段可能走不同的路径并且在路由缓冲中产生了较高的延迟。在本地网络中，在UDP中缺少重新排序特性不会导致不可靠的接收。
+UDP要比TCP更简单。关于UDP，还是有些东西值得关注的。
+首先，尽管UDP有时候和描述的一样没有错误检查的能力，事实上，它能够执行基本的错误检查。最好将UDP描述成具有有限的错误
+检查能力。UDP数据报包含一个接收端能够用于测试数据完整性的checksum值。（checksum测试是可选的并且能够在接收端被关
+闭来加速处理进来的数据。）UDP数据报包含一个含有数据报目的地址的伪头部，因此，也提供了检查错误数据报的方式。并且，
+如果接收端模块接收到一个传到未激活或未定义的UDP端口，则返回ICMP消息来通知数据报源计算机，端口不可达。
+第二，UDP不提供TCP提供的数据重新排序功能。大型网络上，重新排序最具有重要意义。比如，在互联网中，数据段可能走不同的
+路径并且在路由缓冲中经历了较高的延迟。在本地网络中，在UDP中缺少重新排序特性不会导致不可靠的接收。
 
 UDP的简单，无连接设计使得它能够用于网络广播的情况中。广播是子网上所有的计算机都会收到并且处理的一个单独的消息。
 
-UDP协议的主要目的是将数据报公开给应用层。UDP不传输丢失或损坏的数据包，削除重复的数据报。
+UDP协议的主要目的是将数据报公开给应用层。UDP不传输丢失或损坏的数据包，削除重复的数据报，通知数据报的接收，或建立或
+终止连接。
 UDP header由4个16-bit的字段构成。如下图所示：
 
 ![2193b220d298492b.svg](https://i.quantuminit.com/2193b220d298492b.svg)
@@ -235,9 +242,49 @@ UDP header由4个16-bit的字段构成。如下图所示：
 万一是一则单向的消息，不期待有响应返回时，这可能会是需要的功能。
 - Destination Port: 保存接收端上UDP软件传输这个数据报到的端口地址，它是16-bit的字段。
 - Length: 16bit的字段。该字段以UDP数据报的八位字节识别数据报长度。该长度包含UDP头部还有要传输的数据的长度。因为
-UDP头部是8个八位字节的长度，所以，这个值至少为8。
+UDP头部是8个八位字节的长度，所以，这个值至少为8字节。
 - Checksum: 用于决定这个数据报在传输过程是否被损坏的16 bit字段。这个字段的值是通过执行特殊计算一串二进制而得到
-的结果。在UDP例子中，checksum是基于一个伪头部，UDP头部，UDP 数据，还有可能是填充的八位字节的0来构成一个偶数八位字节长度的checksum输入值而计算的。发送端生成，接收端用来决定数据报是否已经被损坏。
+的结果。在UDP例子中，checksum是基于一个伪头部，UDP头部，UDP数据，还有可能是填充的八位字节的0来构成一个偶数个八
+位字节长度的checksum输入值而计算的。发送端生成，接收端用来决定数据报是否已经被损坏。
+
+部分用于checksum计算的数据是从IP header又称伪头部中提取出来的一个字符串。伪头部提供目的地址信息，这样接收端能够
+用于决定一个数据报是否已经被错误传输。
+
+### 其他传输层协议
+
+- Datagram Congestion Control以及Stream Control Transmission Protocol提供在传统的TCP和UDP中没有的一些
+增强特性
+- Real-time Transport Protocol (RTP) 提供用于传输实时音频以及视频的结构。
+
+## Firewalls and Ports
+
+防火墙是一个预防局域网被未经授权的用户从互联网上访问的协议系统。防火墙的一个重要特性是能够阻止访问特定的TCP和UDP
+端口。禁止局域网外的用户访问局域网内的SSH 服务器以及局域网内的任何一台计算机。
+
+![8fa1d412400a4570.svg](https://i.quantuminit.com/8fa1d412400a4570.svg)
+
+防火墙能够阻止访问任何或所有可能暴露出安全威胁的端口。
+
+## 小小的总结
+
+- 传输层职责提供API，多路复用/反多路复用，流控制，错误检查以及验证，
+- TCP是面向连接且具有更为健全的错误检查，以及使用滑动窗口方法进行流控制，接收端通过比较数据段中checksum以及重新
+对Data进行计算出来的checksum来进行验证。
+- 通过将port和地址连接起来构成socket，这个socket在系统中是独一无二的，可用于识别网络应用，应用则通过这个
+socket，可称为管道，给传输层发送数据。
+- TCP与UDP异同
+  - 同：都属于传输层，通过socket识别网络应用。
+  - 异：TCP面向连接且提供更为健全的错误检查，流控制，数据段重排序，具有可靠传输特性。UDP面向无连接，相比TCP更简
+  单且提供简单的错误检查，UDP数据报长度至少为8字节。
+- [TCP header字段](/#TCP-Data-Format)
+- [TCP开启连接](/#Establing-a-Connection)
+- [TCP关闭连接](/#Closing-a-Connection)
+- [TCP 如何序列并通知数据传输](#TCP-Connections)
+- [UDP header的四个字段](/#UDP-The-Connection-Transport-Protocol)：
+  - Source Port
+  - Destination Port
+  - Length
+  - Checksum
 
 [上一篇](/Subnetting-and-CIDR)
 
