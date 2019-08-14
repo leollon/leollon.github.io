@@ -98,7 +98,7 @@ TCP/IP开发者知道他们需要在能够与IP协作的网络层（Internet lay
 
 ![6482f7049b1d4d3b.svg](https://i.quantuminit.com/6482f7049b1d4d3b.svg)
 
-多路复用/反多路复用使得TCP/IP协议栈的更底层能够处理数据而不用管是哪个应用初始化的。所有和原始应用的关联都在Transport layer进行设置，并且数据以单独，应用独立的管道传向或来自Internet Layer。
+多路复用/反多路复用使得TCP/IP协议栈的更底层能够处理数据而不用管是哪个应用初始化的。所有和原始应用的关联都在Transport layer进行设置，并且数据以单独的，应用独立的管道传向或来自Internet Layer。
 
 多路复用和反多路复用的关键是由IP地址和端口（port）号组成的socket地址，它提供了一个识别特定机器上特定应用程序的独
 一无二的身份。
@@ -192,7 +192,7 @@ Acknowledgement Number 字段定义了接收的计算机下一次接收的sequen
 ### Establing a Connection
 
 计算机B必须要知道计算机A使用什么ISN（初始序列号）来起始序列号。计算机A必须要知道计算机B将会使用什么ISN来为计算机B
-传输的任何数据起始序列号号。序列号的同步称为一次**three-way handshake**。它总是出现在TCP连接开始时。
+传输的任何数据起始序列号。序列号的同步称为一次**three-way handshake**。它总是出现在TCP连接开始时。
 
 ![a2b94c3679534b47.svg](https://i.quantuminit.com/a2b94c3679534b47.svg)
 
