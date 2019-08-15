@@ -13,7 +13,7 @@ tags: [notes, TCP/IP, Networks]
 
 ## What Is the Application Layer
 
-TCP/IP的应用层是各种网络感知软件组件，用于向TCP和UDP端口发送信息和从TCP端口接收信息。在逻辑相似或等同的意义上，这些应用层组件不是并行的。
+应用层必须和TCP以及UDP端口一样感知传输层并且根据情况传输数据。TCP/IP的应用层是一种用于向TCP和UDP端口发送信息和从TCP端口接收信息网络感知软件组件。在逻辑相似或等同的意义上，这些应用层组件不是并行的。
 
 ## The TPC/IP Application Layer and OSI
 
@@ -35,10 +35,10 @@ TCP/IP的应用层与OSI的应用层，表现层以及会话层相关。
 
 应用层更重要的活动：
 
-- [文件与打印服务](/#File-and-Print-Services)
-- [域名解析服务](/#Name-Resolution-Services)
-- [远程访问服务](/#Remote-Access)
-- [Web服务](/#Web-Services)。
+- [文件与打印服务](#File-and-Print-Services)
+- [域名解析服务](#Name-Resolution-Services)
+- [远程访问服务](#Remote-Access)
+- [Web服务](#Web-Services)。
 
 一些应用层协议的表：
 
@@ -96,5 +96,41 @@ Hypertext Transfer Protocol (HTTP) 是我们所知的万维网生态系统的心
 ## APIs and the Application Layer
 
 一个application programming interface (API) 是一个应用用来访问其他部分操作环境的一个编程组件预订义集合。
+程序使用API功能与操作系统进行通信。网络协议栈就是API概念的一个经典的应用。网络API提供从应用到协议栈的接口。应用程序使用来自API的功能打开和关闭连接以及写入数据到网络或从网络中读取数据。Sockets API最初是为BSD UNIX开发的作为应用程序访问TCP/IP协议栈的接口。从Window 95开始，微软将TCP/IP程序接口直接放进了Window操作系统，而在此之前，时序哟啊用户安装且配置的。
 
+应用程序通过API访问TCP/IP协议栈：
 
+![d91fbe6b3a864831.svg](https://i.quantuminit.com/d91fbe6b3a864831.svg)
+
+例如Sockets API的网络API通过[socket](/The-Transport-Layer/#Ports-和-Sockets)接收并传递数据给应用程序。因此那些APIs在应用层运行。
+
+TCP/IP实用程序表
+
+|程序名|描述|
+|:----|:----|
+|ipconfig/ifconfig|A Unix/Linux utility that displays and sets TCP/IP configuration settings.(The Windows utility IPConfig is similar.)|
+|ping|A utility that tests for network connectivity.|
+|arp|A utility that lets you view (and possibly modify) the Address Resolution
+Protocol (ARP) cache of a local or remote computer. The ARP cache
+contains the physical address to IP address mappings (see Hour 4,
+“The Internet Layer”).|
+|traceroute|A utility that traces the path of a datagram through the internetwork.|
+|route|A utility that lets you view, add, or edit entries in a routing table.[Routing](/Routing)|
+|netstat|A utility that displays IP, UDP, TCP, and ICMP statistics.|
+|hostname|A utility that returns the hostname of the local host.|
+|ftp|A basic file transfer utility that uses TCP.|
+|tftp|A basic file transfer utility that uses UDP. Tftp is used for tasks such as downloading code to network devices.|
+|finger|A utility that displays user information.|
+
+## 小小的总结
+
+- 应用层必须和TCP以及UDP端口一样感知传输层并且根据情况传输数据。
+- DNS是用于映射域名映射到IP地址的服务，HTTP是用于提供web服务的协议。RPC是用于一台计算机上的程序调用另一台计算机
+上的子程序或程序。
+- ifconfig, ping, traceroute, netstat/ss, telnet
+- 获取邮件的的两个应用层协议：IMAP, POP3
+- ntp协议用于同步计算机时钟
+
+[上一篇](/The-Transport-Layer)
+
+[下一篇](/Routing)

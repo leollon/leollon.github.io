@@ -92,7 +92,7 @@ Presentation layer：翻译数据成标准格式；管理加密和数据压缩
 
 - 数据段传到IP协议提供logical address 信息以及包装数据成为数据报的网络层。
 
-- IP数据报进入到传递能与物理网络交互的已经设计好的软件组建的Network Access layer。Network Access layer 创建为了进入physical network而设计的一个或更多的数据帧（frame）。在LAN系统的例子中，比如以太网，帧可能含有通过[**ARP**](https://quantuminit.com/What-is-TCP-IP/#Logical-addressing)协议从维护的表获取来的physical address的信息。
+- IP数据报进入到传递能与物理网络交互的已经设计好的软件组建的Network Access layer。Network Access layer 创建为了进入physical network而设计的一个或更多的数据帧（frame）。在LAN系统的例子中，比如以太网，帧可能含有通过[**ARP**](/What-is-TCP-IP/#Logical-addressing)协议从维护的表获取来的physical address的信息。
 
 - 数据帧被转换成可以通过网络媒介传输的比特流。
 

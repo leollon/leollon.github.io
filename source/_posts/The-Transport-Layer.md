@@ -33,7 +33,7 @@ TCP/IP开发者知道他们需要在能够与IP协作的网络层（Internet lay
 接收端，传输层必须能够从网络层接受数据并且指导数据到多个应用中去。这一特性，称之为反多路服用，允许一台计算机不断地支持多个网络应用，比如浏览器，邮件客户端和文件分享工具。多路复用/反多路复用的另一方面是一个单独的应用能够连续地维护与多个计算机之间的连接。
 - 错误检查，流控制以及验证：需要确保数据在发送和接受机器上传递的完整方案。
 
-**Transmission COntrol Protocol (TCP)**: TCP 提供广泛的错误控制和流控制以及验证数据的成功传递。**TCP是面向连接的协议**。
+**Transmission Control Protocol (TCP)**: TCP 提供广泛的错误控制和流控制以及验证数据的成功传递。**TCP是面向连接的协议**。
 
 **User Datagram Protocol (UDP)**: UDP提供极其基本的错误检查并且被设计用于没必要使用TCP广泛的控制特性的时
 候。**UDP是一个无连接的协议**。
@@ -153,12 +153,12 @@ TCP 数据格式图示
 - ACK: 值为1的ACK声明Acknoledgement Number字段是重要的。
 - PSH: 值为1的字段告诉TCP软件推送到目前为止通过管道发送的所有数据到接收应用的中。
 - RST: 重新设置连接的值为1的字段。
-- SYN: 值为1的字段声明被同步的序列号，标记连接开始。[three-way handshake](/#Establing-a-Connection)
+- SYN: 值为1的字段声明被同步的序列号，标记连接开始。[three-way handshake](#Establing-a-Connection)
 - FIN: 值为1的字段暗示发送端没有更多的数据要传输了。这个标记被用于关闭一个连接。
 - Window (16-bit): 用于流控制的参数。除了发送端自由传送且没有跟进一步通知的最后的acknowledged的序列号之外，
 window定义了序列号的范围。
 - Checksum (16-bit): 用于检查段的完整性的字段。接收端执行段的checksum计算并且比较这个计算出来的值与存储在字段
-中的值。TCP和UDP在checksum计算中包含有一个含有IP地址信息的伪头部。[UDP 伪头部讨论](/#UDP-The-Connection-Transport-Protocol)
+中的值。TCP和UDP在checksum计算中包含有一个含有IP地址信息的伪头部。[UDP 伪头部讨论](#UDP-The-Connection-Transport-Protocol)
 - Urgent Pointer (16-bit): 指向标记任何紧急信息开头的序列号的偏移指针。
 - Options: 指定小部分可选设置中一个。
 - Padding: 确保数据起始于32-bit边界的额外的0 bits（根据需要）位。
@@ -181,7 +181,7 @@ TCP软件。
 
 分开的序列号不会和每个独立的字节一起被编码。而是，header中的Sequence Number 字段给出段中数据的第一个字节的序列
 号。
-如果段出现在连接的开头（在[three-way handshake](/#Establing-a-Connection)中描述），Sequence Number
+如果段出现在连接的开头（在[three-way handshake](#Establing-a-Connection)中描述），Sequence Number
 字段包含ISN，它的值要比段中数据第一个字节的序列号少1。（也就是第一个字节等于ISN + 1。）
 如果成功收到段，接收的计算机使用Acknowledgement Number字段告诉发送的计算机已经收到那个字节了。
 acknowledgement 信息中的Acknowledgement Number字段被设置为最后收到的sequence number + 1。换句话说，
@@ -276,11 +276,11 @@ socket，可称为管道，给传输层发送数据。
   - 同：都属于传输层，通过socket识别网络应用。
   - 异：TCP面向连接且提供更为健全的错误检查，流控制，数据段重排序，具有可靠传输特性。UDP面向无连接，相比TCP更简
   单且提供简单的错误检查，UDP数据报长度至少为8字节。
-- [TCP header字段](/#TCP-Data-Format)
-- [TCP开启连接](/#Establing-a-Connection)
-- [TCP关闭连接](/#Closing-a-Connection)
+- [TCP header字段](#TCP-Data-Format)
+- [TCP开启连接](#Establing-a-Connection)
+- [TCP关闭连接](#Closing-a-Connection)
 - [TCP 如何序列并通知数据传输](#TCP-Connections)
-- [UDP header的四个字段](/#UDP-The-Connection-Transport-Protocol)：
+- [UDP header的四个字段](#UDP-The-Connection-Transport-Protocol)：
   - Source Port
   - Destination Port
   - Length
