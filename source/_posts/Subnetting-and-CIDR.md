@@ -1,5 +1,5 @@
 ---
-title: Subnetting-and-CIDR
+title: Subnetting and CIDR
 date: 2019-08-07 14:25:39
 categories: Sams-Teach-yourself-TCP/IP-in-24-hours
 tags: [notes, TCP/IP, Networks]

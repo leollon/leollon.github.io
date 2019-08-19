@@ -1,5 +1,5 @@
 ---
-title: The-Internet-Layer
+title: The Internet Layer
 date: 2019-08-05 10:02:41
 categories: Sams-Teach-yourself-TCP/IP-in-24-hours
 tags: [notes, TCP/IP, Networks]
