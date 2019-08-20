@@ -50,3 +50,58 @@ WAN协议几乎总是聚焦在OSI模型上，因此要记住的是Network Access
 ![b4b9276675534e3b.svg](https://i.quantuminit.com/b4b9276675534e3b.svg)
 
 供应商保证特定带宽以及从分界点开始的服务等级。
+
+## Wireless Networking
+
+### 802.11 Networks
+
+从[The Network Access Layer](/The-Network-Access-Layer/)中得知，物理网络的细节驻留在TCP/IP协议栈的Network Access layer。**IEEE 802.11**规范为网络接入层的无线网络提供了模型。
+
+![489b1c2f1eea41f1.svg](https://i.quantuminit.com/489b1c2f1eea41f1.svg)
+
+因为802.11与IEEE 802.3以太网标准相似且兼容，802.11经常称为无线以太网。
+物理层的不同选项表示不同的无线广播格式，frequency-hopping spread spectrum (FHSS)，direct-sequence spread spectrum（DSSS），othogonal frequency-division multiplexing（OFDM）以及 high-rate direct-sequence spread spectrum multiplexing（HR/DSSS）。
+无线网络与有线网络不同的一个品质是结点是移动的。换句话说，网络能够响应连接设备的位置改变。
+
+#### 802.11 Family
+
+802.11是一些列标准的集合名字。
+|标准|频率范围|传输速度高达|
+|:----|:----|:----|
+|初始版本802.11|2.4GHz|2Mbps|
+|802.11a|5GHz|54Mbps|
+|802.11b|2.4Ghz|5.5Mbps&11Mbps|
+
+还有802.11g（2003年采取）802.11n (2009年采取)，还有其他版本。802.11ac作为高速选项不断受到喜爱。
+
+#### Independent and Infrastructure Networks
+
+最简单的无线网络形式有两个或更多携带有无线网卡的设备直接与彼此进行通信。这种类型的网络正式地被称为**独立基础服务集合（independent BSS，或IBSS）**，更常见的名称是自组网络。适用于紧凑空间内少部分计算机之间的通信。Independent BSS网络是有局限性的，因为它依赖参与通信的计算之间的接近，没有基础设施用于管理连接以及没有办法和更大的网络进行连接，比如本地局域网或者互联网。
+
+![ccb646f6530a4edb.svg](https://i.quantuminit.com/ccb646f6530a4edb.svg)
+
+另一种无线网络形式，称为**基础设施基础服务集合（infrastructure BSS)**，在团体网络以及公共机构环境中更常见，并且由于新一代的便宜的无线路由设备，使得它成为家庭以及咖啡店的受欢迎的网络选项。Infrastructure BSS依赖一个称为**接入点（access point，AP）**的固定设备来促成无线设备之间的通信。一个接入点通过无线广播与无线网络进行通信并且通过传统的连接连接到普通的以太网网络。无线设备通过接入点进行通信。无线设备通过发送一个帧到接入点并让接入点传输消息到目的地来完成与同一区域的其他无线设备进行通信。
+
+![878a9878e6014e7c.svg](https://i.quantuminit.com/878a9878e6014e7c.svg)
+
+通过多个接入点服务更大的区域：
+
+![808959b6286540ac.svg](https://i.quantuminit.com/808959b6286540ac.svg)
+
+802.11帧提供四个地址：
+
+- 目的地址：帧到达的目的设备
+- 源地址：发送帧的设备
+- 接收器地址：应该处理802.11帧的无线设备。如果帧发送给的是一个无线设备，接收器地址和目的地址一样。如果帧发送到的设备超出无线网络，接收器地址是接收并转发帧到以太网分布式网络中的接入点的地址。
+- 传输器地址：转发帧到无线网络上的设备的地址。
+
+802.11帧格式中的一些重要字段：
+
+- Frame control： 描述用于翻译帧内容的协议版本，帧类型以及其他必要值的更小字段的集合。
+- Duration/ID：提供评估大约传输持续多长时间的字段。这个字段可能也从接入点请求缓存的帧。
+- Address fields：48-bit物理地址字段。根据帧的类型，这个字段的使用也不同。第一个字段通常是接收器的并且第二字段通常是传输器的。
+- Sequence control：分片编号（用于分片重组）以及帧的序列号。
+- Frame body：与帧一起传输的数据。当然，和帧一起传输还包含有上层的协议头部。
+- Frame Check Sequence (FCS)：环形冗余校验，用于检查传输错误以及验证帧在传输过程中没有被修改。
+
+![e06f0810ddec4b44.svg](https://i.quantuminit.com/e06f0810ddec4b44.svg)
