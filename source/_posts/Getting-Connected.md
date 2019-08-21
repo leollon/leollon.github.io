@@ -21,7 +21,7 @@ tags: [notes, TCP/IP, Networks]
 ![b6aee1fb6923494c.svg](https://i.quantuminit.com/b6aee1fb6923494c.svg)
 
 *modem*是modulator/demodulator的缩写。一个像电话调制解调器的线缆调制解调器，调制数字网络传输成为模拟形式并且从模拟形式到有效地通过线缆连接传递数据。
-**线缆猫终端系统（CMTS）**接收来自线缆猫的信号并且将其转回在线缆提供商的网络接口处的数字形式。反过来，提供商从上游互联网服务提供商（ISP）租用带宽，并且提供商网络上的路由器连接用户和余下的网络。提供商可能也提供其他的支持服务，比如动态主机配置协议（DHCP）被用来给网络上的用户分配一个动态的IP地址。线缆猫实际上不是一个路由器，而更像是一个网桥。线缆猫通过网络接入层的媒体接入控制（MAC）地址来过滤流量。**Data Over Cable Service Interface Spedification(DOCSIS)是用于线缆猫的网络的标准。
+**线缆调制解调器终端系统（CMTS）**接收来自线缆调制解调器的信号并且将其转回在线缆提供商的网络接口处的数字形式。反过来，提供商从上游互联网服务提供商（ISP）租用带宽，并且提供商网络上的路由器连接用户和余下的网络。提供商可能也提供其他的支持服务，比如动态主机配置协议（DHCP）被用来给网络上的用户分配一个动态的IP地址。线缆调制解调器实际上不是一个路由器，而更像是一个网桥。线缆调制解调器通过网络接入层的媒体接入控制（MAC）地址来过滤流量。**Data Over Cable Service Interface Spedification(DOCSIS)是用于线缆调制解调器的网络的标准。
 
 ## Digital Subscriber Line
 
@@ -30,7 +30,7 @@ tags: [notes, TCP/IP, Networks]
 ![769151e41b214515.svg](https://i.quantuminit.com/769151e41b214515.svg)
 
 还有几种DSL版本，例如ADSL（asyncchronous DSL, 最受小办公室以及家庭欢迎），HDSL(high bit-rate DSL)，VDSL（very high bit-rate DSL），SDSL（symmetric DSL，它的上行和下行的带宽相等）以及IDSL（ISDN over DSL）。
-一些DSL设备将交换机和路由器集成在一起。其他设备充当网桥（与线缆调制解调器相似），在网络接入层通过MAC地址过滤流量。DSL设备经常使用Point-to-Point协议，封装数据，比如PPP。所谓的通过以太网协议（PPPoE）的PPP是DSL最受欢迎选项。
+一些DSL设备将交换机和路由器集成在一起。其他设备充当网桥（与线缆调制解调器相似），在网络接入层通过MAC地址过滤流量。DSL设备经常使用Point-to-Point协议，封闭，比如PPP。所谓的通过以太网协议（PPPoE）的PPP是DSL最受欢迎选项。
 
 ## Wide Are Networks
 
@@ -105,3 +105,88 @@ WAN协议几乎总是聚焦在OSI模型上，因此要记住的是Network Access
 - Frame Check Sequence (FCS)：环形冗余校验，用于检查传输错误以及验证帧在传输过程中没有被修改。
 
 ![e06f0810ddec4b44.svg](https://i.quantuminit.com/e06f0810ddec4b44.svg)
+
+因为802.11是一个网络接入层的协议集合，因此802.11帧使用的地址是48-bit的物理地址，而不是IP地址。
+
+#### Securiry
+
+为了解决无线网络中窃听问题，IEEE开发了与802.11相伴的可选的安全协议标准。**Wired Equivalent Privacy (WEP)**标准被设计用于提供和常规网络隐私等同的隐私级别。WEP的目标是：
+
+- Confidentiality：防止窃听
+- Integrity：确保数据不会被修改
+- Authentication：确保通信的双方都是它们说的是它们自己，并且它们有必要的授权在网络上通信。
+
+WEP通过使用RC4算法加密来处理confidentiality以及integrity目标。发送设备生成一个完整性的校验值（Integrity Check Value，ICV）。ICV是一个根据帧内容进行计算而得到的值。然后ICV使用RC4进行加密并传输到接收器。接收设备对帧进行解密并且计算ICV。如果计算得出的ICV值和帧一起传送的值相等，帧并未发生改变。
+
+不幸的是，WEP遭到了一些安全专家的反对。其中有反对者反对使用RC4加密算法。WEP理论上使用64-bit的key，但却使用24bits的key来初始化。只有40 bits的key用做shared secret。还指出key管理系统的问题。
+
+WEP2提高了初始化向量到128bits并且添加了身份验证来管理secret keys的使用以及分发。然而，WEP2并未解决所有的WEP的问题。还有其他协议，比如Extensible Authentication Protocol（EAP）也表示担忧WEP。称为Wi-Fi Protectedd Access II（WPA2）的新方式使用了ASE块计算机密而不是RC4，并且带来了更安全的验证以及key分发过程。
+
+### Mobile IP
+
+为了维护一个TCP连接，设备必须有一个固定的IP地址，意味着漫游的设备不能仅仅使用有最近传输器分配的IP地址。重要的是，这个问题与互联网地址有关，不能严格地在网络接入层进行解决并且需要扩展Internetc层的IP协议。阅读[Mobile IP扩展](https://tools.ietf.org/html/rfc3220)。移动IP通过关联第二个永久的IP地址的地址来解决地址问题。
+
+移动IP环境描述图：
+
+![f761c1aea1c04266.svg](https://i.quantuminit.com/f761c1aea1c04266.svg)
+
+### Bluetooth
+
+Bluetooth 标准定义的事OSI 数据链路层以及物理层（等同于TCP/IP的网络接入层）。Bluetooth商标由一个称为蓝牙特殊爱好组（Special Intere Group，SIG）来控制。蓝牙专注于为短距离（10米）范围内无线设备提供一个可靠并高性能的通信环境。
+蓝牙使用一个接入点来连接无线网络到常规网络。（接入点在蓝牙术语中，又称为网络接入点，或NAP）。蓝牙封闭封闭P/IP包通过蓝牙网络进行分发传输。当然了，如果一个蓝牙设备通过互联网访问，它必须通过TCP/IP访问。厂商想象一类通过一个蓝牙功能网桥访问网络即用型的蓝牙设备。一个蓝牙NAP充当网桥，接收进来的TCP/IP传输并且使用蓝牙网络接入协议替换进来的网络接入层用于传输到一个等待的设备。
+
+![5a8301d4dce84f7a.svg](https://i.quantuminit.com/5a8301d4dce84f7a.svg)
+
+## Dial-Up Networking
+
+大多数的拨号解决方案使用一个调制解调器连接。调制解调器的目的是将来自计算机的数字信号变换成能够通过电话系统接口的模拟信号以及将从电话线收到的模拟信号变换成接收计算机能够理解的数字信号。
+在电话线两端的两台计算机不需要与另一台计算机竞争传输媒介，它们彼此之间共享传输媒介。这种类型的连接称为**点对点（point-to-point）**连接。
+
+![974b94aa11324d90.svg](https://i.quantuminit.com/974b94aa11324d90.svg)
+
+相比基于局域网的配置，点对点链接要更简单。因为没必要提供多计算机共享传输媒介的方式。与此同时，通过电话线连接的最大局限性之一是通过电话连接的传输速率要比通过基于局域网，比如以太网的速率要更慢。
+早期的调制解调器仅仅是用于通过电话线传递信息，并在这种情况中，TCP/IP的逻辑地址和网络错误控制不是必需或者甚至是需要的。后来随着本地网络以及互联网的到来，工程师们开始想着使用拨号连接作为网络接入的方式。单拨服务器给远程计算机提供连接本地网络的方法。
+
+![d71676dfff9a4261.svg](https://i.quantuminit.com/d71676dfff9a4261.svg)
+
+拨号服务器负责更多的网络任务职责，并且充当一个路由器：
+
+![08790b9071514ee3.svg](https://i.quantuminit.com/08790b9071514ee3.svg)
+
+来自拨号领域中最受欢迎的拨号网络协议是点对点（PPP）协议。PPP替换早期称为串行线路网络协议（SLIP）。
+
+当前PPP标准是RFC 1661。RFC 1661分割PPP组成成三种大致分类：
+
+- **封闭议数据报的方法**： SLIP 和 PPP都接受数据报，并且为互联网准备数据报。但PPP不像SLIP，它必须准备接收来自不只一个协议系统的的数据报。
+- **用于建立，配置以及测试连接的连接控制协议（LCP）**：PPP处理配置设置并且因此消除了与SLIP连接时的兼容性问题。
+- 支持更上层协议系统的一族网络控制协议（NCPs）：PPP可以包含有给TCP/IP和备用网络协议提供单独接口的单独子层。
+
+### PPP Data
+
+PPP（还有SLIP）最初的目的是转发数据报。这些数据报不只是一种类型的数据报，可以是IP数据报，或是OSI的网络层数据报。
+
+#### Packets
+
+PPP RFCs 使用术语*包*来描述在帧中被传输的一堆数据。并不是所有PPP数据包都是数据报，因此和RFCs中保持一致。
+
+PPP 必须也转发含有和自己建立以及管理调制解调器连接协议相关信息的数据。通信设备通过PPP连接交换几种类型的信息和请求。通信计算机必须交换用于建立，管理以及关闭连接的LCP packets；支持PPP可选的验证协议的验证包；以及PPP与不同协议集交互的NCP packets。
+
+PPP 帧的数据格式图：
+
+![a4dd636674604251.svg](https://i.quantuminit.com/a4dd636674604251.svg)
+
+字段说明：
+
+- Protocol：提供用于识别封闭的包的协议类型的识别码的1或2字节的字段。可能的类型包含LCP包，NCP包，IP包或是OSI网络层协议包。ICANN维护各种协议类型的标准识别码列表。
+- Enclosed data (zero or more bytes)：和帧一起被传输的控制包或更上层的数据报。
+- Padding (optional and variable length)：在协议字段中协议设计需要的额外的字节。每个协议负责决定如何从封闭的数据报区分padding。
+
+### PPP Connections
+
+PPP连接的生命周期：
+
+1. 使用LCP协商过程来建立连接
+2. 如果步骤1中的协商过程指定用于验证的配置选项，通信计算机输入验证码。RFC提供密码验证协议（PAP）以及挑战握手验证协议（Challenge Handshake Authentication Protocol，CHAP）。也支持额外的验证协议。
+3. PPP使用NCP包来为每个支持的协议指定协议特定的配置信息。
+4. PPP传输从上层协议接收来的数据报。如果步骤1中的协商过程中包含有用于连接质量监控空的配置选项，那么监控协议将会传输监控信息。NCP不管具体的协议而可能传输信息。
+5. PPP通过LCP终止包的交换来关闭连接
