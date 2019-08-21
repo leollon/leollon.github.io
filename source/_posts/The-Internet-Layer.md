@@ -73,9 +73,7 @@ Classless InterDomain Routing（CIDR）提供了简单，灵活并且无二异�
 
 ## IP Header Fields
 
-每一个IP数据报以一个IP header开头。IP数据报的源计算机的TCP/IP软件构造该header，目的计算机使用这个包含在
-数据报中header处理该数据报。Header包含了大量的信息，其中包含了源计算机和目的计算机的IP 地址，数据报的长度，IP 版本号以
-及特殊的路由指令。
+每一个IP数据报以一个IP header开头。IP数据报的源计算机的TCP/IP软件构造该 IP header，目的计算机上软件使用这个包含在IP header中的信息处理该数据报。Header包含了大量的信息，其中包含了源计算机和目的计算机的IP 地址，数据报的长度，IP 版本号以及特殊的路由指令。
 
 **IP header的最小值是20 bytes。**
 
