@@ -100,6 +100,8 @@ ICANN有完整域名注册任务的授权但是委托特定的顶级域名的注
 
 在网络上实现DNS，至少需要一个主服务器负责维护域名。从本地文件中获取负责区域的所有信息的主名字服务器，从主名字服务器的**区域文件**获取信息并响应服务请求的备份名字服务器（又称第二名字服务器），响应来自本地网络上的客户端的域名解析请求查询的只缓存服务器。只缓存服务器向其他DNS服务器查询域名信息以及提供比如Web和FTP服务的计算机。当收到来自其他DNS服务器的信息是，将那些信息存储在缓存中以防万一再次请求这些信息。只缓存服务器被本地网络上的客户端计算用来解析名字。互联网上的其他DNS服务器不会知道这些只缓存服务器并且因此不会查询它们。
 
+最受欢迎的DNS实现是BIND，Berkeley Internet Name Domain。
+
 ### Domains and Zones
 
 在含有一组通用的DNS服务器的集合配置中的一组DNS主机称为**区域（zone）**。简单网络上，一个区域可能代表了一个完整的DNS域。更复杂的网络上，子域的DNS配置有时候委托到服务这个子域的另一个区域。区域委托让管理员具备更快速地知道管理一个子网络管理那个子网络的DNS配置。
@@ -127,4 +129,82 @@ ICANN有完整域名注册任务的授权但是委托特定的顶级域名的注
 - 在这个区域的DNS服务器（权威的以及非权威的）。
 - 在区域内的主机的别名（备用名字）之内的DNS-name-to-IP-address映射。
 
+一个区域文件示例：
+![https://i.quantuminit.com/8b03b3e9906345d6.svg](https://i.quantuminit.com/8b03b3e9906345d6.svg)
 
+SOA记录中包含有几个使用主DNS服务器上的原版区域文件更新备份DNS服务器的参数。一个serial number表示区域文件自己的版本号，其他参数：
+
+- Refresh time：备份DNS服务器查询主DNS服务器来更新区域文件的时间间隔。
+- Retry time：区域文件未成功更新，再次尝试更新之前需等待的时间。
+- Expiration time：备份DNS服务器无更新再获取一条记录的上限时间。
+- Minimum Time to Live (TTL)：导出的区域记录的默认TTL。
+
+### The Reverse Lookup Zone File
+
+DNS名字解析必需的另一种类型的区域文件是反向查询文件。当一个客户端提供一个IP地址并且请求相关的主机名时，将使用到这个文件。在IP地址中，最左边部分是普遍的，最右边部分是特殊的。然而在域名中确实相反的，左边部分是特殊的，右边部分，比如，.com或.edu都普遍的。创建一个反向查询区域文件，必须将网络地址顺序进行逆序，这样普遍的以及特殊的部分会遵循在域名中使用的模式。例如，192.59.66.0网络的区域会有是66.59.192.in-addr.arpa的名字。*in-addr*部分表示反向地址，*arpa*部分表示另一个顶级域名并且是来自发生互联网之前的原本的ARPAnet的预留部分。这个文件与普通的区域文件一样含有SOA以及为区域定义的名字服务器的NS记录，但是反向查询区域文件包含将地址映射到名字的PTR记录，而不是将域名映射到地址的A记录。只有主机地址部分是被包含在地址映射中——网络部分从文件名字中获取：
+
+; zone file for 23.21.181.in-addr.arpa
+@ IN SOA boris.cocacola.com. hostmaster.cocacola.com. (
+     201.9 ; serial number incremented with each
+           ; file update
+           ;
+     3600 ; refresh time (in seconds)
+     1800 ; retry time (in seconds)
+     4000000 ; expiration time (in weeks)
+     3600) ; minimum TTL
+IN NS horace.cocacola.com.
+IN NS boris.cocacola.com.
+;
+; IP address to host mappings
+;
+4 IN PTR chuck
+5 IN PTR amy
+
+起初计划用于IPv6反向查询区域文件是以*ip6.int*结尾，但是互联网当前正向*ip6.arpa*过渡。因此可能碰上两中形式之一。和IPv4一样，网络地址部分有文件名反映出来（逆序的）；主机ID是文件中的一个条目（也是逆序的）并且被映射到一个主机名。
+
+### DNS Security Extension （DNSSEC）
+
+拦截DNS查询的攻击人可以发送一个虚假的响应，将客户端重定向到一个能够提供发起攻击方式的秘密的DNS服务器。只要虚假的行应在真实响应到达之前，DNS客户端一点也不聪慧的。
+
+可以通过验证返回DNS数据的源头的方式来解决这个问题。DNS Security Extensions（DNSSEC）为验证DNS数据提供了这个系统。DNSSEC通过一组加密密钥和数字签名来实现。DNSSEC需要定义在RFC 2671中的Extension Mechanisms for DNS（EDNS）的支持。EDNS DO头部位标志一个DNSSEC查询。
+
+为了达到安全验证的目的，DNSSEC添加四个新的DNS资源记录类型：
+
+- DNSKEY：用于签名以及鉴定DNS资源记录集合的公钥。
+- DS：指向（并且验证）一个子区域的DNSKEY的资源记录。
+- RRSIG：和区域数据关联的数字签名。
+- NSEC：下一个权威数据的拥有人的名字。
+
+服务器拥有构成信任链的安全的DNS数据。解析方必须能够独立访问和用于顶层区域的一条DNSKEY记录关联的公钥。这个密钥是分开获取的。公钥鉴定存储在信任点上的数据，包括一条验证以及鉴定与在下一个查找过程步骤相关联的子区域的DS记录。解析方遍历信任链，通过低层级子区域，使用在父区域上的DS key验证子区域上的DNSKEY。最后一步，DNSKEY解密存储在RRSIG资源记录内的数据签名并且将其和由普通的DNS查询过程返回的签名进行比较。如果这个过程成功完成，则用于DNS查询的源得到了验证，并且数据被认为是真实的。
+
+保存在初始入口点的DNS数据包括用于任何子区域的DS记录。例如，.com区域的官方服务器包含了一条famousIT.com的DS记录。DS记录识别以及验证用于子区域的DNSKEY。
+
+![https://i.quantuminit.com/2f3f823b39164d9c.svg](https://i.quantuminit.com/2f3f823b39164d9c.svg)
+
+DNSSEC依赖于在DNSKEY以及DS资源记录之间的一连串交互作用。父区域可能含有用于多个子区域的DS记录，以及每个DS记录提共必要的信息来验证在子区域中相关的DNSKEY记录是正确的并且表示一个服务器在信任链内。
+
+另一个必要的要素是RRSIG记录包含用于区域数据的签名。为了给一个区域签名，这个区域的管理员生成一个或多个公共/私有的密钥对并且使用密钥为区域内的权威数据进行签名。对于每一个用于在一个区域中创建RRSIG记录的私钥，这个区域应该包含一个含有相关公钥的区域DNSKEY。
+
+RRSIG记录含有比如拥有人名字，一个分类值（a class value），一个TTL值，包含数据的区域的名字以及其他识别记录的数据的信息。
+
+万一名字错误或是当一个用于查找名字的实际匹配不可用时，则使用NSEC记录。
+
+### DNS工具
+
+如果使用资源的IP地址可以连接到资源，但是不能通过一个主机名或是FQDN连接这个资源，有可能的问题是名字解析问题。
+
+#### Checking Name Resolution with Ping
+
+简单且好用的`ping`是一个用于测试DNS配置的工具。
+
+通过IP地址：
+
+```shell
+ping 198.1.14.2  # 通过IP地址给这台计算机发送信号，如果命令成功，表示可以通过IP地址连接到远程计算机
+```
+
+通过DNS名字：
+
+```shell
+ping quantuminit.com
+```
