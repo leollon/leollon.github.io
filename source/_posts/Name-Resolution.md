@@ -285,3 +285,6 @@ NetBIOS名字是单个长度限制为15个字符的名字。NetBIOS不允许网�
 - 处于DDNS 网络中的计算向DHCP获取一个IP地址，再将这个IP地址发送给一个DNS服务器用于更新。
 - CNAME资源记录用于给一个A记录进行别名。
 - DNSSEC使用一条存储在父区域的DS资源记录来识别和鉴定存储在子区域的DNSKEY资源记录。为了有必要验证查询响应的真实性，保存在父区域的DS记录允许查询遍历信任链。DS资源记录指向（以及验证）子区域的DNSKEY。
+
+[名字解析](/Getting-Connected)
+[TCP/IP安全](/TCP-IP-Security)
