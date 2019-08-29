@@ -121,7 +121,7 @@ ICANN有完整域名注册任务的授权但是委托特定的顶级域名的注
 - A：一条A记录将一个DNS名字映射到一个IPv4地址。
 - AAAA：一条AAAA记录将一个DNS名字映射到一个IPv6地址。
 - PTR：一条PTR记录将一个IP地址映射到一个DNS名字。
-- CNAME：CNAME是canonical name的缩写。一条CNAME记录映射一个别名到由A一条A记录表示的实际的主机名。
+- CNAME：CNAME是canonical name的缩写。一条CNAME记录映射一个别名到由一条A记录表示的实际的主机名。
 
 因此，这个区域文件告诉DNS服务器一下信息：
 
@@ -143,6 +143,7 @@ SOA记录中包含有几个使用主DNS服务器上的原版区域文件更新�
 
 DNS名字解析必需的另一种类型的区域文件是反向查询文件。当一个客户端提供一个IP地址并且请求相关的主机名时，将使用到这个文件。在IP地址中，最左边部分是普遍的，最右边部分是特殊的。然而在域名中确实相反的，左边部分是特殊的，右边部分，比如，.com或.edu都普遍的。创建一个反向查询区域文件，必须将网络地址顺序进行逆序，这样普遍的以及特殊的部分会遵循在域名中使用的模式。例如，192.59.66.0网络的区域会有是66.59.192.in-addr.arpa的名字。*in-addr*部分表示反向地址，*arpa*部分表示另一个顶级域名并且是来自发生互联网之前的原本的ARPAnet的预留部分。这个文件与普通的区域文件一样含有SOA以及为区域定义的名字服务器的NS记录，但是反向查询区域文件包含将地址映射到名字的PTR记录，而不是将域名映射到地址的A记录。只有主机地址部分是被包含在地址映射中——网络部分从文件名字中获取：
 
+```text
 ; zone file for 23.21.181.in-addr.arpa
 @ IN SOA boris.cocacola.com. hostmaster.cocacola.com. (
      201.9 ; serial number incremented with each
@@ -159,6 +160,7 @@ IN NS boris.cocacola.com.
 ;
 4 IN PTR chuck
 5 IN PTR amy
+```
 
 起初计划用于IPv6反向查询区域文件是以*ip6.int*结尾，但是互联网当前正向*ip6.arpa*过渡。因此可能碰上两中形式之一。和IPv4一样，网络地址部分有文件名反映出来（逆序的）；主机ID是文件中的一个条目（也是逆序的）并且被映射到一个主机名。
 
@@ -166,7 +168,7 @@ IN NS boris.cocacola.com.
 
 拦截DNS查询的攻击人可以发送一个虚假的响应，将客户端重定向到一个能够提供发起攻击方式的秘密的DNS服务器。只要虚假的行应在真实响应到达之前，DNS客户端一点也不聪慧的。
 
-可以通过验证返回DNS数据的源头的方式来解决这个问题。DNS Security Extensions（DNSSEC）为验证DNS数据提供了这个系统。DNSSEC通过一组加密密钥和数字签名来实现。DNSSEC需要定义在RFC 2671中的Extension Mechanisms for DNS（EDNS）的支持。EDNS DO头部位标志一个DNSSEC查询。
+可以通过验证返回DNS数据的源头的方式来解决这个问题。DNS Security Extensions（DNSSEC）为验证DNS数据提供了这个系统。DNSSEC通过一组加密密钥和数字签名来实现。DNSSEC需要定义在RFC 2671中的Extension Mechanisms for DNS（EDNS）的支持。EDNS DO头部位标志一个DNSSEC查询。DNSSEC添加一个验证有效的过程来确保DNS查询的结果是真实可靠的。
 
 为了达到安全验证的目的，DNSSEC添加四个新的DNS资源记录类型：
 
@@ -181,7 +183,7 @@ IN NS boris.cocacola.com.
 
 ![https://i.quantuminit.com/2f3f823b39164d9c.svg](https://i.quantuminit.com/2f3f823b39164d9c.svg)
 
-DNSSEC依赖于在DNSKEY以及DS资源记录之间的一连串交互作用。父区域可能含有用于多个子区域的DS记录，以及每个DS记录提共必要的信息来验证在子区域中相关的DNSKEY记录是正确的并且表示一个服务器在信任链内。
+DNSSEC依赖于在DNSKEY以及DS资源记录之间的一连串交互。父区域可能含有用于多个子区域的DS记录，以及每个DS记录提共必要的信息来验证在子区域中相关的DNSKEY记录是正确的并且表示一个服务器在信任链内。
 
 另一个必要的要素是RRSIG记录包含用于区域数据的签名。为了给一个区域签名，这个区域的管理员生成一个或多个公共/私有的密钥对并且使用密钥为区域内的权威数据进行签名。对于每一个用于在一个区域中创建RRSIG记录的私钥，这个区域应该包含一个含有相关公钥的区域DNSKEY。
 
@@ -208,3 +210,78 @@ ping 198.1.14.2  # 通过IP地址给这台计算机发送信号，如果命令�
 ```shell
 ping quantuminit.com
 ```
+
+#### Checking Nmae Resolution with NSLookup
+
+NSLook工具用处：
+
+- 查询DNS服务器以及查看比如资源记录等信息
+- DNS问题排查
+
+运行模式：
+
+- Batch模式：在Batch模式中，运行NSLookup并提供输入参数。NSLookup使用输入的参数执行请求的功能，显示结果然后结束。
+- Interactive模式：在Interactive模式中，不提供输入参数而直接运行NSLookup，然后NSLookup提示输入参数。当输入输入参数时，NSLookup执行请求的操作，显示结果，再次提示输入参数。
+
+![https://i.quantuminit.com/6ad2ac608ebb448e.svg](https://i.quantuminit.com/6ad2ac608ebb448e.svg)
+
+nslookup的interactive模式中可用的命令：
+
+- host [server]：使用当前默认的服务器或使用提供的指定的服务器。
+- server domain/lserver domain：更改默认服务器到domain。**lserver**使用初始服务器查询关于domain的信息，而**server**使用当前的默认服务器。
+- set all：打印当前频繁用于**set**的选项值。包括当前使用的默认服务器和主机信息。
+
+使用`man nslookup`查看更多信息。要注意的是大部分商业DNS服务器以及跟服务器拒绝`ls`命令，因为它们可以生成巨大的流量并且可能引发安全漏洞。
+
+#### Domain Information Grouper (Dig)
+
+最基本的用法：
+
+```bash
+dig quantuminit.com
+```
+
+在指定DNS服务器进行查询：
+
+```bash
+dig @8.8.8.8 quantuminit.com
+```
+
+查询指定的资源记录类型：
+
+```bash
+dig blog.quantuminit.com NS # 显示与域名相关连的NS记录。
+```
+
+查找邮件服务器：
+
+```bash
+dig quantuminit.com MX
+```
+
+当指定IP地址时，`-x`选项执行反向查询。`-4`选项限制查询为IPv4。`-6`用于IPv6。
+
+## Dynamic DNS
+
+每次计算机启动时，IP地址通过动态主机配置协议（DHCP）进行配置。企业目录系统比如微软的Active Directory使用动态DNS来管理在目录结构内的DHCP客户系统。
+
+主机从一个DHCP服务器获取一个IP地址，并用这个IP地址更新DNS服务器。
+
+![https://i.quantuminit.com/110b21ae66a9498b.svg](https://i.quantuminit.com/110b21ae66a9498b.svg)
+
+## NetBIOS Name Resolution
+
+**NetBIOS**是一个应用编程接口（API）并且最初由IBM开发的名字解析系统成为了微软Windows网络演化起到了重要作用。旧版的Windows系统，NetBIOS名字是分配给Windows计算机的计算机名字。
+NetBIOS过去是为那些不使用TCP/IP的网络而开发的。NetBIOS不仅仅是在所有的Windows上有，流行的开源Samba文件服务以及其他独立工具也支持NetBIOS名字解析。
+
+因为NetBIOS通过广播运行，所以在小型网络上的一个用户不需要做任何事情来配置NetBIOS名字解析（除了设置网络以及分配一个计算机名字）。大型网络上，可以通过使用称为Windows互联网名字服务（Windows Internet Name Service，WINS）服务器来解析NetBIOS名字成IP地址。也可以配置一个静态的**LMHosts**文件（和DNS下的hosts文件相似）用于名字解析查询。
+
+NetBIOS名字是单个长度限制为15个字符的名字。NetBIOS不允许网络上有相同的计算机名。技术上来说，一个NetBIOS名字包含16个字符。然后第十六个字符被底层应用所有使用并且一般来说不能由用户直接配置。
+
+## 小小的总结
+
+- 域名是一个用于识别一个网络的名字。主机名是分配给特别的主机并且映射到一个IP地址的单独的名字。
+- DNS资源记录是包含在一个DNS区域文件中的条目。不同的资源记录用来识别不同的计算机或服务的类型。
+- 处于DDNS 网络中的计算向DHCP获取一个IP地址，再将这个IP地址发送给一个DNS服务器用于更新。
+- CNAME资源记录用于给一个A记录进行别名。
+- DNSSEC使用一条存储在父区域的DS资源记录来识别和鉴定存储在子区域的DNSKEY资源记录。为了有必要验证查询响应的真实性，保存在父区域的DS记录允许查询遍历信任链。DS资源记录指向（以及验证）子区域的DNSKEY。
