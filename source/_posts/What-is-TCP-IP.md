@@ -21,7 +21,7 @@ Transmission Control Protocol/Internet Protocol(TCP/IP) 是一个协议系统—
 
 网络协议是一系列帮助定义网络通信复杂过程的通用规则。协议指导发送来自计算机上的应用的数据到另一台计算机上的应用的过程。
 
-![10304e0abc58479a.png](https://i.quantuminit.com/10304e0abc58479a.png)
+![https://i.quantuminit.com/d6cfa868671642bd.svg](https://i.quantuminit.com/d6cfa868671642bd.svg)
 
 TCP/IP协议定义了网络通信过程并且，更重要的是定义了一个数据单元的查看方式并且应该包含什么数据，这样数据的接收的电脑能够正确地读取这些信息。
 TCP/IP以及其相关的协议构成了一个定义数据在TCP/IP网络上如何被处理，传输以及接收的方式的计算机系统。一个相关连的协议系统，被称为协议套装。
