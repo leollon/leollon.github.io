@@ -45,3 +45,15 @@ DHCP是一个用于自动为计算机分配TCP/IP配置参数的协议。一个D
 
 1. DHCPDISCOVER：DHCP客户端通过广播一个发往端口67（BOOTP以及DHCP服务器使用）的数据报来初始化这个过程。第一个数据报又称为DHCP发现消息，它是一个请求任何DHCP服务器接收用于配置信息的数据报。DHCP发现数据报中含有许多字段，但是最重要的一个是含有DHCP客户端物理地址的字段。
 2. DHCPOFFER：DHCP服务器为驻留在网络上的客户端计算机构造一个称为DHCP offer的响应数据报并且通过广播将数据报发到发起DHCP discover的计算机上。这个广播被发往UDP端口68并且含有DHCP客户端物理地址。同时包含在DHCP offer中的还有DHCP服务器的物理地址以及IP地址，分配给DHCP客户端的IP地址以及子网掩码。如果有不只一个能够给DHCP客户端提供IP地址的DHCP服务器，此时DHCP客户端有可能接收到几个DHCP offers。大多数情况下，DHCP客户端接收第一个到达的DHCP offer。
+3. DHCPREQUEST：客户端选择一个offer并且构造以及广播DHCP请求数据报。DHCP请求数据报包含有能发出offer的服务器的IP地址以及DHCP客户端的地址。DHCP请求执行两个基本任务。第一告诉DHCP服务器客户端请求给DHCP客户端分配一个IP地址（以及其他配置设置）。第二，通知所有其他有更好的offer的DHCP服务器它们的offers不会被接受。
+4. DHCPACK：当被选择的来自DHCP服务器的offer的服务器接受DHCP请求报文是，服务器构造最终的租用过程的数据报。这个数据报又称为**DHCP ack**（*acknowledgment的缩写)。DHCPack包含分配给DHCP客户端的一个IP地址以及子网掩码。可选地，DHCP客户端经常也被配置默认网关，几个DNS服务器和可能一或两个WINS服务器的IP地址。除了IP地址之外，DHCP客户端能够接收其他比如NetBIOS结点类型的信息，该信息可能改变BetBIOS名字解析的顺序。
+
+包含在DHCPack中的三个其他关键的字段，每一个都暗示时间段，一个说明租约长度的字段，两个其他时间字段，又称为T1和T2，当客户端尝试重新更新租约时，将会使用到。
+
+### Relay Agents
+
+如果DHCP客户端和DHCP服务器在同一网络段上，这个过程处理和之前描述的一样。如果DHCP客户端和DHCP服务器在由一个或更多的路由分割开来的不同的网络，这个过程会变得更复杂。路由器一般不转发广播到其他网络。为了使得DHCP工作，必须有一个辅助DHCP过程的中间人。这个中间人可以是同一网络上另外一个作为DHCP客户端的主机，但是经常是路由器本身。在任何情况，执行这个中间人功能的过程被称为**BOOTP relay agent**或是**DHCP relay agent**。
+
+一个relay agent被配置一个固定的IP地址并且知道DHCP服务器的IP地址。因为relay agent 已经配置了IP地址，它们总是能够发送并且接收给DHCP服务器的定向的数据报。因为relay agent与DHCP客户但处在同样的网络上，所以能够通过广播和DHCP客户端进行通信。
+
+![https://i.quantuminit.com/08620e0f601c4ed0.svg](https://i.quantuminit.com/08620e0f601c4ed0.svg)
