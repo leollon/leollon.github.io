@@ -57,3 +57,13 @@ DHCP是一个用于自动为计算机分配TCP/IP配置参数的协议。一个D
 一个relay agent被配置一个固定的IP地址并且知道DHCP服务器的IP地址。因为relay agent 已经配置了IP地址，它们总是能够发送并且接收给DHCP服务器的定向的数据报。因为relay agent与DHCP客户但处在同样的网络上，所以能够通过广播和DHCP客户端进行通信。
 
 ![https://i.quantuminit.com/08620e0f601c4ed0.svg](https://i.quantuminit.com/08620e0f601c4ed0.svg)
+
+### DHCP Time Fields
+
+DHCP客户端从DHCP服务器租用一个固定时间的IP地址。实际的租约时间长度一般在DHCP服务器上面定义。与DHCP ack消息发送的T1和T2时间的值在租约重新更新过程中用到。T1值暗示客户端什么时候开始重新更新租约过程。T1一般设置为实际租约时间的二分之一。更新租约的时候，DHCP request 和 ack两个数据报不是广播，而是作为定向的数据报发送。因为两台计算机此时都含有有效的IP地址，所以这是有可能的。
+
+当DHCP客户端在实际租约时间二分之一时发起第一个更新租约请求，如果DHCP服务器不可用，客户端等待并在租约时间的4/3时进行尝试更新租约。如果请求也还是失败，DHCP客户端在7/8的租约时间时第三次进行尝试更新。如果DHCP客户端不能在总的租约时间的87.5%更新它的租约，T2时间生效。T2时间允许DHCP客户端向任何DHCP服务器发起广播请求。如果DHCP客户端不能更新租约或在租约过期时从另外一个DHCP服务器获取到新的租约，客户端必须停止使用该IP地址和停止使用TCP/IP用于普通的网络操作。
+
+### DHCP Server Configuration
+
+除非你是在中型或大型网络上的一个系统管理员，否则你不可能有机会配置一台计算来充当一个DHCP服务器。Windows提同一个图形界面的工具来配置DHCP服务器。Linux系统通过dhcpd（DHCP守护程序）提供DHCP服务。根据不同的厂商，安装dhcpd的命令也不一样。DHCP配置信息存储在/etc/dhcpd.conf配置文件中。
