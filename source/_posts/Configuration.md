@@ -67,3 +67,27 @@ DHCP客户端从DHCP服务器租用一个固定时间的IP地址。实际的租�
 ### DHCP Server Configuration
 
 除非你是在中型或大型网络上的一个系统管理员，否则你不可能有机会配置一台计算来充当一个DHCP服务器。Windows提同一个图形界面的工具来配置DHCP服务器。Linux系统通过dhcpd（DHCP守护程序）提供DHCP服务。根据不同的厂商，安装dhcpd的命令也不一样。DHCP配置信息存储在/etc/dhcpd.conf配置文件中。
+
+/etc/dhcpd.conf文件包含DHCP守护程序将分配给客户端的IP地址配置信息和可选的比如广播地址，域名，DNS服务器地址以及路由器地址等设置。
+
+/etc/dhcpd.conf配置文件实例：
+
+default-lease-time 600;
+max-lease-time 7200;
+option domain-name "macmillan.com";
+option subnet-mask 255.255.255.0;
+option broadcast-address 185.142.13.255;
+subnet 185.142.13.0 netmask 255.255.255.0 {
+range 185.142.13.10 185.142.13.50;
+range 185.142.13.100 185.142.13.200;
+}
+
+正如前面文章提到的一样，DHCP服务经常通过比如路由器/防火墙系统等网络设备来提供。一个路由器设备提供一个网页DHCP配置接口。
+
+![https://i.quantuminit.com/bc30a85b56d74bf5.svg](https://i.quantuminit.com/bc30a85b56d74bf5.svg)
+
+一些路由器提供一个成为IP预留的特性，用来将一个IP地址和物理地址（MAC）关联起来。通过这一特性能够确保设备总是收到同样的IP地址。
+
+## Network Address Translation
+
+只要路由器本身有一个即用型的地址，它就能够充当网络上客户端代理——接收来自客户端的请求并且转换来自和去到互联网地址空间的请求。如今许多路由器/DHCP也执行一个称为网络地址转换（NAT）的服务。
