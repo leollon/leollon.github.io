@@ -52,9 +52,9 @@ DHCP是一个用于自动为计算机分配TCP/IP配置参数的协议。一个D
 
 ### Relay Agents
 
-如果DHCP客户端和DHCP服务器在同一网络段上，这个过程处理和之前描述的一样。如果DHCP客户端和DHCP服务器在由一个或更多的路由分割开来的不同的网络，这个过程会变得更复杂。路由器一般不转发广播到其他网络。为了使得DHCP工作，必须有一个辅助DHCP过程的中间人。这个中间人可以是同一网络上另外一个作为DHCP客户端的主机，但是经常是路由器本身。在任何情况，执行这个中间人功能的过程被称为**BOOTP relay agent**或是**DHCP relay agent**。
+如果DHCP客户端和DHCP服务器在同一网络段上，这个过程处理和之前描述的一样。如果DHCP客户端和DHCP服务器在由一个或更多的路由分割开来的不同的网络中，这个过程会变得更复杂。路由器一般不转发广播到其他网络。为了使DHCP工作，必须有一个辅助DHCP过程的中间人。这个中间人可以是同一网络上另外一个作为DHCP客户端的主机，但是经常是路由器本身。在任何情况，执行这个中间人功能的过程被称为**BOOTP relay agent**或是**DHCP relay agent**。
 
-一个relay agent被配置一个固定的IP地址并且知道DHCP服务器的IP地址。因为relay agent 已经配置了IP地址，它们总是能够发送并且接收给DHCP服务器的定向的数据报。因为relay agent与DHCP客户但处在同样的网络上，所以能够通过广播和DHCP客户端进行通信。
+一个relay agent被配置一个固定的IP地址并且知道DHCP服务器的IP地址。因为relay agent 已经配置了IP地址，它们总是能够发送并且接收给DHCP服务器的定向的数据报。因为relay agent与DHCP客户端处在同样的网络上，所以能够通过广播和DHCP客户端进行通信。
 
 ![https://i.quantuminit.com/08620e0f601c4ed0.svg](https://i.quantuminit.com/08620e0f601c4ed0.svg)
 
@@ -138,4 +138,35 @@ DNS服务发现（DNS-SD）为计算机以及设备提供一种通过DNS公布�
 
 DNS服务发现设计用于与multicast DNS一同工作来提供完整，零配置的DNS环境，但是DNS-SD也能够与具有最小预备的配置的传统的DNS服务一同工作。
 
-微软定义了另一种称之为链路本地多址通信名字解析（LLMNR）。微软的简单服务发现协议（SSDP）提供服务发现。SSDP基于HTTP而不是传统的DNS。
+微软定义了另一种称之为链路本地多址通信名字解析（LLMNR）。微软的简单服务发现协议（SSDP）提供服务发现。SSDP基于HTTP而不是传统的DNS，这与更加强调基于URL的服务的发展趋势相匹配，但是与传统的DNS基础设施之间存在一些不连续性。
+
+提供类似与DNS-SD的通用即插即玩（Universal Plug and Play，UPnp）协议系统依赖于SSDP。
+
+另一个称为Service Location Protocol（SLP）的服务发现选项在HP打印机和许多其他设备中有使用到。
+
+## Configuring TCP/IP
+
+在/etc/network/interfaces文件中，eth0接口（第一块以太网网卡）的静态地址配置的如下：
+
+```text
+iface eth0 inet static
+address 203.121.14.13
+netmask 255.255.255.0
+gateway 203.121.14.1
+```
+
+/etc/network/interfaces中一个网络接口被配置成DHCP的条目如下：
+
+```text
+auto eth0
+iface eth0 inet dhcp
+```
+
+/etc/network/interfaces文件可以含有许多其定义配置的设置。不过得需要查看Linux文档。
+
+Ubuntu无线网络问题排查[向导](https://help.ubuntu.com/community/WifiDocs/WirelessTroubleShootingGuide)以及[无线维基](http://wireless.wiki.kernel.org/)是了解Linux中关于无线的大概信息的好去处。
+
+## 小小的总结
+
+- DHCP客户端与DHCP服务器刚开始时通过广播以及接收广播来与彼此进行通信。
+- 一个DHCP客户端从另外一个网络上的DHCP服务器租用一个IP地址需要一个DHCP中继代理，中继代理费负责发送和接收给DHCP服务器的定向的数据报，中继代理与DHCP客户端处在相同的网络上，可以通过广播与DHCP客户端进行通信。
