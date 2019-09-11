@@ -170,3 +170,6 @@ Ubuntu无线网络问题排查[向导](https://help.ubuntu.com/community/WifiDoc
 
 - DHCP客户端与DHCP服务器刚开始时通过广播以及接收广播来与彼此进行通信。
 - 一个DHCP客户端从另外一个网络上的DHCP服务器租用一个IP地址需要一个DHCP中继代理，中继代理费负责发送和接收给DHCP服务器的定向的数据报，中继代理与DHCP客户端处在相同的网络上，可以通过广播与DHCP客户端进行通信。
+
+[上一篇](/TCP-IP-Security)
+[下一篇](/IPv6-Next-Generation)
