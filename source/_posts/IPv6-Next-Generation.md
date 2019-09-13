@@ -77,3 +77,11 @@ Routing头部被用于指定一个或多个在去往目的地路上数据报路�
 路由头部格式图：
 
 ![https://i.quantuminit.com/d35c7ad5ad29414e.svg](https://i.quantuminit.com/d35c7ad5ad29414e.svg)
+
+数据字段说明：
+
+- Next Header： 标识跟着这个头部的下一个头部的头部类型。
+- Header Length（8-bit）：按字节指定头部的长度（不包含下一个头部字段）。
+- Routing Type（8-bit）：标识路由头部类型。不同的路由头部类型被设计用于特定的情况。
+- Segment Left：在目的地之前表明明确定义的路由段的数量。
+- Type-Specific Data：给路由类型字段中给定的特定的路由类型标识数据字段。
