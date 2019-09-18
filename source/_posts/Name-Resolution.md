@@ -211,7 +211,7 @@ ping 198.1.14.2  # 通过IP地址给这台计算机发送信号，如果命令�
 ping quantuminit.com
 ```
 
-#### Checking Nmae Resolution with NSLookup
+#### Checking Name Resolution with NSLookup
 
 NSLook工具用处：
 
