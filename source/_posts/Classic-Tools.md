@@ -146,3 +146,56 @@ ifconfig eth0 down
 7. 当目的计算机接受ICMP*Echo*消息时，它发送会一个*ICMP Echo Reply*消息。
 
 除了定位数据报通过的每个路由器或网关，`traceroute`工具还记录到达买个路由器所用的round-trip时间（RTT）。根据实现方式的不同，`traceroute可能实际上发送多于一个*Echo*消息到路由器，目的是为了能够更好地判断round-trip时间。
+
+不应该使用通过`traceroute`获得的round-trip时间值来明确地评判网络的性能。许多路由器会简单地给ICMP流量更低的优先权并消耗大量的处理时间来转发更多重要的数据报。
+
+`traceroute`命令使用例子，命令后面跟IP地址，DNS名字或一个URL：
+
+```bash
+traceroute 193.138.240.91  # 跟IP地址
+traceroute quantuminit.com
+```
+
+旧版本的Window系统使用`tracert`命令作为等同于`traceroute`的命令工具。在Powershell系统上，`TraceRoute`是一个`Test-NetConnection`命令的选项：
+
+```cmd
+test-NetConnection www.example.com -TraceRoute
+```
+
+### Route
+
+大多数路由器使用特殊的路由协议来交换路由信息并且动态地有周期地更新它们的路由表。在路由器和计算机上可以手动多次地添加路由条目到路由表中。
+
+`route`命令在TCP/IP网络中有许多用得到的地方。可以使用`route`来显示路由表中来自一台主机的数据包不能够被高效地路由的情况。如果`traceroute`命令显示出一个反常的或不高效的路径，可能需要`route`来确定为什么正在使用的那条路径并且可能得配置一条更高效的路由路径。
+
+`route`命令也可以用于手动添加，删除并更改路由条中路由条目。Windows系统上route命令使用例子：
+
+- `route print`：显示路由表中的当前的路由条目。
+
+![https://i.quantuminit.com/7e3f5ca7c9b64dd6.png](https://i.quantuminit.com/7e3f5ca7c9b64dd6.png)
+
+- `route add`添加一条新的路由条目到路由表中。例如，为了指定一个路由到目的网络202.34.17.0是5跳的距离并且首先传进一个带有在本地网络192.59.66.5上的一个IP地址的路由器并且子网掩码是255.255.255.224，输入如下命令：
+
+```cmd
+route add 207.34.17.0 mask 255.255.255.224 192.59.66.5 metric 5
+```
+
+手动添加的路由条目，在计算机或路由器重启之后会丢失。经常将一系列的`route add`命令放到一个开机启动脚本中，这样每次启动的时候，都能够使用这些路由。
+
+- `route change`：更改路由表中的条目。下面的例子是更改数据路由到一个有更多更直接的three-hop路径到目的地的不同的路由器：
+
+```cmd
+route change 207.34.17.0 mask 255.255.255.224 192.59.66.7 metric 3
+```
+
+- `route delete`：从路由表中删除一个条目。
+
+```cmd
+route delete 207.34.17.0
+```
+
+### Netstat
+
+`netstat`工具显示和IP，TCP，UDP以及ICMP协议相关的统计数据。统计数据显示比如发送的数据报，接收的数据报以及各种各样可能已经发生的错误。
+
+计算机有时候会接收到的引发错误，丢弃或是失败的数据报。产生丢弃是因为数据报传输到了错误的位置。如果是一个路由器，当在路由的数据报中的TTL值到达0时，也会丢弃数据报。重组失败发生是在所有的分片数据基于接收的数据报中的TTL值一段时间内不能到达。
