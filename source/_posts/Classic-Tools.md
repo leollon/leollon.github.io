@@ -199,3 +199,48 @@ route delete 207.34.17.0
 `netstat`工具显示和IP，TCP，UDP以及ICMP协议相关的统计数据。统计数据显示比如发送的数据报，接收的数据报以及各种各样可能已经发生的错误。
 
 计算机有时候会接收到的引发错误，丢弃或是失败的数据报。产生丢弃是因为数据报传输到了错误的位置。如果是一个路由器，当在路由的数据报中的TTL值到达0时，也会丢弃数据报。重组失败发生是在所有的分片数据基于接收的数据报中的TTL值一段时间内不能到达。
+
+`netstat`命令选项描述：
+
+- `netstat -s`：用于分协议显示每个协议的统计数据。
+- `netstat -e`：用于显示关于以太网的统计数据。列出来的项目包括总共的字节，错误，丢弃数据，定向数据报的数量以及广播数量。这些统计数据都是发送和接收的数据报。
+- `netstat -r`：用于显示与`route print`命令相似的路由表信息。除了活跃的路由之外，还显示当前活跃的连接。
+- `netstat -a`：用于显示所有活跃连接，包括建立的连接和那些正在监听的连接请求。
+- `netstat -n`：显示所有的活跃的连接
+- `netstat -p TCP`：用于显示建立的TCP连接
+- `netstat -p UDP`：用于显示建立的UDP连接
+
+![https://i.quantuminit.com/0b1132c475d849a9.svg](https://i.quantuminit.com/0b1132c475d849a9.svg)
+
+Windows PowerShell environments 使用等同于`netstat`的`Get-NetTCPConnection`命令。
+
+## Telnet
+
+**telnet**是一系列提供terminal-like访问一台远程计算机的组件。他曾经是最常见的用于达到使用命令行访问一台远程计算机的方式。然而最近几年，更加安全的SSH协议成为终端访问的标准。
+
+Telnet会话需要一个充当远程终端的Telnet客户端和一个接收连接请求并且允许连接的Telnet服务器。
+
+![https://i.quantuminit.com/ac16e131fdcb42c5.svg](https://i.quantuminit.com/ac16e131fdcb42c5.svg)
+
+Telnet也是一个协议——一个定义在Telnet服务器和客户端之间交互的规则系统。
+
+在Unix系统上，`telnet`命令像下面一样在命令提示符后面输入：
+
+```bash
+$ telnet hostname  # hostname是想要连接的计算机的名字。hostanme可以换成IP地址。启动telnet应用程序。
+```
+
+telnet也提供一些可以在Telnet会话中使用的特殊命令：
+
+- close：用于关闭连接
+- display： 用于显示连接设置，比如，终端模拟器的端口
+- envriton：用于设置环境变量。由操作系统使用的环境变量来提供机器指定或用户指定的信息。
+- logout：用于登出远程用户和关闭连接
+- mode：用于在ACSII或二进制文件传输模式中进行切换。ASCII模式设计用于文本文件的高效传输。二进制模式用于其他的文件类型，比如可执行文件和图形图像。
+- open：用于连接一台远程计算机
+- quit：用于推出Telnet
+- send：用于发送特殊的Telnet协议序列给远程计算机，比如一个终止序列，一个间断序列或一个文件结束（end-of-file）序列
+- set：用于设置连接参数
+- unset：用于复原连接参数
+- ?：用于打印帮助信息
+
