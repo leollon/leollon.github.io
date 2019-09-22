@@ -244,3 +244,68 @@ telnet也提供一些可以在Telnet会话中使用的特殊命令：
 - unset：用于复原连接参数
 - ?：用于打印帮助信息
 
+## Berkeley Remote Utilities
+
+Berkeley Software Distribution Unix实现，称作BSD Unix，是Unix发展过程中的主要步骤。BSD Unix的理念中的一个是设计用于提供远程访问的一小部分命令行工具。这些工具又称作Berkeley r*工具，因为每个工具的名字的开头都是表示remote的r。
+
+一些Berkeley r*工具：
+
+- Rlogin：允许用户远程登录
+- Rcp：提供远程文件传输
+- Rsh：通过`rshd`守护程序执行一个远程命令
+- Rexec：通过`rexecd`守护程序执行一个远程命令
+- Ruptime：显示运行时的系统信息以及连接的用户数量
+- Rwho：显示当前连接的用户的信息
+
+r\*工具使用一个称为**trusted access**的概念。Trusted access允许一台计算机信任另外一台计算机的验证。如下图所示，如果计算机A将计算机B指定为一台信任的主机，那么登录到计算机B的用户可以使用r\*工具在不提供密码的情况下访问计算机A。计算机A也可以指定特定的用户为信任的用户。被信任的主机和用户被标识在用户尝试访问的计算机上的/etc/hosts.equiv文件中。每个用户主目录中的rhosts文件也能够被用于授予访问到该用户帐号的权限。
+
+![https://i.quantuminit.com/41aa727931764c37.svg](https://i.quantuminit.com/41aa727931764c37.svg)
+
+hosts.equiv和rhosts文件的脆弱性是r*工具不再被认为是安全的原因之一。
+
+## Secure Shell
+
+当今网络上，远程shell会话常常通过一套协议和在集中在**Secure Shell(SSH)**集合下的工具来管理。SSH本质上等同于只是携带了公钥加密的Berkeley r*工具的实现。SSH集合中的主要部分：
+
+- ssh：一个替代`rlogin`,`rsh`和`telnet`的远程shell程序
+- scp：一个替代`Rcp`的文件传输工具
+- sftp：一个替代FTP的文件传输工具
+
+最受欢迎的SSH实现是自由的OpenSSH项目，该项目在Unix，Linux，Windows以及Mac OS上都可用。OpenSSH含有一些用于管理密钥签名和加密的额外工具。使用Openssh并在提示符后面提供密码登录到一个远程系统之后，就可以像在本地命令shell一样操作。
+
+除了提供安全的远程shell连接，SSH也支持端口转发的形式，目的是其他不安全的应用程序能够通过SSH的加密连接安全地运行。
+大部分的现代的操作系统都带SSH客户端程序，但是不能连接一个远程计算机除非SSH服务运行在远程系统上。
+
+## Network Management
+
+管理大量计算机的的IP专家需要效率更好的管理工具作为第二种选择。网络管理工具让用户配置，监控并且管理远程系统和来自单一接口的设备。这些工具不仅是等待用户查找出问题。运行在远程系统上的代理用户程序能够自动地发挥状态信息，以及如果硬盘空间，资源使用或网络性能超过与预先设置的阈值时，系统甚至会通过邮件或文本消息来警告用户。
+
+两个经常被许多网络管理工具使用的协议——简单网络管理协议（SNMP）和远程监控（RMON）协议。自从像SNMP这样子的工具发展以来，得到许多网络硬件和软件公司支持的DMTF已经推出了比如WBEM以及CIM等标准，这些标准给开发者和硬件厂商开发出与网络管理工具通信的驱动程序提供了更通用的方案。
+
+### Simple Network Management Protocol
+
+SNMP是一个设计用于管理并且监控网络上的远程设备。SNMP支持一个让一个网络管理员管理从单个工作站到远程管理并监控计算机，路由器以及其他设备的系统。
+
+SNMP架构的主要部分：
+
+- Network monitor：一个称为管理员或网络管理的控制台的管理控制台提供一个用于管理网络上的设备的中心位置。网络网络监视器尝试是一个安装了必要的SNMP管理软件的普通计算机。
+- Nodes：网络上的设备
+- Community：在常见的管理网络中的一组结点。
+
+![https://i.quantuminit.com/04e38dabad224e5b.svg](https://i.quantuminit.com/04e38dabad224e5b.svg)
+
+协议给通信提供方案，但是实际的交互发生在运行在通信设备的上的应用程序。在SNMP例子中，一个称为代理的程序运行在远程结点上并且与运行在网络监视器上的管理软件进行通信。
+
+![https://i.quantuminit.com/94cf26bf255f4925.svg](https://i.quantuminit.com/94cf26bf255f4925.svg)
+
+监视器和代理使用SNMP协议来通信。SNMP使用数据报（UDP）协议端口161和162。通过community name来提供安全，社区的名字又称为**community string**。（你得知道连接的community string）。在某些情况下，也可以配置代理只接收来自特定IP地址的数据。最新办的SNMP版本，SNMP v3，为系统提供了验证，隐私以及更好的完整的安全。
+
+SNMP定义大量的管理参数。网络监视器使用这个管理信息基础（MIB）来请求来自代理的信息并且更改配置设置。
+
+### The SNMP Address Space
+
+SNMP进程都是在监视器和代理软件上运行的，它们能够交换关于在MIB中的特定的可寻址位置的信息。MIB允许监控器和代理准确并且无二异性的交换信息。监控器和代理需要相同的MIB结构，因为他们必须能够独一无二地识别一个特定单元的信息。
+
+![https://i.quantuminit.com/e4dc8016a4bd4bce.svg](https://i.quantuminit.com/e4dc8016a4bd4bce.svg)
+
+MIB是一个含有每小块信息的一个唯一地址的层次地址空间。注意MIB地址不像网络地址一样。它们表示一个位置或一个实际的设备。
