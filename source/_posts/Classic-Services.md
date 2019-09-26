@@ -59,3 +59,67 @@ FTP使用TCP协议并且因此通过一个在客户端计算机和服务器计�
 - `bye`或`quit`：关闭当前的FTP会话并且终止FTP客户端运行。
 
 如果想要使用比FTP更安全的文件传输工具，可以使用含有`scp`和`sftp`工具的SSH工具包。
+
+## Trivial File Transfer Protocol
+
+TFTP（Trivial File Transer Protocol）用于在TFTP客户端与TFTP服务器之间传输文件的协议。这个协议使用用户数据报（UDP）作为传输层（TCP/IP模型中从上往下的第二层），不像FTP，不需要用户登录来传输文件。TFTP被设计得很小，因此它和UDP都能够在PROM（programmable read-only memory，可编程只读内存）芯片上实现。TFTP只能读写文件，不能列出目录中的内容，创建或删除目录或像FTP一样允许用户登录。TFTP最开始是与RARP和BOOTP协议联合使用来启动无盘工作站以及在某种情况下，上传新系统代码或给路由器或其他网络设备打补丁。它使用称为netascii的ASCII格式或称为octet的二进制格式两者之一来传输文件。
+
+使用tftp传输完文件之后，会话将关闭并终止。tftp命令使用语法格式：
+
+```bash
+TFTP [-i] host [get | put] <source filename> [<destination filenae>]
+```
+
+阅读[RFC 1350](https://tools.ietf.org/html/rfc1350)，获取学习TFTP协议细节。
+
+## File and Print Service
+
+如`ftp`和`tftp`工具都是运行在TCP/IP协议栈的应用层的独立应用程序。介绍两种提供完整的网络文件访问的协议：
+
+- Network File System(NFS)：在UNIX和Linux系统上使用的协议
+- Common Internet File System/Server Message Block(CIFS/SMB)：WIndows客户端用于提供远程访问文件的协议
+
+### Network File System
+
+NFS最初由Sun开发，现在在UNIX，Linux和其他系统上都得到支持。NFS允许用户访问（读写，创建以及删除）位于远程计算机上的目录以及文件，就好像这个目录和文件在本地计算机上一样。NFS在本地文件系统和远程文件系统之间都有实现，所以不需要应用程序的任何改变。程序能够通过NFS而不需要任何重新编译或其他改变就能够访问本地文件和远程文件以及目录，就好像它们只存在在本地文件系统上一样。
+
+NFS被设计成独立于操作系统，传输层以及物理网络结构而存在。在客户端计算机和服务器计算机之间使用远程过程调用（Remote Procedure Calls，RPCs）来实现这一独立性。RPC是一个使运行在一台计算机上的一个程序调用运行在另一台计算机上的程序的内部代码段的过程。在NFS例子中，客户端操作系统向服务器上的操作系统发起一个远程过程调用。
+
+在远程文件和目录在NFS系统可以使用之前，得先经过挂载。在成功挂载之后，远程文件和目录存在并可以像在本地文件系统上一样操作。
+
+### Server Message Block and Common Internet File System
+
+服务器消息块（SMB）是支持Windows用户界面的具有网络功能的工具的一个协议，比如，Explorer，网络邻居以及映射网络驱动。SMB是设计运行于各种不同协议系统之上，包括IPX/SPX，NetBEUI，以及TCP/IP。
+
+每个SMB的会话以一个初始信息交换而开始，在信息中协商SMB对话规范以及验证一个客户端并登录到服务器上。验证过程的细节根据操作系统以及配置有所变化，但就SMB关注的而言，登录信息被封装在*sesssetupX*SMB中。在SMB协议之下的的协议传输简单称为一个SMB。）
+
+如果登录成功，客户端发送一个指定网络共享名字的SMB给服务器，这个网络共享也是客户端想要访问的。如果共享访问成功，客户端能够打开，关闭，读取，或写入网络资源，并且服务器发送必要的数据来完成客户端的请求。
+
+另一个等同于SMB的版本是公用文件系统（CIFS）。开发者以及其他支持服务器与Window客户端通过SMB交流的操作系统都知晓SMB和CIFS协议的细节。一个称为Samba的开源服务器为UNIX/Linux系统提供SMB文件服务。
+
+当在Windows中配置文件共享时，本质上是配置这台计算机，使其充当一个CIFS服务器。
+
+## Lightweight Directory Access Protocol
+
+在大型网络上，以统一高效地管理资源信息的任务的困难日益增加。当初开发轻量目录访问协议（LDAP）是作为基于TCP/IPX.500数据模型的继承人。LDAP是一个**目录服务**。一个LDAP服务器维护一个关于按逻辑且类似树状结构组织管理的网络资源的信息目录。LDAP运行TCP/IP应用层 并且监听到达TCP端口389的请求。
+
+也许最著名的基于LDAP的系统就是微软的活跃目录（Active Directory）。在开源世界中，OpenLDAP更受到倾睐。
+
+一个LDAP目录的结构定义在一种模式中。这个模式清楚的说明了定义存在目录中的数据的属性集合。例如一个雇员记录的目录中可能包括雇员的姓名，地址以及用户ID等的属性。
+
+一个LDAP目录被有层次地进行组织管理，就像一个文件目录结构一样。每个条目都有一个定义它在树中位置的distinguished name（DN）。这个DN由一个唯一定义容器中的条目的relative distinguished name（RDN），加上一系列定义条目所在的容器的层次的部件构成。如下图。
+
+dn: cn=Ellen Johnson, ou=employees, dc=pearson,dc=com
+
+![https://i.quantuminit.com/85483ac5df90454a.svg](https://i.quantuminit.com/85483ac5df90454a.svg)
+
+一个DN可能看起来像是这样子的：
+
+dn: cn=Ellen Johnson, ou=employees,dc=pearson,dc=com
+
+注意到与名字值关联的两个字母的属性类型（在等号左边的）。LDAP预先定义一些用于在建立DN中定义的标准属性类型，包括如下：
+
+- Domain component（dc）：在定义目录层次的嵌套容器链中的一个条目。在之前的例子中，*dc*条目提到一个DNS域名（pearson.com)。
+- Organization unit（ou）：为了管理方便对条目进行分组的一个容器。一个ou可能定应一些逻辑组，比如一个部门，然而一个*dc*更可能反映网络自身的结构。
+- Canonical name（cn）：在容器中唯一的对象的一个可读性友好的名字。
+
