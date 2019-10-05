@@ -111,3 +111,104 @@ def main():
 if __name__ == "__main__":
     main()
 ```
+
+## 使用asyncio和aiohttp下载
+
+```python
+"""Download flags of top 20 countries by population
+Sequential version
+Sample run::
+    $ python3 flags.py
+    BD BR CD CN DE EG ET FR ID IN IR JP MX NG PH PK RU TR US VN
+    20 flags downloaded in 5.49s
+"""
+# BEGIN FLAGS_PY
+import os
+import time
+import sys
+
+import requests  # <1>
+
+POP20_CC = ('CN IN US ID BR PK NG BD RU JP '
+            'MX PH VN ET EG DE IR TR CD FR').split()  # <2>
+
+BASE_URL = 'http://flupy.org/data/flags'  # <3>
+
+DEST_DIR = 'downloads/'  # <4>
+
+
+def save_flag(img, filename):  # <5>
+    path = os.path.join(DEST_DIR, filename)
+    with open(path, 'wb') as fp:
+        fp.write(img)
+
+
+def get_flag(cc):  # <6>
+    url = '{}/{cc}/{cc}.gif'.format(BASE_URL, cc=cc.lower())
+    resp = requests.get(url)
+    return resp.content
+
+
+def show(text):  # <7>
+    print(text, end=' ')
+    sys.stdout.flush()
+
+
+def download_many(cc_list):  # <8>
+    for cc in sorted(cc_list):  # <9>
+        image = get_flag(cc)
+        show(cc)
+        save_flag(image, cc.lower() + '.gif')
+
+    return len(cc_list)
+
+
+def main(func):  # <10>
+    t0 = time.time()
+    count = func(POP20_CC)
+    elapsed = time.time() - t0
+    msg = '\n{} flags downloaded in {:.2f}s'
+    print(msg.format(count, elapsed))
+
+
+if __name__ == '__main__':
+    main(func=download_many)
+# END FLAGS_PY
+```
+
+```python
+#!/usr/bin/env python3
+'''using asyncio
+'''
+import asyncio
+import aiohttp
+
+from flags import BASE_URL, save_flag, show, main
+
+async def get_flag(cc):
+    url = '{}/{cc}/{cc}.gif'.format(BASE_URL, cc=cc.lower())
+    async with aiohttp.request('GET', url) as resp:
+        # https://github.com/aio-libs/aiohttp/issues/4065
+        image = await resp.read()
+    return image
+
+
+async def download_one(cc):
+    image = await get_flag(cc)
+    show(cc)
+    save_flag(image, cc.lower() + '.gif')
+    return cc
+
+def download_many(cc_list):
+    loop = asyncio.get_event_loop()
+    to_do = [download_one(cc) for cc in sorted(cc_list)]
+    wait_coro = asyncio.wait(to_do)
+    res, _ = loop.run_until_complete(wait_coro)
+    loop.close()
+    return len(res)
+
+if __name__ == '__main__':
+    main(func=download_many)
+```
+
+
