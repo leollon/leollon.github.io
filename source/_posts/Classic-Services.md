@@ -123,3 +123,19 @@ dn: cn=Ellen Johnson, ou=employees,dc=pearson,dc=com
 - Organization unit（ou）：为了管理方便对条目进行分组的一个容器。一个ou可能定应一些逻辑组，比如一个部门，然而一个*dc*更可能反映网络自身的结构。
 - Canonical name（cn）：在容器中唯一的对象的一个可读性友好的名字。
 
+在之前的例子中，cn充当RDN。也有可能使用另一个别的名字，比如一个用户ID或员工工号做为在区别名字内的RDN元素：
+
+dn: userid=ejohnson,ou=Employees,dc=pearson,dc=com
+
+LDAP是一个二进制格式。字母数字表现形式，比如之前的例子实际上是能用于读取并且报告LDAP数据的LDAP Data Interchange Format（LDIF）。
+
+读取目录信息通过采取传递URLs到LDAP服务器的形式。前缀（或这说方案）`ladp`用于将URL和LDAP协议管理起来。如下：
+
+ldap://ldap.pearson.com/userid=ejohnson,ou=employees,dc=pearson,dc=com
+
+读取所有在ldap.pearson.com与下面关联的专有的名字的属性：
+userid=ejohnson, ou=employees,dc=pearson,dc=com
+
+指定一个特定的属性，用问号符号包起来：
+
+ldap://ldap.pearson.com/userid=ejohnson,ou=employees,dc=pearson,dc=com?phonenumber?
