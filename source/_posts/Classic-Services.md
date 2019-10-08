@@ -139,3 +139,23 @@ userid=ejohnson, ou=employees,dc=pearson,dc=com
 指定一个特定的属性，用问号符号包起来：
 
 ldap://ldap.pearson.com/userid=ejohnson,ou=employees,dc=pearson,dc=com?phonenumber?
+
+LDAP有时候回合其他验证工具结合起来为用户提供一种用于验证LDAP数据存储的安全方式。例如，Active Directory 集成Kerberos验证。Unix/Linux管理员可能将LDAP和Kerberos或即插即用验证模块（PAM）系统组合起来一起使用。
+
+除了支持由现成系统比如Active Directory提供标准用户和资源管理服务之外，LDAP也能够容易地适配自定义的应用程序。对于LDAP来说，任何需要从常见的数据存储中进行网络查询，以及从目录风格的数据结构而不是扁平文件或SQL风格的数据库中受益的场景，这些场景LDAP都能够提供参考。LDAP的协议（schema）框架能够容易的轻松地适配面向对象变成方法，并且许多编程环境提供应用编程接口（APIs）和用于支持LDAP查询的其他工具。
+
+## Remote Control
+
+大部分用户不再从shell提示窗口进行操作，而是喜欢通过鼠标在图形接口（GUI）点击来操作。许多远程接入协议以及工具让用户使用平常的键盘与鼠标的桌面操作来控制远程系统。通过GUI提供远程访问的任务有些复杂，但是原理都是一样的。运行在计算机A的应用层软件部分拦截键盘的输入并且通过协议栈重定向到计算机B。来自计算机B的屏幕输出通过网络发送回计算机A。这样结果是计算机A的键盘和鼠标充当计算机B的键盘鼠标，并且计算机A的屏幕显示计算机B桌面。简而言之，用户可以在计算机A通过远程控制可以看到并且操作计算机B。
+
+![https://i.quantuminit.com/6bfab9684bad43d0.svg](https://i.quantuminit.com/6bfab9684bad43d0.svg)
+
+一些GUI-based远程控制工具，Apple使用Apple Remote Desktop工具，Windows使用支持远程桌面协议（RDP）的远程桌面链接工具，Unix/Linux系统总是通过X Server图形环境的基本架构来简单地实现这个功能。然而，最近的工具，比如虚拟网络计算（VNC）以及NoMachine's NX已经增添了便利性并且给端用户提供了远程访问。
+
+## 小小的总结
+
+- 现代网络上LDAP的主要的角色是维护一个能够通过TCP/IP轻松访问到的网络和用户信息目录。
+- TFTP不能列出目录中的内容，创建或移除目录，或允许用户像FTP一样登录。
+- TFTP主要用于和RARP以及BOOTP协议联合起来用于启动无盘工作站，以及在某些情况下，用于上传新系统代码或补丁到路由器或其他网络设备中。
+- NFS通过在客户端以及服务器之间使用RPC来完成不依赖于操作系统的特性。
+- SMB以及CIFS是能够支持文件共享功能的协议。
