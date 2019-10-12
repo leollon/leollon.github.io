@@ -43,3 +43,50 @@ Tier 2 网络系统围绕Tier 1 网络边缘运行。Tier 2 网络可能租约�
 IP 地址或域名能够定位到一个主机。端口号能够指向运行在主机上的一个服务。但是客户端请求什么？服务器应该做什么？客户端请求输出是否存在输入？
 
 对于互联网用户来说最熟悉的请求格式是统一资源定位符（URL）。一个URL实际上是一个又称为统一资源标识符（URI）的更通用的格式的一个特殊例子。对于同茶馆你的例子来说，术语*标识符*相比*定位符*要更好，因为每个请求实际上不会指向一个位置。
+
+在world wide web上看到的URLs的基本格式如下：
+
+scheme://authority/path?query#fragment
+
+**scheme**用于标识一个系统如何解释请求。scheme字段经常与一个协议关联起来。
+
+URI Schemes
+
+|Scheme|Description|Reference|
+|:----:|:----:|:----:|
+|file|A file on the host system|RFC 1738|
+|ftp|File Transfer Protocol|RFC 1738|
+|gopher|The Gopher protocol|RFC 4266|
+|http|Hypertext Transfer Protocol|RFC 7230|
+|https|Hypertext Transfer Protocol Secure|RFC 2818|
+|im|Instant Messaging|RFC 3860|
+|ldap|Lightweight Directory Access Protocol|RFC 4516|
+|mailto|Electronic mail address|RFC 6068|
+|nfs|Network File System protocol|RFC 2224|
+|pop|Post Office Protocol v3|RFC 2384|
+|telnet|Telnet Interactive session|RFC 4248|
+
+以双斜杠开始的**authority**为访问URL中的指定的信息提供必要的信息。这部分内容包含：
+
+- Username (optional): 用于访问服务的用户帐号
+- Password (optional): 与用户名字一同指定
+- Host: 被请求的提供服务或资源的计算机。可以使用一个IP 地址或DNS名字指定主机。IPv6地址使用[]括号括起来。
+- Port: 接收地址的服务端口号
+
+如果服务使用的端口是固定分配给该服务的，则端口号可以省略。例如HTTP服务默认使用80端口。为了读取资源，如果需要用户提供凭证，用户名和密码是必需的。
+在通常的构成形式中，authority部分的URL看起来像下面这样子：
+
+//username:password@host:port_number
+
+一些例子：
+
+//www.google.com
+
+//blog.quantuminit.com
+
+//ftpuser:userp4s5word@google.com
+
+//quantuminit.com:8080
+
+即使访问需要提供凭证的资源，可能不用一开始就在URL中指定用户。在初始化请求之后，许多服务会提示用户输入用户ID以及密码。
+
