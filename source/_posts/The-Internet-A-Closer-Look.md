@@ -101,3 +101,5 @@ URI Schemes
 - URL是URI的一个特殊例子，因为实际上每个请求不是指向一个位置。
 
 [上一篇](/Classic-Services)
+[下一篇](/HTTP-HTML-WWW)
+
