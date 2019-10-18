@@ -73,25 +73,39 @@ HTML是通过HTTP传输的数据。当使用比如Notepad或Unix的vi等文本�
 
 （使用特殊的浏览器扩展的网页可能指定不同的文档类行。）
 
+跟在`!DOCTYPE`后面的是`<html>`标签。文档的剩余部分被包含在`<html>`和对应的`</html>`之间。在`<html>`标签的开头和结尾之间，这个文档被分割成两部分：
 
+- 头部（head，被包含在`<head>`和`</head>`标签之间）含有关于这个文档的信息。出现在头部中的信息不会出现在网页中，但是`<title>`标签指定显示在浏览器窗口上的标题。`<title>`标签是一个需要的元素。头部部分中的其他元素是可选的，例如`<style>`标签是关于文档样式的信息。
+- 主体（body，被包含在`<body>`和`</body>`标签之间）是实际出现在网页上的的文本以及包含了任何与那些文本相关的HTML标签。
 
+一份简单的HTML文档：
 
+```HTML
+<!DOCTYPE html>
+<html>
+<head>
+<title> Ooh This is Easy </title>
+</head>
+<body>
+Easy!
+</body>
+</html>
+```
 
+`<font>`标签在HTML 4中得到支持，但是在HTML 5中已经找不到。
 
+HTML <font> 标签属性：
 
+|属性|描述|
+|:----|:----|
+|size|相对字体大小设置。其值的范围从1到7:`<font size =7>`|
+|lang|说明文本的语言的语言代码|
+|face|字体设置：`<font face ="Arial">`|
+|color|文本颜色：`<font color ="RED">`|
 
+**Capitalization**
 
-
-
-
-
-
-
-
-
-
-
-
+经典的HTML标签，大写不是很重要。然而，比如可扩展标记语言（XML）以及XHTML更注重大小写。XML是大小写敏感的，并且XHTML要求小写元素以及属性名字。
 
 
 
