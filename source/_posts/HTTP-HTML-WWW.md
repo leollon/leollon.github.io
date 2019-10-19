@@ -107,5 +107,25 @@ HTML <font> 标签属性：
 
 经典的HTML标签，大写不是很重要。然而，比如可扩展标记语言（XML）以及XHTML更注重大小写。XML是大小写敏感的，并且XHTML要求小写元素以及属性名字。
 
+## Cascading Style Sheets
 
+层叠样式表（CSS）是将样式信息放入到一个单独文档的的一种方式。以此来代替将所有的样式放入到HTML文档中。这样做是为了让HTML更像是一个现代的文字处理机或从一个预先定义的字符或段落风格列表中选出的桌面发布工具。这个样式定义了一系列的参数，比如字体大小，颜色，间隔，填充，以及页边距。
+
+使用CSS将文档内容从表现层信息分隔开。这样子是使得HTML更容易读，并且影响文档中风格上的一致性。
+
+例如，一个标题风格可能像下方定义：
+
+```css
+h1 {
+    Color: black;
+    Font-family: Arial, sans-serif;
+    Margin: 0 4px 0 0;
+}
+```
+
+HTML文件可以像下方一样引用CSS文件：
+
+```html
+<link href="path/to/filename.css" rel="stylesheet">
+```
 
