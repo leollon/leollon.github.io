@@ -266,3 +266,9 @@ OAuth工作组发布的第一个授权类型，断言授权类型，客户端给
 
 ![https://i.quantuminit.com/96a515de7dbc4443.svg](https://i.quantuminit.com/96a515de7dbc4443.svg)
 
+## 小小的总结
+
+- Implicit grants 可以用户没有单独客户端的在浏览器中的应用程序
+- Client credentials grants 以及 assertion grants 能够用于没有明显的资源拥有者的服务端应用程序
+- 不到万不得已，都不应该使用 resource owner credentials grant（也就是密码）。
+
