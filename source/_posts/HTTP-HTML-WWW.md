@@ -224,4 +224,7 @@ JavaScript 以及 VBScript 是两种常见的客户端脚本技术。脚本文�
 
 AJAX（有时候被视为 Asynchronous JavaScript and XML 的缩写）是一个使用客户端脚本来无缝更新 web 内容而不需要刷新整个页面的技术集合。另一种常见的客户端技术为用户提供交互选项，调用动画或其他多媒体特效，或是响应关于客户端系统状态的信息。
 
+## Web Browsers
+
+HTML 以及 HTTP 标准的目的是确保任何标准兼容的浏览器能够和任何标准兼容的服务器进行通信。一个具有完整特性的浏览器也必须提供数字签名以及证书的支持来允许用户参与到安全事务中，并且通过 Secure Sockets Layer/Transport Layer Security (SSL/TLS) 与 Hypertext Transfer Protocol Secure (HTTPS) 进行通信。
 
