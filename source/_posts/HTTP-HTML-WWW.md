@@ -228,3 +228,14 @@ AJAX（有时候被视为 Asynchronous JavaScript and XML 的缩写）是一个�
 
 HTML 以及 HTTP 标准的目的是确保任何标准兼容的浏览器能够和任何标准兼容的服务器进行通信。一个具有完整特性的浏览器也必须提供数字签名以及证书的支持来允许用户参与到安全事务中，并且通过 Secure Sockets Layer/Transport Layer Security (SSL/TLS) 与 Hypertext Transfer Protocol Secure (HTTPS) 进行通信。
 
+### The Semantic Web
+
+深受 World Wide Web 创造者 Tim Berners-Lee 支持以及拥戴的 semantic web 被设计成使用真正的语义，就是说人类可理解的方式连接 web 数据的一种通用技术。换句话说，它的目标是用某种容易地访问的以及被计算机处理的方式编码 web 信息的含义。
+
+### Resource Description Framework
+
+Semantic Web 技术仍在实验性阶段。在 Web 社区中得到一定特定的关注的一个语义工具被称为 Resource Description Framework (RDF)。RDF 是一个用于表达关系的框架，这个关系能够暗示出含义。
+
+RDF 的基本单元是一个由称为 a triple 的三部分构成的语句。A triple 像一个有一个主题，一个谓语以及一个对象的基本句子一样进行构造。
+
+例如，在句子 "The play has the title A Streetcar Nmaed Desire"中，主题是 "The play"，对象是 "A Streetcar Named Desire"，以及谓语是 "has the title"。
