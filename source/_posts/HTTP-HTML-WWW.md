@@ -9,7 +9,7 @@ tags: [notes, TCP/IP, Networks]
 
 - 展示 WWW 如何工作
 - 使用文本以及HTML标签建立一个基本的网页
-- 讨论 HTTP协 议以及描述它是如何工作的
+- 讨论 HTTP 协议以及描述它是如何工作的
 - 解释语义化网页的目的
 
 ## What is the World Wide Web？
@@ -132,7 +132,7 @@ HTML 文件可以像下方一样引用 CSS 文件：
 
 ## Understanding HTTP
 
-Web 服务器和浏览器使用超文本传输协议进行通信。HTTP 1.1 在1997年伴随着RFC 2068到来，目前被定义在 RFC 7230 - 7235中。2015年出来了一个成为 HTTP/2 的新版本，这个版本基于 Google 的 SPDY 协议，主要提供性能上的加强并且其目的不是用于替代 HTTP 的语义以及状态码。
+Web 服务器和浏览器使用超文本传输协议进行通信。HTTP 1.1 在1997年伴随着RFC 2068到来，目前被定义在 RFC 7230 - 7235中。2015年出来了一个称为 HTTP/2 的新版本，这个版本基于 Google 的 SPDY 协议，主要提供性能上的加强并且其目的不是用于替代 HTTP 的语义以及状态码。
 
 HTTP 的目的是为了支持 HTML 文档的传输，它是一个应用层的协议。HTTP 客户端以及服务器应用程序使用可靠的 TCP 传输层协议来建立一个连接。
 
@@ -171,7 +171,9 @@ HTTP Header 字段例子：
 
 早期的 HTTP 1.0 版本，每个请求/相应周期需要一个新的 TCP 连接。客户端打开一个连接并且初始化一个请求。服务器完成请求，然后关闭连接。在那种情况下，当服务器已经停止发送数据时，客户端能够知道，因为服务器关闭了 TCP 连接。这个过程需要频繁地打开和关闭连接。
 
-HTTP 1.1 允许客户端和服务器维护比单次传输更长的连接。在那种情况下，客户读爱酱你需要某种方式来知道单次相应的关闭的时间。*Content-Length* 字段指定和 HTML 响应相关联的HTML 对象的长度。如果服务器不知道发送的对象的长度——伴随着动态 HTML 不断常见的情况——服务器发送 header 字段 *Connection:close* 来通知浏览器服务器通过关闭链接来指定数据发送结束。 HTTP 也支持服务器与客户端在一个协商阶段中达成确定格式以及偏好选项的常见设置。
+HTTP 1.1 允许客户端和服务器维护比单次传输更长的连接。在那种情况下，客户读爱酱你需要某种方式来知道单次相应的关闭的时间。*Content-Length* 字段指定和 HTML 响应相关联的HTML 对象的长度。
+如果服务器不知道发送的对象的长度——伴随着动态 HTML 不断常见的情况——服务器发送 header 字段 *Connection:close* 来通知浏览器服务器通过关闭链接来指定数据发送结束。 
+HTTP 也支持服务器与客户端在一个协商阶段中达成确定的格式以及偏好选项的常见设置。
 
 HTTP/2 的优点：
 
@@ -239,3 +241,105 @@ Semantic Web 技术仍在实验性阶段。在 Web 社区中得到一定特定�
 RDF 的基本单元是一个由称为 a triple 的三部分构成的语句。A triple 像一个有一个主题，一个谓语以及一个对象的基本句子一样进行构造。
 
 例如，在句子 "The play has the title A Streetcar Nmaed Desire"中，主题是 "The play"，对象是 "A Streetcar Named Desire"，以及谓语是 "has the title"。
+
+RDF 能够承担几种形式，但是思想是每个元素都在一个 URI 中得到表达，并且 URIs 被连接在一个以冒号分隔的列表中。
+
+### Microformats
+
+RDFs 对于向文本添加含义是一个功能强大的工具。另一个可选的能工具，对于 从事 web 职业来说更加可管理和可使用的是 microformats 。
+
+不像 RDFs，microformats 不会尝试去表示完整的句子结构以及语法结构。microformat 的目标是标记一个区域的文本来将其与一个预先定义的含义关联在一起，这样，一个浏览器或其他 web 应用程序浏览器站点时，会获取到关于该段文本的目的的线索。
+
+一个 microformats 是一个特殊的 name/value 对的词汇，用于提供特定的意图。
+
+更多的信息可以通过 [microformats.org](http://microformats.org/) 获取。随着 HTML5 的到来，一个相似的称为 `microdata` 的概念出现在正式的互联网字典中。
+
+## XHTML
+
+XHTML 标准致力于在过时的 HTML 以及基于 XML 的 web 环境之间搭建桥梁。XHTML 本质上是一个为了适应 XML 语法的 HTML 功能的表述。
+像 XML schema 一样表示 HTML 的目的是为了给开发者建立脚本和能生成以及解释代码的其他程序提供灵活性。XHTML 对于小屏幕的移动设备来说，
+收到 XHTML 页面的客户端应用程序通过更快地修改页面中的文本来适应更小的屏幕，从而使得不能在小屏幕上显示标准的 HTML 页面，通过 XHTML 显示出来。
+
+## HTML5
+
+HTML5 是一个新的 HTML 标准。许多人相信 HTML5 的出现能够降低 XHTML 的重要性。HTML5 标准含有许多设计用于支持移动设备浏览网页的特性。
+
+HTML5 新的重要特性：
+
+- 本地存储以及离线应用程序支持
+- 绘图
+- 音频以及视频嵌入
+- 地理定位
+- 语义标签元素
+
+HTML5 也包含有其他改善的地方，例如托放 API 和更好的支持表单。开发者可以使用 HTML5 来开发出跨平台的跑在 Android，iPhone 以及其他平台并且仅需要小量地更改程序代码的移动端应用程序。、
+
+### HTML5 Local Storage and Offline Application Support
+
+Cookie 是 web 服务器存储在远端客户端机系统上的一小部分持久化数据。Web 服务器使用 cookies 来恢复之前的应用程序的状态或存储关于之前活动的信息。cookies 也是有限制的。
+仅仅4 KB 大小的 cookie 不足以用于存储用户以及会话历史的数据。HTML5 存储（又称为 web 存储或 DOM 存储）让浏览器存储用于在 web 应用程序中定义的设置的值。本地存储提供了许多好处。例如，在客户端上执行脚本可以在存储区隐藏暂时的结果，因而通过减少与服务器通过网络进行通信的需要，从而提高了性能。存储空间也能够更加完整地存储当前会话状态的试图，
+这样当服务器崩溃或者连接断开时，基于 web 的游戏 或其他交互式应用程序能够得以回复（在某些情况下，保持短暂的运行）。
+
+HTML5 本地存储的能力引出了另一个重要的改善之处：离线应用程序支持。支持离线应用程序特性的一个 web 浏览器能够在网络连接断开时保持运行。支持离线处理的 web 应用程序含有命名文件以及用于离线运行的其他资源的 cache manifest。当网络连接恢复时，浏览器系统自动更新在本地系统的文件并且将所有的离线更改发送回服务器进行保存。
+
+HTML5 离线存储的特性也有一些缺点。cookies 给广告商及内容提供商提供了跟踪用户习惯以及活动的方式。离线存储也能够导致额外的隐私担忧。
+
+### HTML5 绘图
+
+在 HTML5 版本之前，向网页中添加用户浏览网页时可以打开动画，需要通过第三方附件工具，比如 Adobe Flash。HTML5 通过两个重要的新元素来提供自己的绘图能力：用于位图图片的`<canvas>`，以及用于标量矢量图形（SVG）图片的`<svg>`。
+
+`<canvas>`元素简单定义屏幕的一个区域做为可绘画的区域：
+
+```html
+<canvas id="picture1" width="350" height="250"></canvas>
+```
+
+web 开发者使用由 JavaScript 编写的绘图命令在这个 canvas 上进行绘画。定义中使用的 ID 为 JavaScript 通过 DOM 或 Document Object Model 定义关联的 canvas 定义创建一个标识符。DOM 被 web 程序员用来管理 website 中的对象。
+
+标量图形是一种使用形状，线段以及几何元素而不是格子上的点来绘画的方式。HTML5 通过 `<svg>`元素提供标量图形。
+因为标量图形图片由图形以及其他与限定的元素来构建，web 开发者以及浏览器厂商需要一个常见图形定义集合以及影响它们的形状和方向的参数。
+
+`<svg>` 标签需要引用一个在绘画中使用到的图形元素的 XML 命名空间。World Wide Web 协会已经在 http://www.w3.org/2000/svg 中定义了自己的命名空间，其目的是用来做为 HTML5 标量图片的引用：
+
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg"></svg>
+```
+关于图片的图形，大小，颜色以及方向的信息也能够放在`<svg>`元素的括号内。 浏览[标量矢量图片页面](http://www.w3.org/Graphics/SVG/)获取更多信息。
+
+### HTML5 Embedded Audio and Video
+
+在 HTML5 之前，标准的 web 规范并不提供嵌入视频的支持。HTML5 创造出了`<video>`标签来告诉浏览器这个标签引用的文件是是一个视频文件。
+与此同时，HTML5 为引用的视频以及音频编码译码器提供直接的支持。（一个编码译码器基本上提供了用于解码一个多媒体文件的方法。）
+如果浏览器知道文件是一个视频文件，并且访问了用于播放该文件的必要解码器，整个过程通过浏览器自身发生而不需要额外的第三方应用程序。
+
+
+### HTML5 Geolocation
+
+HTML5 的地理定位 API 为应用程序查询设备获取地理定位数据提供了标准的方式。程序可一使用地理定位 API 来决定设备的位置以及处理其他地理定位数据来标注坐标或找到附近服务的道路。
+
+### HTML5 Semantics
+
+HTML5 使用语义化的一种方式是通过一系列预先定义的给文本提供含义的 HTML 元素来实现。可以使用这些元素来标记用于特殊意图的文本。
+
+HTML5 语义标签
+
+|Element|Description|
+|:----|:----|
+|`<article>`|A section of text that can be broken off as a self-contained article|
+|`<aside>`|A sidebar or other boxout with content that is related but separable from the main discussion|
+|`<footer>`|Basic information on a section, such as the author name and related links|
+|`<header>`|Introductory information and navigational information, such as a table of contents|
+|`<hgroup>`|Heading for a section|
+|`<mark>`|Text marked for reference|
+|`<nav>`|A block of the page designed as a navigation tool, with general links to other parts of the document|
+|`<section>`|A chapter or other thematic division of the document|
+|`<time>`|A reference for a date or time|
+
+其他包含在 HTML5 规范中重要的语义概念就是 **microdata**。Microdata 是 microformat 概念的扩展。不像 microformats，microdata 使用一系列的 name/value 对的形式。
+
+## 小小的总结
+
+- HTML5 的新特性：提供地理定位 (API)，语义标签，音频以及视频的嵌入标签 (audio/video标签)，本地存储以及离线应用程序支持 (cache manifest)，绘图 （canvas/svg）。
+- HTML 中的语义化三种技术：RDF，microformat，microdata。
+- 语义化网页是为了某些日子帮助 web 开发者编码语义信息，目的是自动化的过程会知道这个页面是关于什么事件/事物。
