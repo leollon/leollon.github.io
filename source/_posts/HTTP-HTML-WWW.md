@@ -343,3 +343,6 @@ HTML5 语义标签
 - HTML5 的新特性：提供地理定位 (API)，语义标签，音频以及视频的嵌入标签 (audio/video标签)，本地存储以及离线应用程序支持 (cache manifest)，绘图 （canvas/svg）。
 - HTML 中的语义化三种技术：RDF，microformat，microdata。
 - 语义化网页是为了某些日子帮助 web 开发者编码语义信息，目的是自动化的过程会知道这个页面是关于什么事件/事物。
+
+[上一篇](/The-Internet-A-Closer-Look)
+[下一篇](/Web-Services)
