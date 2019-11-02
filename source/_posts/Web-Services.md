@@ -13,3 +13,9 @@ tags: [notes, TCP/IP, Networks]
 - 理解 Web 服务中的 XML，SOAP，WSDL 以及 REST 的角色
 - 描述电子商务网站如何处理现金业务
 
+## Content Management System
+
+CMS 本质上是 web 服务器的一个扩展。通常跑在 web 服务器机器上并且来自远程客户工作站通过一个 web 接口和这个机器进行交互。通过 CMS 管理的 web 内容通过可扩展标记语言或一些后端数据库的形式作为系统的属性值被存储以及管理。
+
+![https://i.quantuminit.com/b921a1e627784f49.svg](https://i.quantuminit.com/b921a1e627784f49.svg)
+
