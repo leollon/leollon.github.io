@@ -60,3 +60,9 @@ HTTP 传输系统是我们所知的 web 服务中唯一部分。还有重要的�
 
 几乎任何一家大公司都有需要能够跟踪预约，订单和存货清单的软件需求。web 服务框架有利于将分隔的服务以及事务整合进一个单独统一的环境中。
 
+数据用标准标记格式——一般是 XML 传输通过 web 服务系统的组成部分，尽管还有第二种选择比如 JSON 正受到开发者的欢迎。
+
+XML 是一种用于给属性赋值高效，通用的方式。Simple Object Access Protocol(SOAP) 提供一种用于在 web 服务之间传递 XML-based 数据的标准方法。SOAP 也描述了如何使用 XML 以及 HTTP 去调用远程程序。SOAP 信息传递进入和传递来自通过 Web Services Description Language (WSDL)定义的网络服务。
+
+其他专家主张回到简单的方式上来，使用设计通过标准的 HTTP 命令运行的一个细致地有结构的系统。REST (Representational Sate Transfer) 架构反映出了这方面的着重点。
+
