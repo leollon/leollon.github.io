@@ -85,3 +85,6 @@ SOAP 设计用于支持在所谓的 SOAP 节点之间的通信。SOAP 规范定�
 
 ![https://i.quantuminit.com/d2b13dee62584647.svg](https://i.quantuminit.com/d2b13dee62584647.svg)
 
+SOAP 消息的结构由一个可选的额头部以及消息主体组成。头部含有给消息通过的路径上的节点上使用的编号，定义以及元信息。主体含有发送给消息接受端的数据。
+
+
