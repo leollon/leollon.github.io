@@ -95,3 +95,16 @@ WSDL (Web Services Description Language) 为了描述和 web 服务相关联的�
 
 WSDL 不局限与 SOAP，也可与其他 web 服务通信协议一起使用。
 
+## Web Service Stacks
+
+类似 TCP/IP 一样，由一个组件栈构成一个 web 服务环境。Linux 厂商以及开发者经常谈论 **LAMP** 栈，一个开源组件集合容易被修改用于 web 服务环境。LAMP 是如下主要栈组建的缩写：
+
+- Linux: 支持服务器应用程序运行在服务系统上的一个操作系统
+- Apache: 支持服务 XML-based SOAP 消息的一个 web 服务器。
+- MySQL: 能够访问后端数据服务的一个数据库系统
+- PHP (or Perl or Python): 用于编写自定义 web 服务应用程序细节的一门 Web 即用型编程语言。
+
+## REST
+
+XML 的强大之处以及客户端/服务器模型能够引导出各种分享请求以及传输数据的应用程序。
+
