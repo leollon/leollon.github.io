@@ -152,3 +152,5 @@ REST 系统重要的部分是客户端不告诉服务器做什么事情；它只
 - REST 三个基础要素：Resource，Resource identifier，Representation。
 
 [上一篇](/HTTP-HTML-WWW)
+[下一篇](/Encryption-Tracking-Privacy)
+
