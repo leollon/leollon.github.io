@@ -111,7 +111,7 @@ rss: false
 # Fill in your Google Analytics tracking ID to enable Google Analytics.
 google_analytics:
   enabled: true
-  id: UA-104912832-1 # enter the tracking ID for your Google Analytics
+  id: UA-153067783-1 # enter the tracking ID for your Google Analytics
 
 # Fill in your Disqus Comments Shortname to enable Disqus comments.
 disqus:
