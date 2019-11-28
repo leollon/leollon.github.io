@@ -75,3 +75,70 @@ tags: [notes, TCP/IP, Networks]
 
 数字签名是和消息包含在一起的一个加密数据块。加密数据块有时候又称为一个鉴别码（authenticator）。数字签名通常反向使用公钥加密过程：
 
+1. 计算机 A 想发送一份带有数字签名的文档给计算机 B。计算机 A 使用必要的信息创建一小段数据来验证文档的内容。换句话说，
+在文档的中的 bits 上执行数学运算而得出一个值。这个鉴别码可能也含有其他用于验证信息可靠性的信息，比如时间戳或者其他将鉴别码和鉴别码被附加到哪个信息的参数。
+2. 计算机 A 使用私钥加密鉴别码。然后这个鉴别码被附加给这个文档，并且发送这个文档到计算机 B。
+3. 计算机 B 接收数据并且使用计算机 A 的公钥对鉴别码进行解密。鉴别码中的信息让计算机 B 用来验证数据在传输的过程中没有被修改。事实上，使用计算机 B 的公钥解密数据证明了数据是使用计算机 A 的私钥进行加密的，这确保数据
+是来自计算机 A。
+
+![https://i.quantuminit.com/db88b60159674b35.svg](https://i.quantuminit.com/db88b60159674b35.svg)
+
+### Digital Certificates
+
+使用数字证书来确保谁能够访问公钥。数字证书本质上是公钥的加密拷贝。证书签发过程需要一个能和通信双方有着安全关系的证书服务器。
+
+这个证书服务器也称为 Certificate authority (CA)。
+
+![https://i.quantuminit.com/629b33f64ec94681.svg](https://i.quantuminit.com/629b33f64ec94681.svg)
+
+这个过程的概要描述如下：
+
+1. 用户 B 通过安全的通信信道发送他的公钥到证书服务器。
+2. 证书服务器使用不同的密钥加密用户 B 的公钥（还有其他用户参数）。这个新加密的包称为证书。和证书包含在一起的是证书服务器的数字签名。
+3. 证书服务器返回这个证书给用户 B。
+4. 用户 A 需要获取用于 B 的公钥。计算机 A 向计算机 B 询问获取用户 B 的证书的拷贝。
+5. 计算机 A 通过安全信道与证书服务器进行通信来获取用于加密这个证书的密钥拷贝。
+6. 计算机 A 使用从证书服务器获取来的密钥对这个证书进行解密并且提取出用户 B 的公钥。计算机 A 还检查证书服务器的数字签
+名（步骤2）来确保证书是可靠的。
+
+最著名的证书流程标准是由多份RFCs描述的 **X.509**。数字证书流程设计用于服务用户社区。X.209 证书流程在一些 TCP/IP 安全协议中会
+使用到。
+
+### Securing TCP/IP
+
+将加密技术集成入两个互联网安全系统中：SSL/TSL 和 IPsec。
+
+#### TLS and SSL
+
+**Secure Sockets Layer (SSL)** 开始是由 Netscape 为了保护 web 通信安全而引入的一个 TCP/IP 安全协议的集合。SSL 的目的是给
+在传输层的 sockets 和通过 sockets 访问网络的应用程序之间提供一层安全。 基于SSL 3.0的 **Transport Layer Security (TLS)** 是 SSL 的继承者并且考虑将其作为标准。
+
+当使用 TLS 之后，诸如 FTP 和 HTTP 等网络服务通过安全的 TLS 协议避免遭受到攻击。
+
+![https://i.quantuminit.com/9dc971dd88b548ee.svg](https://i.quantuminit.com/9dc971dd88b548ee.svg)
+
+TLS Record Protocol 是一个用于访问 TCP 的标准基础。在 Record Protocol 之上的是一组执行特定服务器的相关协议：
+
+- **TLS Handshake Protocol**: 处理验证以及协商通信设置。
+- **TLS Change Cipher Spec Protocol**: 发出过渡信号，比如转变协商的加密参数。
+- **TLS Allert Protocol**: 发送警告。
+
+![https://i.quantuminit.com/a95941d5a839469a.svg](https://i.quantuminit.com/a95941d5a839469a.svg)
+
+启用 TLS 的服务直接通过 TLS Record Protocol 运行。在连接建立之后，TLS Record Protocol 提供加密以及必要的验证来确保会话的
+可靠性以及完整性。
+
+TLS Handshake Protocol 建立链接以及协商任何的连接设置（包括加密设置）。一个使用 TLS 加密的 HTTP web 协议的版本称为 Hypertext Transfer Protocol Secure (HTTPS)。
+
+SSL 以及 TLS 被设计用于和面向连接的 TCP 连接一起运行。其他协议称为 Datagram Transport Layer Security (DTLS) 提供 TLS-like 的安全，用这种方式也能够支持和UDP的无连接通信。
+
+#### IPsec
+
+IP Security (IPsec) 是一个在 TCP/IP 网络上使用的可供选择的安全协议系统。IPsec 在 TCP/IP 协议栈内部运行，它在 Transport Layer
+下方。因为这个安全系统在 Transport layer 下方，运行在 Transport layer 上方的应用程序不需要知道这个安全系统。IPsec 设计用于提供保密性，访问控制，验证以及数据完整性的支持。IPsec 也能够防护重放攻击 (replay attacks)，在重放攻击中，由攻击者从数据流中提取数据包并且在后面进行重用。
+
+IPsec 本质上是 IP 协议的一组扩展。IPsec 内建在 IPv6 协议系统结构中。在 IPv4 中，IPsec 被认为是一个扩展，但是 IPsec 支持仍
+内置在许多的 IPv4 实现中。
+
+
+
