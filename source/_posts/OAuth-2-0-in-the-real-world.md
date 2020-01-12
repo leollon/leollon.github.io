@@ -1,7 +1,7 @@
 ---
 title: OAuth 2.0 in the real world
 date: 2019-10-21 15:36:24
-categories: [OAuth 2.0 in action]
+categories: OAuth 2.0 in action
 tags: [OAuth2.0, notes]
 ---
 

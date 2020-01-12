@@ -1,5 +1,5 @@
 ---
-title: '[Ubuntu 16.04] - build python3.6.4 from source code'
+title: [Ubuntu 16.04] - build python3.6.4 from source code
 date: 2018-01-18 10:43:08
 categories: log
 tags: [Ubuntu16.04, build-Python3.6.4, Debian8]

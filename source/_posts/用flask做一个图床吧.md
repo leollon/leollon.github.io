@@ -1,5 +1,5 @@
 ---
-title: "用flask做一个图床吧"
+title: 用flask做一个图床吧
 date: 2017-08-07 10:36:02
 categories: picbed
 tags: [picbed, 图床, imgbed]

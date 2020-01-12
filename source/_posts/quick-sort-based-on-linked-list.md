@@ -2,7 +2,7 @@
 title: quick sort based on linked list
 date: 2019-04-09 23:21:37
 categories: Algorithms_4th
-tags: [quick sort, double linked list,　算法, algos-4th]
+tags: [quick sort, double linked list, 算法, algos-4th]
 ---
 
 ```python

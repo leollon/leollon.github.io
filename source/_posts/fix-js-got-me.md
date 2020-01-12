@@ -1,8 +1,8 @@
 ---
-title: '<fix>:(front-end):js got me'
+title: js got me
 date: 2018-08-04 12:42:38
 categories: FrontEnd
-tags: ["前端","input","disabled","事件委托"]
+tags: [前端, input, disabled, 事件委托]
 ---
 
 ## 踩坑记录

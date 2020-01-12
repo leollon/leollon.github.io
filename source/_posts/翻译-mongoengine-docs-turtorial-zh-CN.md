@@ -1,5 +1,5 @@
 ---
-title: '[翻译]mongoengine-docs-turtorial-zh_CN'
+title: [翻译]mongoengine-docs-turtorial-zh_CN
 date: 2017-12-22 15:32:18
 categories: 翻译
 tags: [mongoengine, MongoDB, 翻译, 文档]

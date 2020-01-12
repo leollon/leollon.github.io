@@ -1,5 +1,5 @@
 ---
-title: '[MySQL] - How to reset root''s password'
+title: [MySQL] - How to reset root's password
 date: 2018-01-16 22:13:40
 categories: MySQL
 tags: [notes, 笔记, MySQL]
