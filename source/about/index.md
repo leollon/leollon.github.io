@@ -9,8 +9,8 @@ date: 2017-08-06 20:55:01
 **Contact:**
 
 ```bash
-$ echo bXNzbS5nb29kQG91dGxvb2suY29tCg== | base64 -d # Linux
-$ echo bXNzbS5nb29kQG91dGxvb2suY29tCg== | base64 -D # macOS
+$ echo bXNzbShkb3QpZ29vZCNvdXRsb29rKHBlcmlvZCljb20K | base64 -d  # Linux
+$ echo bXNzbShkb3QpZ29vZCNvdXRsb29rKHBlcmlvZCljb20K | base64 -D  # MacOS
 ```
 
 ### 本站
