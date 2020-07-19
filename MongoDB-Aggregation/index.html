@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="简单聚合查询 使用$group、 $sum进行计数统计1234567&amp;gt; db.COLLECTION_NAME([  &amp;#123;&quot;$group&quot;:       &amp;#123;&quot;_id&quot;:&quot;($key|&amp;#123;&quot;field1&quot;:&quot;$key1&quot;, &quot;field2&quot;:&quot;$key2&quot;, ...&amp;#125;),       &quot;name&quot;:&amp;#123;$sum:(1|&quot;$field&quot;)&amp;#125;">
+<meta name="keywords" content="notes,MongoDB,nosql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB-Aggregation">
+<meta property="og:url" content="https://quantuminit.com/MongoDB-Aggregation/index.html">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="简单聚合查询 使用$group、 $sum进行计数统计1234567&amp;gt; db.COLLECTION_NAME([  &amp;#123;&quot;$group&quot;:       &amp;#123;&quot;_id&quot;:&quot;($key|&amp;#123;&quot;field1&quot;:&quot;$key1&quot;, &quot;field2&quot;:&quot;$key2&quot;, ...&amp;#125;),       &quot;name&quot;:&amp;#123;$sum:(1|&quot;$field&quot;)&amp;#125;">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-07-19T15:52:16.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MongoDB-Aggregation">
+<meta name="twitter:description" content="简单聚合查询 使用$group、 $sum进行计数统计1234567&amp;gt; db.COLLECTION_NAME([  &amp;#123;&quot;$group&quot;:       &amp;#123;&quot;_id&quot;:&quot;($key|&amp;#123;&quot;field1&quot;:&quot;$key1&quot;, &quot;field2&quot;:&quot;$key2&quot;, ...&amp;#125;),       &quot;name&quot;:&amp;#123;$sum:(1|&quot;$field&quot;)&amp;#125;">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>MongoDB-Aggregation</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/GNU-Linux-Debian-server-configuration/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/Python-dunder-slots-magic-method/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://quantuminit.com/MongoDB-Aggregation/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://quantuminit.com/MongoDB-Aggregation/&text=MongoDB-Aggregation"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://quantuminit.com/MongoDB-Aggregation/&title=MongoDB-Aggregation"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://quantuminit.com/MongoDB-Aggregation/&is_video=false&description=MongoDB-Aggregation"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MongoDB-Aggregation&body=Check out this article: https://quantuminit.com/MongoDB-Aggregation/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://quantuminit.com/MongoDB-Aggregation/&title=MongoDB-Aggregation"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://quantuminit.com/MongoDB-Aggregation/&title=MongoDB-Aggregation"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://quantuminit.com/MongoDB-Aggregation/&title=MongoDB-Aggregation"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://quantuminit.com/MongoDB-Aggregation/&title=MongoDB-Aggregation"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://quantuminit.com/MongoDB-Aggregation/&name=MongoDB-Aggregation&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简单聚合查询"><span class="toc-number">1.</span> <span class="toc-text">简单聚合查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#aggregation-pipeline"><span class="toc-number">2.</span> <span class="toc-text">aggregation pipeline</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#operator"><span class="toc-number">2.1.</span> <span class="toc-text">operator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表达式-Expression"><span class="toc-number">2.2.</span> <span class="toc-text">表达式(Expression)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全文搜索-text"><span class="toc-number">2.3.</span> <span class="toc-text">全文搜索($text)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排序-sort"><span class="toc-number">2.4.</span> <span class="toc-text">排序($sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Aggregation-Options"><span class="toc-number">2.5.</span> <span class="toc-text">Aggregation Options</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL-to-Aggregation-Mapping"><span class="toc-number">2.6.</span> <span class="toc-text">SQL to Aggregation Mapping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Limitations-in-Aggregation"><span class="toc-number">2.7.</span> <span class="toc-text">Limitations in Aggregation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#substr"><span class="toc-number">2.8.</span> <span class="toc-text">$substr</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MongoDB-Aggregation
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-12-07T04:02:39.000Z" itemprop="datePublished">2017-12-07</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/MongoDB/">MongoDB</a>, <a class="tag-link" href="/tags/nosql/">nosql</a>, <a class="tag-link" href="/tags/notes/">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="简单聚合查询"><a href="#简单聚合查询" class="headerlink" title="简单聚合查询"></a>简单聚合查询</h2><blockquote>
+<p>使用$group、 $sum进行计数统计<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.COLLECTION_NAME([</span><br><span class="line">  &#123;<span class="string">"<span class="variable">$group</span>"</span>: </span><br><span class="line">      &#123;<span class="string">"_id"</span>:<span class="string">"(<span class="variable">$key</span>|&#123;"</span>field1<span class="string">":"</span><span class="variable">$key1</span><span class="string">", "</span>field2<span class="string">":"</span><span class="variable">$key2</span><span class="string">", ...&#125;),</span></span><br><span class="line"><span class="string">       "</span>name<span class="string">":&#123;<span class="variable">$sum</span>:(1|"</span><span class="variable">$field</span><span class="string">")&#125;</span></span><br><span class="line"><span class="string">      &#125;</span></span><br><span class="line"><span class="string">  &#125;])</span></span><br><span class="line"><span class="string">#分组统计key的个数</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h2 id="aggregation-pipeline"><a href="#aggregation-pipeline" class="headerlink" title="aggregation pipeline"></a>aggregation pipeline</h2><blockquote>
+<p>向各个操作符(operator)传递文档</p>
+</blockquote>
+<h3 id="operator"><a href="#operator" class="headerlink" title="operator"></a>operator</h3><ol>
+<li>$project(最后显示的数据的结构)</li>
+<li>$match(过滤， 放在最前面， 会使用索引)</li>
+<li>$group(聚合， 分组)</li>
+<li>$sort(排序，会使用索引)</li>
+<li>$skip(跳过数据数量)</li>
+<li>$limit(显示数据数量)</li>
+<li><p>$unwind(扩充数据)</p>
+<blockquote>
+<p>如处理tags: [“red”, “green”, “blue”]后的数据</p>
+</blockquote>
+<p>tags: “red”</p>
+<p>tags: “green”</p>
+<p>tags: “blue”</p>
+</li>
+<li>$out(输出重定向输出到文档中)</li>
+</ol>
+<h3 id="表达式-Expression"><a href="#表达式-Expression" class="headerlink" title="表达式(Expression)"></a>表达式(Expression)</h3><ol>
+<li>$sum</li>
+<li>$avg(计数自动进行)</li>
+<li>$min</li>
+<li>$max</li>
+<li>$push(创建数组)</li>
+<li>$addToSet(创建数组，added one by one)</li>
+<li>$first</li>
+<li>$last</li>
+</ol>
+<h3 id="全文搜索-text"><a href="#全文搜索-text" class="headerlink" title="全文搜索($text)"></a>全文搜索($text)</h3><blockquote>
+<p>If using the $text operator in aggregation, the following restrictions also apply.</p>
+</blockquote>
+<blockquote>
+<p>The $match stage that includes a $text must be the first stage in the pipeline.<br>    A text operator can only occur once in the stage.<br>    The text operator expression cannot appear in $or or $not expressions.<br>    The text search, by default, does not return the matching documents in order of<br>    matching scores. Use the $meta aggregation expression in the $sort stage.</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.COLLECTTION_NAME.aggregate([</span><br><span class="line">  &#123;<span class="variable">$match</span>:</span><br><span class="line">      &#123;<span class="variable">$text</span>: &#123;<span class="variable">$search</span>: <span class="string">"&lt;value&gt;"</span>&#125;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;<span class="variable">$project</span>: &#123;key: (1|0)&#125;&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<h3 id="排序-sort"><a href="#排序-sort" class="headerlink" title="排序($sort)"></a>排序($sort)</h3><blockquote>
+<ol>
+<li>aggregation 均支持disk and memory based sorting。在内存进行排序默认使用的空间是100megabytes。<ol start="2">
+<li>可以在<code>$group</code>之前或之后使用。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.COLLECTION_NAME.aggregate([&#123;<span class="variable">$sort</span>: &#123;<span class="string">"key1"</span>:1, <span class="string">"key2"</span>: -1&#125;&#125;])</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<h3 id="Aggregation-Options"><a href="#Aggregation-Options" class="headerlink" title="Aggregation Options"></a>Aggregation Options</h3><ol>
+<li>explain - query plan (value: boolean, used in mongo shell)</li>
+<li>allowDiskUse - 100MB(default sorting memory based) (value: boolean, use in python)</li>
+<li>cursors - value: ({}, used in python)</li>
+</ol>
+<h3 id="SQL-to-Aggregation-Mapping"><a href="#SQL-to-Aggregation-Mapping" class="headerlink" title="SQL to Aggregation Mapping"></a>SQL to Aggregation Mapping</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">SQL</th>
+<th style="text-align:right">MongoDB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">WHERE</td>
+<td style="text-align:right">$match</td>
+</tr>
+<tr>
+<td style="text-align:left">HAVING</td>
+<td style="text-align:right">$match</td>
+</tr>
+<tr>
+<td style="text-align:left">SELECT</td>
+<td style="text-align:right">$project</td>
+</tr>
+<tr>
+<td style="text-align:left">ORDER BY</td>
+<td style="text-align:right">$sort</td>
+</tr>
+<tr>
+<td style="text-align:left">SUM()</td>
+<td style="text-align:right">$sum</td>
+</tr>
+<tr>
+<td style="text-align:left">COUNT()</td>
+<td style="text-align:right">$sum</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Limitations-in-Aggregation"><a href="#Limitations-in-Aggregation" class="headerlink" title="Limitations in Aggregation"></a>Limitations in Aggregation</h3><ul>
+<li>100MB limit pipeline, use allowDiskUse=True to handle it</li>
+<li>return 16MB single document by default in Python, use cursor={} to handle it</li>
+<li>sharded, brought back the results in the first shard with <code>group</code> and <code>sort</code></li>
+</ul>
+<h3 id="substr"><a href="#substr" class="headerlink" title="$substr"></a>$substr</h3><p>  返回某字段值的子字符串</p>
+<blockquote>
+<p>{key: {$substr: [“$field”, beg, end]}}</p>
+</blockquote>
+<p>返回的字符个数是end-beg。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.getCollection(<span class="string">'zips'</span>).aggregate([</span><br><span class="line">     &#123;<span class="variable">$project</span>: &#123; first_char: &#123;<span class="variable">$substr</span>: [<span class="string">"<span class="variable">$city</span>"</span>,0, 1]&#125;,</span><br><span class="line">                  pop: <span class="string">"<span class="variable">$pop</span>"</span></span><br><span class="line">                &#125;</span><br><span class="line">     &#125;,</span><br><span class="line">     &#123;<span class="variable">$match</span>: &#123;<span class="string">'first_char'</span>: &#123;<span class="variable">$in</span>: [<span class="string">'B'</span>, <span class="string">'D'</span>, <span class="string">'O'</span>, <span class="string">'G'</span>, <span class="string">'N'</span>, <span class="string">'M'</span>] &#125; &#125; &#125;,</span><br><span class="line">     &#123;<span class="variable">$group</span>: &#123;<span class="string">'_id'</span>: null, <span class="string">'totle'</span>: &#123;<span class="variable">$sum</span>: <span class="string">"<span class="variable">$pop</span>"</span>&#125; &#125; &#125;</span><br><span class="line">  ])</span><br></pre></td></tr></table></figure></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简单聚合查询"><span class="toc-number">1.</span> <span class="toc-text">简单聚合查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#aggregation-pipeline"><span class="toc-number">2.</span> <span class="toc-text">aggregation pipeline</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#operator"><span class="toc-number">2.1.</span> <span class="toc-text">operator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#表达式-Expression"><span class="toc-number">2.2.</span> <span class="toc-text">表达式(Expression)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#全文搜索-text"><span class="toc-number">2.3.</span> <span class="toc-text">全文搜索($text)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#排序-sort"><span class="toc-number">2.4.</span> <span class="toc-text">排序($sort)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Aggregation-Options"><span class="toc-number">2.5.</span> <span class="toc-text">Aggregation Options</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL-to-Aggregation-Mapping"><span class="toc-number">2.6.</span> <span class="toc-text">SQL to Aggregation Mapping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Limitations-in-Aggregation"><span class="toc-number">2.7.</span> <span class="toc-text">Limitations in Aggregation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#substr"><span class="toc-number">2.8.</span> <span class="toc-text">$substr</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://quantuminit.com/MongoDB-Aggregation/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://quantuminit.com/MongoDB-Aggregation/&text=MongoDB-Aggregation"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://quantuminit.com/MongoDB-Aggregation/&title=MongoDB-Aggregation"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://quantuminit.com/MongoDB-Aggregation/&is_video=false&description=MongoDB-Aggregation"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MongoDB-Aggregation&body=Check out this article: https://quantuminit.com/MongoDB-Aggregation/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://quantuminit.com/MongoDB-Aggregation/&title=MongoDB-Aggregation"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://quantuminit.com/MongoDB-Aggregation/&title=MongoDB-Aggregation"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://quantuminit.com/MongoDB-Aggregation/&title=MongoDB-Aggregation"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://quantuminit.com/MongoDB-Aggregation/&title=MongoDB-Aggregation"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://quantuminit.com/MongoDB-Aggregation/&name=MongoDB-Aggregation&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

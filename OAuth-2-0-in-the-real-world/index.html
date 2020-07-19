@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Index: OAuth 2.0 in action - chapter 6.1 Implicit grant type客户端完全运行在浏览器中。  它具有严重的局限性： 由于私隐对于浏览器本身来说是可用，所以对于使用这个工作流的客户端来说，这个客户端没有用于保存客户端隐私的实际的方法。这个工作流只使用授权端点并且不使用token端点，这个局限性不影响它的功能，以为客户端从不需要在授权端点进行验证">
+<meta name="keywords" content="notes,OAuth2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OAuth 2.0 in the real world">
+<meta property="og:url" content="https://quantuminit.com/OAuth-2-0-in-the-real-world/index.html">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="Index: OAuth 2.0 in action - chapter 6.1 Implicit grant type客户端完全运行在浏览器中。  它具有严重的局限性： 由于私隐对于浏览器本身来说是可用，所以对于使用这个工作流的客户端来说，这个客户端没有用于保存客户端隐私的实际的方法。这个工作流只使用授权端点并且不使用token端点，这个局限性不影响它的功能，以为客户端从不需要在授权端点进行验证">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.quantuminit.com/21761a033c5b4ed9.jpg">
+<meta property="og:image" content="https://i.quantuminit.com/218c305cbfe04e1e.jpg">
+<meta property="og:image" content="https://i.quantuminit.com/20039fb08a954b51.png">
+<meta property="og:image" content="https://i.quantuminit.com/e602f36e072343b9.png">
+<meta property="og:image" content="https://i.quantuminit.com/054e0de15b4a4762.png">
+<meta property="og:image" content="https://i.quantuminit.com/f5810bd42b9b41d7.png">
+<meta property="og:image" content="https://i.quantuminit.com/96a515de7dbc4443.svg">
+<meta property="og:updated_time" content="2020-07-19T15:52:16.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OAuth 2.0 in the real world">
+<meta name="twitter:description" content="Index: OAuth 2.0 in action - chapter 6.1 Implicit grant type客户端完全运行在浏览器中。  它具有严重的局限性： 由于私隐对于浏览器本身来说是可用，所以对于使用这个工作流的客户端来说，这个客户端没有用于保存客户端隐私的实际的方法。这个工作流只使用授权端点并且不使用token端点，这个局限性不影响它的功能，以为客户端从不需要在授权端点进行验证">
+<meta name="twitter:image" content="https://i.quantuminit.com/21761a033c5b4ed9.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>OAuth 2.0 in the real world</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/Web-Services/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/HTTP-HTML-WWW/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://quantuminit.com/OAuth-2-0-in-the-real-world/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&text=OAuth 2.0 in the real world"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&title=OAuth 2.0 in the real world"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&is_video=false&description=OAuth 2.0 in the real world"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=OAuth 2.0 in the real world&body=Check out this article: https://quantuminit.com/OAuth-2-0-in-the-real-world/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&title=OAuth 2.0 in the real world"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&title=OAuth 2.0 in the real world"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&title=OAuth 2.0 in the real world"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&title=OAuth 2.0 in the real world"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&name=OAuth 2.0 in the real world&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Implicit-grant-type"><span class="toc-number">1.</span> <span class="toc-text">Implicit grant type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Client-Credentials-grant-type"><span class="toc-number">2.</span> <span class="toc-text">Client Credentials grant type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resource-owner-credentials-grant-type"><span class="toc-number">3.</span> <span class="toc-text">Resource owner credentials grant type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Assertion-grant-types"><span class="toc-number">4.</span> <span class="toc-text">Assertion grant types</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Choosing-the-appropriate-grant-type"><span class="toc-number">5.</span> <span class="toc-text">Choosing the appropriate grant type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小小的总结"><span class="toc-number">6.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        OAuth 2.0 in the real world
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-10-21T07:36:24.000Z" itemprop="datePublished">2019-10-21</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/OAuth2-0/">OAuth2.0</a>, <a class="tag-link" href="/tags/notes/">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Index: OAuth 2.0 in action - chapter 6.1</p>
+<h2 id="Implicit-grant-type"><a href="#Implicit-grant-type" class="headerlink" title="Implicit grant type"></a>Implicit grant type</h2><p>客户端完全运行在浏览器中。</p>
+<p><img src="https://i.quantuminit.com/21761a033c5b4ed9.jpg" alt="https://i.quantuminit.com/21761a033c5b4ed9.jpg"></p>
+<p>它具有严重的局限性：</p>
+<p>由于私隐对于浏览器本身来说是可用，所以对于使用这个工作流的客户端来说，这个客户端没有用于保存客户端隐私的实际的方法。这个工作流只使用授权端点并且不使用token端点，这个局限性不影响它的功能，以为客户端从不需要在授权端点进行验证。然而，缺乏任何验证客户端的方式影响到了授权类型的安全，并且应该小心使用。这个授权类型不能够用于获取一个refresh token。</p>
+<p>客户端使用HTTP POST方法，想服务端发送请求，请求的URL中包含response_type，并且使用表单提交数据。</p>
+<p>服务端代码实例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="keyword">var</span> nosql = <span class="built_in">require</span>(<span class="string">"nosql"</span>);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">"/token"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (query.response_type == <span class="string">'token'</span>) &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Implement response_type=token here</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">var</span> rscope = getScopesFromForm(req.body);</span><br><span class="line">        <span class="keyword">var</span> client = getClient(query.client_id);</span><br><span class="line">        <span class="keyword">var</span> cscope = client.scope ? client.scope.split(<span class="string">' '</span>) : <span class="literal">undefined</span>;</span><br><span class="line">        <span class="keyword">if</span> (__.difference(rscope, cscope).length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> urlParsed = buildUrl(query.redirect_uri,</span><br><span class="line">                &#123;&#125;,</span><br><span class="line">                qs.stringify(&#123;<span class="attr">error</span>: <span class="string">'invalid_scope'</span>&#125;)</span><br><span class="line">            );</span><br><span class="line">            res.redirect(urlParsed);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> access_token = randomstring.generate();</span><br><span class="line">        <span class="keyword">var</span> auth = req.headers[<span class="string">'authorization'</span>];</span><br><span class="line">        <span class="keyword">if</span> (auth) &#123;</span><br><span class="line">            <span class="keyword">var</span> clientCredentials = decodeClientCredentials(auth);</span><br><span class="line">            <span class="keyword">var</span> clientId = clientCredentials.id;</span><br><span class="line">        &#125;</span><br><span class="line">        nosql.insert(&#123; <span class="attr">access_token</span>: access_token, <span class="attr">clinet_id</span>: clientId, <span class="attr">scope</span>: rscope &#125;);</span><br><span class="line">        <span class="keyword">var</span> token_response = &#123; <span class="attr">access_token</span>: access_token, <span class="attr">token_type</span>: <span class="string">'Bearer'</span>, <span class="attr">scope</span>: rscope.join(<span class="string">' '</span>) &#125;;</span><br><span class="line">        <span class="keyword">if</span> (query.state) &#123;</span><br><span class="line">            token_response.state = query.state;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> urlParsed = buildUrl(query.redirect_uri,</span><br><span class="line">            &#123;&#125;,</span><br><span class="line">            qs.stringify(token_response)</span><br><span class="line">        );</span><br><span class="line">        res.redirect(urlParsed);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="Client-Credentials-grant-type"><a href="#Client-Credentials-grant-type" class="headerlink" title="Client Credentials grant type"></a>Client Credentials grant type</h2><p>倘若没有明显的资源拥有者，或资源拥有者不能够与客户端软件本身分别出。这是相当常见的情况，在这种情况中，后端系统需要直接与彼此进行通信并且没必要代表任何一个特定的用户。</p>
+<p><img src="https://i.quantuminit.com/218c305cbfe04e1e.jpg" alt="https://i.quantuminit.com/218c305cbfe04e1e.jpg"></p>
+<p>客户端代表自己（自己就是资源拥有者）从token端点获取access token。</p>
+<p>客户端使用HTTP POST方法，向服务端发送含有表单数据的请求。</p>
+<p>服务端代码实例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="keyword">var</span> nosql = <span class="built_in">require</span>(<span class="string">"nosql"</span>);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/token'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (req.body.grant_type == <span class="string">'client_credentials'</span>) &#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Implement the client credentials grant type</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">var</span> rscope = req.body.scope ? req.body.scope.split(<span class="string">' '</span>) : <span class="literal">undefined</span>;</span><br><span class="line">        <span class="keyword">var</span> cscope = client.scope ? client.scope.split(<span class="string">' '</span>) : <span class="literal">undefined</span>;</span><br><span class="line">        <span class="keyword">if</span> (__.difference(rscope, cscope).length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            res.status(<span class="number">400</span>).json(&#123;<span class="attr">error</span>: <span class="string">'invalid_scope'</span>&#125;);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> access_token = randomstring.generate();</span><br><span class="line">        <span class="keyword">var</span> token_response = &#123; <span class="attr">access_token</span>: access_token, <span class="attr">token_type</span>: <span class="string">'Bearer'</span>, <span class="attr">scope</span>: rscope.join(<span class="string">' '</span>) &#125;;</span><br><span class="line">        nosql.insert(&#123; <span class="attr">access_token</span>: access_token, <span class="attr">client_id</span>: clientId, <span class="attr">scope</span>: rscope &#125;);</span><br><span class="line">        res.status(<span class="number">200</span>).json(token_response);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>客户端代码实例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> authServer = &#123;</span><br><span class="line">    tokenEndpoint: <span class="string">"http://localhost:9001/token"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">app.get(<span class="string">'/authorize'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>)</span>&#123;</span><br><span class="line">    access_token = <span class="literal">null</span>;</span><br><span class="line">    scope = <span class="literal">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Implement the client credentials flow here</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> form_data = qs.stringify(&#123;</span><br><span class="line">        grant_type: <span class="string">'client_credentials'</span>,</span><br><span class="line">        scope: client.scope</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> headers = &#123;</span><br><span class="line">        <span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded'</span>,</span><br><span class="line">        <span class="string">'Authorization'</span>: <span class="string">'Basic '</span> + encodeClientCredentials(client.client_id, client.client_secret),</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> tokRes = request(<span class="string">'POST'</span>, authServer.tokenEndpoint, &#123;</span><br><span class="line">        body: form_data,</span><br><span class="line">        headers: headers</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (tokRes.statusCode &gt;= <span class="number">200</span> &amp;&amp; tokRes.statusCode &lt; <span class="number">300</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> body = <span class="built_in">JSON</span>.parse(tokRes.getBody());</span><br><span class="line">        access_token = body.access_token;</span><br><span class="line">        scope = body.scope;</span><br><span class="line">        res.render(<span class="string">'index'</span>, &#123;<span class="attr">access_token</span>: access_token, <span class="attr">scope</span>: scope&#125;);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.render(<span class="string">'error'</span>, &#123;<span class="attr">error</span>: <span class="string">'Unable to fetch access token, server response: '</span> + tokRes.statusCode&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="Resource-owner-credentials-grant-type"><a href="#Resource-owner-credentials-grant-type" class="headerlink" title="Resource owner credentials grant type"></a>Resource owner credentials grant type</h2><p>假设资源拥有者在授权服务器上拥有普通的用户名以及密码，那么对于客户端来说，能够提示用户使用这一凭证并且使用它们来交换获取一个access token。resource owner credentials 授权类型，也称密码工作流，允许一个客户端仅仅这么做。</p>
+<p><img src="https://i.quantuminit.com/20039fb08a954b51.png" alt="https://i.quantuminit.com/20039fb08a954b51.png"></p>
+<p>服务端代码实例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"><span class="keyword">var</span> nosql = <span class="built_in">require</span>(<span class="string">"nosql"</span>);</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">"/token"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (req.body.grant_type == <span class="string">'password'</span>) &#123;</span><br><span class="line">     </span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * Implement the resource owner credentials grant type</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">var</span> getUser = <span class="function"><span class="keyword">function</span>(<span class="params">username</span>) </span>&#123;  </span><br><span class="line">            <span class="keyword">return</span> userInfo[username];          </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> username = req.body.username;   </span><br><span class="line">        <span class="keyword">var</span> user = getUser(username);       </span><br><span class="line">        <span class="keyword">if</span> (!user) &#123;</span><br><span class="line">            <span class="comment">// The user does not exist.         </span></span><br><span class="line">            res.status(<span class="number">401</span>).json(&#123;<span class="attr">error</span>: <span class="string">'invalid_grant'</span>&#125;);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> password = req.body.password;</span><br><span class="line">        <span class="keyword">if</span> (user.password != password) &#123;</span><br><span class="line">            res.status(<span class="number">401</span>).json(&#123;<span class="attr">error</span>: <span class="string">'invalid_granty'</span>&#125;);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> rscope = req.body.scope ? req.body.scope.split(<span class="string">' '</span>) : <span class="literal">undefined</span>;</span><br><span class="line">        <span class="keyword">var</span> cscope = client.scope ? client.scope.split(<span class="string">' '</span>) : <span class="literal">undefined</span>;</span><br><span class="line">        <span class="keyword">if</span> (__.difference(rscope, cscope).length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            res.status(<span class="number">401</span>).json(&#123;<span class="attr">error</span>: <span class="string">'invalid_scope'</span>&#125;);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> access_token = randomstring.generate();</span><br><span class="line">        <span class="keyword">var</span> refresh_token = randomstring.generate();</span><br><span class="line">     </span><br><span class="line">        nosql.insert(&#123; <span class="attr">access_token</span>: access_token, <span class="attr">client_id</span>: clientId, <span class="attr">scope</span>: rscope &#125;);</span><br><span class="line">        nosql.insert(&#123; <span class="attr">refresh_token</span>: refresh_token, <span class="attr">client_id</span>: clientId, <span class="attr">scope</span>: rscope &#125;);</span><br><span class="line">     </span><br><span class="line">        <span class="keyword">var</span> token_response = &#123;<span class="attr">access_token</span>: access_token, <span class="attr">token_type</span>: <span class="string">'Bearer'</span>, <span class="attr">refresh_token</span>: refresh_token, <span class="attr">scope</span>: rscope.join(<span class="string">' '</span>)&#125;;</span><br><span class="line">     </span><br><span class="line">        res.status(<span class="number">200</span>).json(token_response);</span><br><span class="line">     </span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>客户端代码实例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> express = <span class="built_in">require</span>(<span class="string">"express"</span>);</span><br><span class="line"><span class="keyword">var</span> app = express();</span><br><span class="line"></span><br><span class="line">app.post(<span class="string">'/username_password'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> username = req.body.username;</span><br><span class="line">	<span class="keyword">var</span> password = req.body.password;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">var</span> form_data = qs.stringify(&#123;</span><br><span class="line">		grant_type: <span class="string">'password'</span>,</span><br><span class="line">		username: username,</span><br><span class="line">		password: password,</span><br><span class="line">		scope: client.scope</span><br><span class="line">	&#125;);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">var</span> headers = &#123;</span><br><span class="line">		<span class="string">'Content-Type'</span>: <span class="string">'application/x-www-form-urlencoded'</span>,</span><br><span class="line">		<span class="string">'Authorization'</span>: <span class="string">'Basic '</span> + encodeClientCredentials(client.client_id, client.client_secret)</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> tokRes = request(<span class="string">'POST'</span>, authServer.tokenEndpoint, &#123;	</span><br><span class="line">		body: form_data,</span><br><span class="line">		headers: headers</span><br><span class="line">	&#125;);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (tokRes.statusCode &gt;= <span class="number">200</span> &amp;&amp; tokRes.statusCode &lt; <span class="number">300</span>) &#123;</span><br><span class="line">		<span class="keyword">var</span> body = <span class="built_in">JSON</span>.parse(tokRes.getBody());</span><br><span class="line">	</span><br><span class="line">		access_token = body.access_token;</span><br><span class="line"></span><br><span class="line">		scope = body.scope;</span><br><span class="line"></span><br><span class="line">		refresh_token = body.refresh_token;</span><br><span class="line"></span><br><span class="line">		res.render(<span class="string">'index'</span>, &#123;<span class="attr">access_token</span>: access_token, <span class="attr">refresh_token</span>: refresh_token, <span class="attr">scope</span>: scope&#125;);</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		res.render(<span class="string">'error'</span>, &#123;<span class="attr">error</span>: <span class="string">'Unable to fetch access token, server response: '</span> + tokRes.statusCode&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="Assertion-grant-types"><a href="#Assertion-grant-types" class="headerlink" title="Assertion grant types"></a>Assertion grant types</h2><p>OAuth工作组发布的第一个授权类型，断言授权类型，客户端给出一个结构化并且加密保护的项，该项称为一个<em>断言</em>，该项发送到授权服务器用来交换一个token。可以将端口当作一个认证后的文档，比如证书。到目前为止有两种格式是标准化的：一个使用Security Assertion Markup languate（SAML）和另一个使用JSON Web Token（JWT）。这个授权类型不包括使用反向信道。</p>
+<p><img src="https://i.quantuminit.com/e602f36e072343b9.png" alt="https://i.quantuminit.com/e602f36e072343b9.png"></p>
+<p>客户端发送给授权服务器的assertion：</p>
+<p><img src="https://i.quantuminit.com/054e0de15b4a4762.png" alt="https://i.quantuminit.com/054e0de15b4a4762.png"></p>
+<p>对assertion的主体进行解密之后：</p>
+<p><img src="https://i.quantuminit.com/f5810bd42b9b41d7.png" alt="https://i.quantuminit.com/f5810bd42b9b41d7.png"></p>
+<p>授权服务器解析 assertion，检查它的加密保护措施以及通过处理它的内容来决定生成什么类型的token。这个 assertion 可以表示任意数量的不同的事情，比如资源拥有者的身份或一系列允许的域（权限）。</p>
+<h2 id="Choosing-the-appropriate-grant-type"><a href="#Choosing-the-appropriate-grant-type" class="headerlink" title="Choosing the appropriate grant type"></a>Choosing the appropriate grant type</h2><p><img src="https://i.quantuminit.com/96a515de7dbc4443.svg" alt="https://i.quantuminit.com/96a515de7dbc4443.svg"></p>
+<h2 id="小小的总结"><a href="#小小的总结" class="headerlink" title="小小的总结"></a>小小的总结</h2><ul>
+<li>Implicit grants 可以用户没有单独客户端的在浏览器中的应用程序</li>
+<li>Client credentials grants 以及 assertion grants 能够用于没有明显的资源拥有者的服务端应用程序</li>
+<li>不到万不得已，都不应该使用 resource owner credentials grant（也就是密码）。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Implicit-grant-type"><span class="toc-number">1.</span> <span class="toc-text">Implicit grant type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Client-Credentials-grant-type"><span class="toc-number">2.</span> <span class="toc-text">Client Credentials grant type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resource-owner-credentials-grant-type"><span class="toc-number">3.</span> <span class="toc-text">Resource owner credentials grant type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Assertion-grant-types"><span class="toc-number">4.</span> <span class="toc-text">Assertion grant types</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Choosing-the-appropriate-grant-type"><span class="toc-number">5.</span> <span class="toc-text">Choosing the appropriate grant type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小小的总结"><span class="toc-number">6.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://quantuminit.com/OAuth-2-0-in-the-real-world/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&text=OAuth 2.0 in the real world"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&title=OAuth 2.0 in the real world"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&is_video=false&description=OAuth 2.0 in the real world"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=OAuth 2.0 in the real world&body=Check out this article: https://quantuminit.com/OAuth-2-0-in-the-real-world/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&title=OAuth 2.0 in the real world"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&title=OAuth 2.0 in the real world"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&title=OAuth 2.0 in the real world"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&title=OAuth 2.0 in the real world"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://quantuminit.com/OAuth-2-0-in-the-real-world/&name=OAuth 2.0 in the real world&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

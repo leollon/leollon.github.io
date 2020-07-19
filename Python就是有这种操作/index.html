@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="发现Python有这个操作的是因为再看Fluent Python这本书并且在Python解释器中运行一小段代码的发现这种操作的，现在记录一下这个过程。">
+<meta name="keywords" content="notes,Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python就是有这种操作">
+<meta property="og:url" content="https://quantuminit.com/Python就是有这种操作/index.html">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="发现Python有这个操作的是因为再看Fluent Python这本书并且在Python解释器中运行一小段代码的发现这种操作的，现在记录一下这个过程。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-07-19T15:52:16.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python就是有这种操作">
+<meta name="twitter:description" content="发现Python有这个操作的是因为再看Fluent Python这本书并且在Python解释器中运行一小段代码的发现这种操作的，现在记录一下这个过程。">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Python就是有这种操作</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/Fluent-Python - list-sort-and-sorted/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/Fluent-Python-PySlicing(二)/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://quantuminit.com/Python就是有这种操作/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://quantuminit.com/Python就是有这种操作/&text=Python就是有这种操作"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://quantuminit.com/Python就是有这种操作/&title=Python就是有这种操作"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://quantuminit.com/Python就是有这种操作/&is_video=false&description=Python就是有这种操作"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python就是有这种操作&body=Check out this article: https://quantuminit.com/Python就是有这种操作/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://quantuminit.com/Python就是有这种操作/&title=Python就是有这种操作"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://quantuminit.com/Python就是有这种操作/&title=Python就是有这种操作"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://quantuminit.com/Python就是有这种操作/&title=Python就是有这种操作"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://quantuminit.com/Python就是有这种操作/&title=Python就是有这种操作"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://quantuminit.com/Python就是有这种操作/&name=Python就是有这种操作&description=&lt;p&gt;发现&lt;code&gt;Python&lt;/code&gt;有这个操作的是因为再看Fluent Python这本书并且在Python解释器中运行一小段代码的发现这种操作的，现在记录一下这个过程。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#参考内容"><span class="toc-number">1.</span> <span class="toc-text">参考内容</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Python就是有这种操作
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-08-30T14:05:28.000Z" itemprop="datePublished">2017-08-30</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Python/">Python</a>, <a class="tag-link" href="/tags/notes/">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>发现<code>Python</code>有这个操作的是因为再看Fluent Python这本书并且在Python解释器中运行一小段代码的发现这种操作的，现在记录一下这个过程。</p>
+<a id="more"></a>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; t1 = (1, 2, 3)</span><br><span class="line">&gt;&gt;&gt; l1 = [1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; id(t1)</span><br><span class="line">140129474189664</span><br><span class="line">&gt;&gt;&gt; id(l1)</span><br><span class="line">140129446358480</span><br><span class="line">&gt;&gt;&gt; t1</span><br><span class="line">(1, 2, 3)</span><br><span class="line">&gt;&gt;&gt; l1</span><br><span class="line">[1, 2, 3]</span><br><span class="line">&gt;&gt;&gt; a[0] is b[0]</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; a[1] is b[1]</span><br><span class="line">True</span><br><span class="line">&gt;&gt;&gt; a[2] is b[2]</span><br><span class="line">True</span><br></pre></td></tr></table></figure>
+<p>是的，每一次创建一个对象的时候，都会为这个对象一个新的内存地址。但总有些情况是例外的。后来去<a href="https://www.google.com/search?newwindow=1&amp;safe=active&amp;q=why+is+that+the+id+of+element+in+list++and+tuple+are+the+same&amp;oq=why+is+that+the+id+of+element+in+list++and+tuple+are+the+same&amp;gs_l=psy-ab.3..33i160k1.51115.123511.0.123746.123.101.6.0.0.0.621.12660.2-33j6j6j1.46.0....0...1.1.64.psy-ab..76.18.5559...0j0i131k1j0i3k1j33i22i29i30k1j33i21k1.OGHgGJKSmvw" target="_blank" rel="noopener">Google</a>了一发，然后看到第一条<a href="https://stackoverflow.com/questions/38189660/two-variables-in-python-have-same-id-but-not-lists-or-tuples" target="_blank" rel="noopener">Stack Overflow</a>。</p>
+<p>下面引用Kasramvd说的一段话：</p>
+<blockquote>
+<p>Immutable objects don’t have the same id, and as a mater of fact this is not true for any type of objects that you define separately. Every time you define an object in Python, you’ll create a new object with a new identity.</p>
+</blockquote>
+<blockquote>
+<p>But there are some exceptions for small integers (between -5 and 256) and small strings (interned strings, with a special length (usually less than 20 character)) which are singletons and have same id (actually one object with multiple pointer).</p>
+</blockquote>
+<p>意思就是说，当整形数(small integers)在-5到256这个区间的时候，或者是字符串(small strings)是单例，这些字符串有特别长度(通常小于20个字符)，那么它们就有相同的id，即相同的内存地址。</p>
+<h1 id="参考内容"><a href="#参考内容" class="headerlink" title="参考内容"></a>参考内容</h1><ul>
+<li><a href="https://en.wikipedia.org/wiki/String_interning" target="_blank" rel="noopener">interning strings</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%
+BE%8B%E6%A8%A1%E5%BC%8F" target="_blank" rel="noopener">wiki_单例模式</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Singleton_pattern" target="_blank" rel="noopener">wiki_singleon pattern</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#参考内容"><span class="toc-number">1.</span> <span class="toc-text">参考内容</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://quantuminit.com/Python就是有这种操作/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://quantuminit.com/Python就是有这种操作/&text=Python就是有这种操作"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://quantuminit.com/Python就是有这种操作/&title=Python就是有这种操作"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://quantuminit.com/Python就是有这种操作/&is_video=false&description=Python就是有这种操作"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Python就是有这种操作&body=Check out this article: https://quantuminit.com/Python就是有这种操作/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://quantuminit.com/Python就是有这种操作/&title=Python就是有这种操作"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://quantuminit.com/Python就是有这种操作/&title=Python就是有这种操作"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://quantuminit.com/Python就是有这种操作/&title=Python就是有这种操作"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://quantuminit.com/Python就是有这种操作/&title=Python就是有这种操作"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://quantuminit.com/Python就是有这种操作/&name=Python就是有这种操作&description=&lt;p&gt;发现&lt;code&gt;Python&lt;/code&gt;有这个操作的是因为再看Fluent Python这本书并且在Python解释器中运行一小段代码的发现这种操作的，现在记录一下这个过程。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

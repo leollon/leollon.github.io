@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="本文目的 描述应用层 描述一些应用层的网络服务 列出一些TCP/IP重要的程序  What Is the Application Layer应用层必须和TCP以及UDP端口一样感知传输层并且根据情况传输数据。TCP/IP的应用层是一种用于向TCP和UDP端口发送信息和从TCP端口接收信息网络感知软件组件。在逻辑相似或等同的意义上，这些应用层组件不是并行的。 The TPC/IP Applicati">
+<meta name="keywords" content="notes,TCP&#x2F;IP,Networks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Application Layer">
+<meta property="og:url" content="https://quantuminit.com/The-Application-Layer/index.html">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="本文目的 描述应用层 描述一些应用层的网络服务 列出一些TCP/IP重要的程序  What Is the Application Layer应用层必须和TCP以及UDP端口一样感知传输层并且根据情况传输数据。TCP/IP的应用层是一种用于向TCP和UDP端口发送信息和从TCP端口接收信息网络感知软件组件。在逻辑相似或等同的意义上，这些应用层组件不是并行的。 The TPC/IP Applicati">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://i.quantuminit.com/bb3dcf7b5d06401e.svg">
+<meta property="og:image" content="https://i.quantuminit.com/fd822f26bd8d43c9.svg">
+<meta property="og:image" content="https://i.quantuminit.com/0ae5007c0d38412b.svg">
+<meta property="og:image" content="https://i.quantuminit.com/d91fbe6b3a864831.svg">
+<meta property="og:updated_time" content="2020-07-19T15:52:16.284Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Application Layer">
+<meta name="twitter:description" content="本文目的 描述应用层 描述一些应用层的网络服务 列出一些TCP/IP重要的程序  What Is the Application Layer应用层必须和TCP以及UDP端口一样感知传输层并且根据情况传输数据。TCP/IP的应用层是一种用于向TCP和UDP端口发送信息和从TCP端口接收信息网络感知软件组件。在逻辑相似或等同的意义上，这些应用层组件不是并行的。 The TPC/IP Applicati">
+<meta name="twitter:image" content="https://i.quantuminit.com/bb3dcf7b5d06401e.svg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>The Application Layer</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/Routing/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/The-Transport-Layer/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://quantuminit.com/The-Application-Layer/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://quantuminit.com/The-Application-Layer/&text=The Application Layer"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://quantuminit.com/The-Application-Layer/&title=The Application Layer"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://quantuminit.com/The-Application-Layer/&is_video=false&description=The Application Layer"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=The Application Layer&body=Check out this article: https://quantuminit.com/The-Application-Layer/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://quantuminit.com/The-Application-Layer/&title=The Application Layer"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://quantuminit.com/The-Application-Layer/&title=The Application Layer"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://quantuminit.com/The-Application-Layer/&title=The Application Layer"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://quantuminit.com/The-Application-Layer/&title=The Application Layer"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://quantuminit.com/The-Application-Layer/&name=The Application Layer&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#本文目的"><span class="toc-number">1.</span> <span class="toc-text">本文目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Is-the-Application-Layer"><span class="toc-number">2.</span> <span class="toc-text">What Is the Application Layer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-TPC-IP-Application-Layer-and-OSI"><span class="toc-number">3.</span> <span class="toc-text">The TPC/IP Application Layer and OSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Services"><span class="toc-number">4.</span> <span class="toc-text">Network Services</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#File-and-Print-Services"><span class="toc-number">5.</span> <span class="toc-text">File and Print Services</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Name-Resolution-Services"><span class="toc-number">6.</span> <span class="toc-text">Name Resolution Services</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remote-Access"><span class="toc-number">7.</span> <span class="toc-text">Remote Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-Services"><span class="toc-number">8.</span> <span class="toc-text">Web Services</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#APIs-and-the-Application-Layer"><span class="toc-number">9.</span> <span class="toc-text">APIs and the Application Layer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小小的总结"><span class="toc-number">10.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        The Application Layer
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-08-14T03:02:28.000Z" itemprop="datePublished">2019-08-14</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Networks/">Networks</a>, <a class="tag-link" href="/tags/TCP-IP/">TCP/IP</a>, <a class="tag-link" href="/tags/notes/">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="本文目的"><a href="#本文目的" class="headerlink" title="本文目的"></a>本文目的</h2><ul>
+<li>描述应用层</li>
+<li>描述一些应用层的网络服务</li>
+<li>列出一些TCP/IP重要的程序</li>
+</ul>
+<h2 id="What-Is-the-Application-Layer"><a href="#What-Is-the-Application-Layer" class="headerlink" title="What Is the Application Layer"></a>What Is the Application Layer</h2><p>应用层必须和TCP以及UDP端口一样感知传输层并且根据情况传输数据。TCP/IP的应用层是一种用于向TCP和UDP端口发送信息和从TCP端口接收信息网络感知软件组件。在逻辑相似或等同的意义上，这些应用层组件不是并行的。</p>
+<h2 id="The-TPC-IP-Application-Layer-and-OSI"><a href="#The-TPC-IP-Application-Layer-and-OSI" class="headerlink" title="The TPC/IP Application Layer and OSI"></a>The TPC/IP Application Layer and OSI</h2><p>TCP/IP的应用层与OSI的应用层，表现层以及会话层相关。</p>
+<p><img src="https://i.quantuminit.com/bb3dcf7b5d06401e.svg" alt="bb3dcf7b5d06401e.svg"></p>
+<p>与TCP/IP应用层相关的OSI分层描述：</p>
+<ul>
+<li>Application layer: OSI 应用层有提供服务给用户应用以及支持网络连接的组件。</li>
+<li>Presentation layer: 表现层将数据翻译成平台中立的格式并且处理加密以及数据压缩。</li>
+<li>Session layer: 会话层管理网络上计算机应用之间的通信。</li>
+</ul>
+<p>对于多有的应用程序以及实现，所有的这些服务都不是必需。在TCP/IP模型中，应用层的实现不要求遵循OSI细分的分层，但是总体来说，OSI的应用层，表现层以及会话层定义的职责都在TCP/IP应用层负责的范围内。</p>
+<h2 id="Network-Services"><a href="#Network-Services" class="headerlink" title="Network Services"></a>Network Services</h2><p>在此层之前，协议系统的一层为系统中其他层提供服务。这些服务协议系统定义好的，完整的一部分。在应用层，不是所有的服务都被需要用于协议软件的运行并且更有可能根据用户的直接利益来提供，或者与本地操作系统进行网络连接。应用层含有支持用户体验的各种各样的网络服务：文件服务，远程访问服务，邮件服务和HTTP web 服务。</p>
+<p>应用层更重要的活动：</p>
+<ul>
+<li><a href="#File-and-Print-Services">文件与打印服务</a></li>
+<li><a href="#Name-Resolution-Services">域名解析服务</a></li>
+<li><a href="#Remote-Access">远程访问服务</a></li>
+<li><a href="#Web-Services">Web服务</a>。</li>
+</ul>
+<p>一些应用层协议的表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Protocol</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">BitTorrent</td>
+<td style="text-align:left">A peer-to-peer file sharing protocol often used for fast download of large files on the Internet</td>
+</tr>
+<tr>
+<td style="text-align:left">Common Internet File System (CIFS)</td>
+<td style="text-align:left">An enhanced version of the SMB file service protocol</td>
+</tr>
+<tr>
+<td style="text-align:left">Domain Name System (DNS)</td>
+<td style="text-align:left">A hierarchical system for mapping Internet names to IP addresses</td>
+</tr>
+<tr>
+<td style="text-align:left">Dynamic Host Configuration Protocol(DHCP)</td>
+<td style="text-align:left">A protocol used for automatically assigning IP addresses and other network configuration parameters</td>
+</tr>
+<tr>
+<td style="text-align:left">File Transfer Protocol (FTP)</td>
+<td style="text-align:left">A popular protocol for uploading and downloading files</td>
+</tr>
+<tr>
+<td style="text-align:left">Finger</td>
+<td style="text-align:left">A protocol used for viewing and requesting user information</td>
+</tr>
+<tr>
+<td style="text-align:left">Hypertext Transfer Protocol (HTTP)</td>
+<td style="text-align:left">The communication protocol of the World Wide Web</td>
+</tr>
+<tr>
+<td style="text-align:left">Internet Message Access Protocol (IMAP)</td>
+<td style="text-align:left">A common protocol for accessing email messages</td>
+</tr>
+<tr>
+<td style="text-align:left">Lightweight Directory Access Protocol (LDAP)</td>
+<td style="text-align:left">A protocol used for implementing and managing information directory services</td>
+</tr>
+<tr>
+<td style="text-align:left">Network File System (NFS)</td>
+<td style="text-align:left">A protocol that provides a remote user with access to file resources</td>
+</tr>
+<tr>
+<td style="text-align:left">Network Time Protocol (NTP)</td>
+<td style="text-align:left">A protocol used for synchronizing clocks and other time sources over a TCP/IP network</td>
+</tr>
+<tr>
+<td style="text-align:left">Post Office Protocol (POP)</td>
+<td style="text-align:left">A protocol used for downloading email from a mail server</td>
+</tr>
+<tr>
+<td style="text-align:left">Remote Procedure Call (RPC)</td>
+<td style="text-align:left">A protocol that lets a program on one computer call a subroutine or procedure on another computer</td>
+</tr>
+<tr>
+<td style="text-align:left">Server Message Block (SMB)</td>
+<td style="text-align:left">A file and print service protocol</td>
+</tr>
+<tr>
+<td style="text-align:left">Simple Network Management Protocol (SNMP)</td>
+<td style="text-align:left">A protocol for managing network devices</td>
+</tr>
+</tbody>
+</table>
+<h2 id="File-and-Print-Services"><a href="#File-and-Print-Services" class="headerlink" title="File and Print Services"></a>File and Print Services</h2><p>一个打印<a href="/The-Transport-Layer/#TCP-Connections">服务器</a>操作一个打印机并且在那个打印机上完成打印文件的请求。<br>一个文件服务器操作一个数据存储设备，例如，硬盘，并且完成读取或写入数据到那个设备的请求。文件服务与打印服务是非常见<br>的网络活动，所以他们总是经常放到一起考虑。</p>
+<p>诸如UNIX/Linux Network File System (NFS)，Microsoft的Common Internet File System (CIFS)以及Server<br>Message Block)都是在应用层运行，还有经典的文件传输工具File Transport Protocol (FTP) 以及 Trivial File<br>Transfer Protocol (TFTP)。</p>
+<p>文件服务场景示意图：</p>
+<p><img src="https://i.quantuminit.com/fd822f26bd8d43c9.svg" alt="fd822f26bd8d43c9.svg"></p>
+<h2 id="Name-Resolution-Services"><a href="#Name-Resolution-Services" class="headerlink" title="Name Resolution Services"></a>Name Resolution Services</h2><p><a href="/What-is-TCP-IP/#Name-Resolution">Name resolution</a>是映射预订义，用户友好的字母数字名字到IP地址的过程。Domain Name System (DNS)服务给互联网（Internet）和隔离的TCP/IP网络提供域名解析。DNS使用<strong>name servers</strong>来解析DNS域名查询。一个name server服务运行在name server计算机上的应用层并且与其他name server交换域名解析信息。还有其他比如NIS，NetBIOS以及一些与LDAP关联的域名服务的域名解析系统存在。</p>
+<h2 id="Remote-Access"><a href="#Remote-Access" class="headerlink" title="Remote Access"></a>Remote Access</h2><p>应用就是让用户初始化从一台计算机到另一台计算机交互连接的技术集合之家。例如<a href="/Classic-Services">SSH</a>让用户能够登<br>录到远程系统并且通过网络发送命令。为了将本地环境和网络集成在一起，一些操作系统使用一种称为<strong>redictor</strong>有时又称<br>requester的服务。Redirector在本地计算机中拦截服务请求并且检查是否这个请求应该在本地完成或是转发到网络上的另外一<br>台计算机。</p>
+<p><img src="https://i.quantuminit.com/0ae5007c0d38412b.svg" alt="0ae5007c0d38412b.svg"></p>
+<p>例如，远程硬盘能够以本地硬盘出现在客户计算机上。</p>
+<h2 id="Web-Services"><a href="#Web-Services" class="headerlink" title="Web Services"></a>Web Services</h2><p>Hypertext Transfer Protocol (HTTP) 是我们所知的万维网生态系统的心脏的一部分。</p>
+<h2 id="APIs-and-the-Application-Layer"><a href="#APIs-and-the-Application-Layer" class="headerlink" title="APIs and the Application Layer"></a>APIs and the Application Layer</h2><p>一个application programming interface (API) 是一个应用用来访问其他部分操作环境的一个编程组件预订义集合。<br>程序使用API功能与操作系统进行通信。网络协议栈就是API概念的一个经典的应用。网络API提供从应用到协议栈的接口。应用程序使用来自API的功能打开和关闭连接以及写入数据到网络或从网络中读取数据。Sockets API最初是为BSD UNIX开发的作为应用程序访问TCP/IP协议栈的接口。从Window 95开始，微软将TCP/IP程序接口直接放进了Window操作系统，而在此之前，时序哟啊用户安装且配置的。</p>
+<p>应用程序通过API访问TCP/IP协议栈：</p>
+<p><img src="https://i.quantuminit.com/d91fbe6b3a864831.svg" alt="d91fbe6b3a864831.svg"></p>
+<p>例如Sockets API的网络API通过<a href="/The-Transport-Layer/#Ports-和-Sockets">socket</a>接收并传递数据给应用程序。因此那些APIs在应用层运行。</p>
+<p>TCP/IP实用程序表</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">程序名</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ipconfig/ifconfig</td>
+<td style="text-align:left">A Unix/Linux utility that displays and sets TCP/IP configuration settings.(The Windows utility IPConfig is similar.)</td>
+</tr>
+<tr>
+<td style="text-align:left">ping</td>
+<td style="text-align:left">A utility that tests for network connectivity.</td>
+</tr>
+<tr>
+<td style="text-align:left">arp</td>
+<td style="text-align:left">A utility that lets you view (and possibly modify) the Address Resolution</td>
+</tr>
+</tbody>
+</table>
+<p>Protocol (ARP) cache of a local or remote computer. The ARP cache<br>contains the physical address to IP address mappings (see Hour 4,<br>“The Internet Layer”).|<br>|traceroute|A utility that traces the path of a datagram through the internetwork.|<br>|route|A utility that lets you view, add, or edit entries in a routing table.<a href="/Routing">Routing</a>|<br>|netstat|A utility that displays IP, UDP, TCP, and ICMP statistics.|<br>|hostname|A utility that returns the hostname of the local host.|<br>|ftp|A basic file transfer utility that uses TCP.|<br>|tftp|A basic file transfer utility that uses UDP. Tftp is used for tasks such as downloading code to network devices.|<br>|finger|A utility that displays user information.|</p>
+<h2 id="小小的总结"><a href="#小小的总结" class="headerlink" title="小小的总结"></a>小小的总结</h2><ul>
+<li>应用层必须和TCP以及UDP端口一样感知传输层并且根据情况传输数据。</li>
+<li>DNS是用于映射域名映射到IP地址的服务，HTTP是用于提供web服务的协议。RPC是用于一台计算机上的程序调用另一台计算机<br>上的子程序或程序。</li>
+<li>ifconfig, ping, traceroute, netstat/ss, telnet</li>
+<li>获取邮件的的两个应用层协议：IMAP, POP3</li>
+<li>ntp协议用于同步计算机时钟</li>
+</ul>
+<p><a href="/The-Transport-Layer">上一篇</a></p>
+<p><a href="/Routing">下一篇</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#本文目的"><span class="toc-number">1.</span> <span class="toc-text">本文目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Is-the-Application-Layer"><span class="toc-number">2.</span> <span class="toc-text">What Is the Application Layer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-TPC-IP-Application-Layer-and-OSI"><span class="toc-number">3.</span> <span class="toc-text">The TPC/IP Application Layer and OSI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Services"><span class="toc-number">4.</span> <span class="toc-text">Network Services</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#File-and-Print-Services"><span class="toc-number">5.</span> <span class="toc-text">File and Print Services</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Name-Resolution-Services"><span class="toc-number">6.</span> <span class="toc-text">Name Resolution Services</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remote-Access"><span class="toc-number">7.</span> <span class="toc-text">Remote Access</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-Services"><span class="toc-number">8.</span> <span class="toc-text">Web Services</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#APIs-and-the-Application-Layer"><span class="toc-number">9.</span> <span class="toc-text">APIs and the Application Layer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#小小的总结"><span class="toc-number">10.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=https://quantuminit.com/The-Application-Layer/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=https://quantuminit.com/The-Application-Layer/&text=The Application Layer"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=https://quantuminit.com/The-Application-Layer/&title=The Application Layer"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https://quantuminit.com/The-Application-Layer/&is_video=false&description=The Application Layer"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=The Application Layer&body=Check out this article: https://quantuminit.com/The-Application-Layer/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=https://quantuminit.com/The-Application-Layer/&title=The Application Layer"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=https://quantuminit.com/The-Application-Layer/&title=The Application Layer"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=https://quantuminit.com/The-Application-Layer/&title=The Application Layer"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=https://quantuminit.com/The-Application-Layer/&title=The Application Layer"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=https://quantuminit.com/The-Application-Layer/&name=The Application Layer&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2020 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+<!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
