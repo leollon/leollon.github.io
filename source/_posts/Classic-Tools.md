@@ -19,7 +19,7 @@ tags: [notes, TCPIP, Networks]
 
 - 协议功能障碍或配置错误：协议软件不工作或（无论什么原因）未正确配置地运行在网络上。
 - 线路问题：网线未插入或不正常工作。集线器，路由器或交换机未正常工作。
-- 错误的名字解析：域名系统（DNS）或NetBIOS名字不能被解析。资源能够通过IP地址进行访问但是不能通过主机名或DNS名字（quantuminit.com）。
+- 错误的名字解析：域名系统（DNS）或NetBIOS名字不能被解析。资源能够通过IP地址进行访问但是不能通过主机名或DNS名字（cthee.cyou）。
 - 流量过大（Excessive traffic）：网络是工作状态，但是工作很慢。
 
 下面分别讨论解决这些常见连接问题的工具及技术。
@@ -153,7 +153,7 @@ ifconfig eth0 down
 
 ```bash
 traceroute 193.138.240.91  # 跟IP地址
-traceroute quantuminit.com
+traceroute cthee.cyou
 ```
 
 旧版本的Window系统使用`tracert`命令作为等同于`traceroute`的命令工具。在Powershell系统上，`TraceRoute`是一个`Test-NetConnection`命令的选项：
@@ -172,7 +172,7 @@ test-NetConnection www.example.com -TraceRoute
 
 - `route print`：显示路由表中的当前的路由条目。
 
-![https://i.quantuminit.com/7e3f5ca7c9b64dd6.png](https://i.quantuminit.com/7e3f5ca7c9b64dd6.png)
+![https://i.cthee.cyou/7e3f5ca7c9b64dd6.png](https://i.cthee.cyou/7e3f5ca7c9b64dd6.png)
 
 - `route add`添加一条新的路由条目到路由表中。例如，为了指定一个路由到目的网络202.34.17.0是5跳的距离并且首先传进一个带有在本地网络192.59.66.5上的一个IP地址的路由器并且子网掩码是255.255.255.224，输入如下命令：
 
@@ -210,7 +210,7 @@ route delete 207.34.17.0
 - `netstat -p TCP`：用于显示建立的TCP连接
 - `netstat -p UDP`：用于显示建立的UDP连接
 
-![https://i.quantuminit.com/0b1132c475d849a9.svg](https://i.quantuminit.com/0b1132c475d849a9.svg)
+![https://i.cthee.cyou/0b1132c475d849a9.svg](https://i.cthee.cyou/0b1132c475d849a9.svg)
 
 Windows PowerShell environments 使用等同于`netstat`的`Get-NetTCPConnection`命令。
 
@@ -220,7 +220,7 @@ Windows PowerShell environments 使用等同于`netstat`的`Get-NetTCPConnection
 
 Telnet会话需要一个充当远程终端的Telnet客户端和一个接收连接请求并且允许连接的Telnet服务器。
 
-![https://i.quantuminit.com/ac16e131fdcb42c5.svg](https://i.quantuminit.com/ac16e131fdcb42c5.svg)
+![https://i.cthee.cyou/ac16e131fdcb42c5.svg](https://i.cthee.cyou/ac16e131fdcb42c5.svg)
 
 Telnet也是一个协议——一个定义在Telnet服务器和客户端之间交互的规则系统。
 
@@ -259,7 +259,7 @@ Berkeley Software Distribution Unix实现，称作BSD Unix，是Unix发展过程
 
 r\*工具使用一个称为**trusted access**的概念。Trusted access允许一台计算机信任另外一台计算机的验证。如下图所示，如果计算机A将计算机B指定为一台信任的主机，那么登录到计算机B的用户可以使用r\*工具在不提供密码的情况下访问计算机A。计算机A也可以指定特定的用户为信任的用户。被信任的主机和用户被标识在用户尝试访问的计算机上的/etc/hosts.equiv文件中。每个用户主目录中的rhosts文件也能够被用于授予访问到该用户帐号的权限。
 
-![https://i.quantuminit.com/41aa727931764c37.svg](https://i.quantuminit.com/41aa727931764c37.svg)
+![https://i.cthee.cyou/41aa727931764c37.svg](https://i.cthee.cyou/41aa727931764c37.svg)
 
 hosts.equiv和rhosts文件的脆弱性是r*工具不再被认为是安全的原因之一。
 
@@ -292,11 +292,11 @@ SNMP架构的主要部分：
 - Nodes：网络上的设备
 - Community：在常见的管理网络中的一组结点。
 
-![https://i.quantuminit.com/04e38dabad224e5b.svg](https://i.quantuminit.com/04e38dabad224e5b.svg)
+![https://i.cthee.cyou/04e38dabad224e5b.svg](https://i.cthee.cyou/04e38dabad224e5b.svg)
 
 协议给通信提供方案，但是实际的交互发生在运行在通信设备的上的应用程序。在SNMP例子中，一个称为代理的程序运行在远程结点上并且与运行在网络监视器上的管理软件进行通信。
 
-![https://i.quantuminit.com/94cf26bf255f4925.svg](https://i.quantuminit.com/94cf26bf255f4925.svg)
+![https://i.cthee.cyou/94cf26bf255f4925.svg](https://i.cthee.cyou/94cf26bf255f4925.svg)
 
 监视器和代理使用SNMP协议来通信。SNMP使用数据报（UDP）协议端口161和162。通过community name来提供安全，社区的名字又称为**community string**。（你得知道连接的community string）。在某些情况下，也可以配置代理只接收来自特定IP地址的数据。最新办的SNMP版本，SNMP v3，为系统提供了验证，隐私以及更好的完整的安全。
 
@@ -306,7 +306,7 @@ SNMP定义大量的管理参数。网络监视器使用这个管理信息基础�
 
 SNMP进程都是在监视器和代理软件上运行的，它们能够交换关于在MIB中的特定的可寻址位置的信息。MIB允许监视器和代理准确并且无二异性的交换信息。监视器和代理需要相同的MIB结构，因为他们必须能够独一无二地识别一个特定单元的信息。
 
-![https://i.quantuminit.com/e4dc8016a4bd4bce.svg](https://i.quantuminit.com/e4dc8016a4bd4bce.svg)
+![https://i.cthee.cyou/e4dc8016a4bd4bce.svg](https://i.cthee.cyou/e4dc8016a4bd4bce.svg)
 
 MIB是一个含有每小块信息的一个唯一地址的层次地址空间。注意MIB地址不像网络地址一样，在地址中它们表示一个位置或实际的设备。MIB使用点状助记符号标识在MIB对象中的每个唯一的地址。
 

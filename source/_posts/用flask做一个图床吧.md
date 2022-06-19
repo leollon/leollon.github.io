@@ -23,7 +23,7 @@ TODO List
 
 2018-09-21 00:33:15 坑填好了
 
-## [点我体验一下](https://picbed.quantuminit.com/)
+## [点我体验一下](https://picbed.cthee.cyou/)
 ## [点我去看一下代码](https://github.com/leollon/yet-another-image-bed)
 
 --EOF--

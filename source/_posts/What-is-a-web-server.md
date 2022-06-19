@@ -43,7 +43,7 @@ web server支持HTTP(Hypertext Transfer Protocol)。HTTP指定了客户端与服
 
   意思就是这协议里面的内容是纯文本的，并且对于我们来说是可读的。比如下面浏览器的Request Headers:
 
-    :authority:blog.quantuminit.com
+    :authority:i.cthee.cyou
     :method:GET
     :path:/
     :scheme:https
@@ -54,7 +54,7 @@ web server支持HTTP(Hypertext Transfer Protocol)。HTTP指定了客户端与服
     cookie:__cfduid=dc58427250e06445edbc6017d751350a91499695700; _ga=GA1.2.277865214.1302012244; _gid=GA1.2.532311051.1503029392
     dnt:1
     if-modified-since:Fri, 18 Aug 2017 06:20:43 GMT
-    referer:https://blog.quantuminit.com/
+    referer:https://i.cthee.cyou/
     upgrade-insecure-requests:1
     user-agent:Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36
 

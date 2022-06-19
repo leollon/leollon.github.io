@@ -9,13 +9,13 @@ tags: [csapp,notes,深入理解计算机系统]
 
 计算机系统是由硬件和系统软件组成的，它们共同工作来运行应用程序。
 
-![https://i.quantuminit.com/2e501a1eebe44afa.png](https://i.quantuminit.com/2e501a1eebe44afa.png)
+![https://i.cthee.cyou/2e501a1eebe44afa.png](https://i.cthee.cyou/2e501a1eebe44afa.png)
 
 ## 信息就是位 + 上下文
 
 hello 程序的生命周期是从一个源程序（或者说源文件）开始的，即程序员通过编辑器创建并保存的文本文件，文件名 hello.c。源程序实际上是一个由值 0 和 1 组成的位（又称比特）序列，8 个位组成的一个组，称之为**字节**。每个字节表示程序中的某些文本字符。只有 ASCII 字符构成的文件称为**文本文件**，所有其他文件都称为**二进制文件*。
 
-![https://i.quantuminit.com/c30693fca1994049.png](https://i.quantuminit.com/c30693fca1994049.png)
+![https://i.cthee.cyou/c30693fca1994049.png](https://i.cthee.cyou/c30693fca1994049.png)
 
 hello.c 程序是以字节序列的方式储存在文件中的。hello.c 的表示方法说明了一个基本思想：系统中的所有信息————包括磁盘文件、内存中的程序、内存中存放的用户数据以及网络上传送的数据，都是由一串比特表示的。
 
@@ -38,13 +38,13 @@ gcc -o hello hello.c
 3. *汇编器*
 4. *链接器*
 
-![https://i.quantuminit.com/d246b3ca236a4e25.png](https://i.quantuminit.com/d246b3ca236a4e25.png)
+![https://i.cthee.cyou/d246b3ca236a4e25.png](https://i.cthee.cyou/d246b3ca236a4e25.png)
 
 - 预处理器。该处理器（cpp）根据 # 开头字符的命令修改原始 C 程序。比如 hello.c 中的 `#include <stdio.h>`命令告诉预处理器读取系统文件 `stdio.h`的内容，并插入到 hello.c 文本文件中。通常是的到一个以.i为文件扩展名的另一个 C 程序。
 
 - 编译器。编译器（ccl）将预处理器生成的文本文件 hello.i 翻译成包含一个汇编语言程序的文本文件 hello.s。该程序包含函数 main 的定义：
 
-![https://i.quantuminit.com/19eb1fc16f884f2d.png](https://i.quantuminit.com/19eb1fc16f884f2d.png)
+![https://i.cthee.cyou/19eb1fc16f884f2d.png](https://i.cthee.cyou/19eb1fc16f884f2d.png)
 
 - 汇编阶段。汇编器（as）将包含汇编语言程序的 hello.s 翻译成机器语言指令，将这些命令打包成一个称为**可重定位目标程序**的格式，并保存在目标文件 hello.o 中。此时，hello.o 是一个二进制文件，其包含的 17 个字节是函数 main 的指令编码。
 - 链接阶段。hello 程序调用 printf 函数，它是每个 C 编译器都提供的标准 C 库中的一个函数。链接器负责将存在于预编译好的 printf.o文件中 中的 printf 函数，以某种方式合并到 hello.o 中来。最后得到一个可被加载到内存中由系统执行的可执行目标文件（或简称为可执行文件）。
@@ -66,7 +66,7 @@ hello, world
 
 那么什么是 shell 呢？这个英语单词在中文中的意思是壳，贝壳。我们知道贝壳的壳很硬，这么硬有部分原因肯定是想保护内部柔软的核心的。我们知识迁移到计算机操作系统中，计算机操作系统主要由两部分组成：操作系统和 shell 组成。我们这里讲的是Unix系统。那么shell 它是一个命令行解释器，同时也是起到保护计算机操作系统内核的作用。它输出一个提示符，等待输入一个命令行，然后执行用户输入的这个命令。
 
-![https://i.quantuminit.com/f4ec18a9d70e4133.svg](https://i.quantuminit.com/f4ec18a9d70e4133.svg)
+![https://i.cthee.cyou/f4ec18a9d70e4133.svg](https://i.cthee.cyou/f4ec18a9d70e4133.svg)
 
 ### 系统的硬件组成
 
@@ -78,7 +78,7 @@ hello, world
 
     I/O(输入/输出)设备是系统与外部世界的联系通道。这里的实例系统包括四个I/O设备：作为用户输入的鼠标和键盘，作为用户输出的显示器，以及用于长期存储数据和程序的磁盘驱动器（即磁盘）。每个 I/O 设备通过一个*控制器*或*适配器*与 I/O 总线相连。控制器和适配器之间的区别主要在于他们的封装方式。**控制器**是 I/O 设备本身或者系统的主印制电路板（即主板）上的芯片组。适配器则是一块插在主板插槽上的卡。但他们的功能都是在 I/O 总线和 I/O 设备之间传递信息。
 
-    ![https://i.quantuminit.com/da08e95947d2461b.png](https://i.quantuminit.com/da08e95947d2461b.png)
+    ![https://i.cthee.cyou/da08e95947d2461b.png](https://i.cthee.cyou/da08e95947d2461b.png)
 
 3. 主存
 
@@ -105,17 +105,17 @@ hello, world
 
 初始时，shell 程序执行它的指令，等待输入一个命令。当输入字符串“./hello”之后，shell 程序将字符逐一读入寄存器，将其放到内存中。
 
-![https://i.quantuminit.com/b7736672b9e14b96.png](https://i.quantuminit.com/b7736672b9e14b96.png)
+![https://i.cthee.cyou/b7736672b9e14b96.png](https://i.cthee.cyou/b7736672b9e14b96.png)
 
 当敲下键盘键盘上的回车键时，shell 程序就知道已经输入完命令。shell 程序执行一系列指令来加载可执行的 hello 文件，将 hello 目标文件中的代码和数据从磁盘复制到主存。其中也包括最后要显示的“hello, world\n”。
 
 利用直接存储器存取（DMA）技术，数据可以不通过处理器而直接从磁盘到达内存。
 
-![https://i.quantuminit.com/36ce1861ef1b4c38.png](https://i.quantuminit.com/36ce1861ef1b4c38.png)
+![https://i.cthee.cyou/36ce1861ef1b4c38.png](https://i.cthee.cyou/36ce1861ef1b4c38.png)
 
 在目标文件 hello 程序中的代码被加载到主存以后，处理器处理则开始执行 hello 程序的 main 函数中的机器语言指令。这些指令将字符串“hello, world\n”数据复制到寄存器，再从寄存器复制到显示设备上，并最终显示出来。
 
-![https://i.quantuminit.com/aba4b8df31de4413.png](https://i.quantuminit.com/aba4b8df31de4413.png)
+![https://i.cthee.cyou/aba4b8df31de4413.png](https://i.cthee.cyou/aba4b8df31de4413.png)
 
 ## 告诉缓存至关重要
 
@@ -127,11 +127,11 @@ hello, world
 
 为了解决处理器和主存之间的这种差距，系统设计者采用了更小更快的存储设备，称为*高速缓存存储器*（cache memory，简称为 cache 或高速缓存），作为暂时集结区域，用来存放处理器近期可能会使用的信息。位于处理器芯片上的 L1 高速缓存的容量可以达到数万字节，其访问速度接近于访问寄存器的速度。而 L2 高速缓存器容量可达到数十万到数百万字节，它通过一条特殊的总线连接到处理器。L1 和 L2 高速缓存使用一种叫做 **静态随机访问存储器**（SRAM）的硬件技术来实现。比较新的处理器要还有 L3 高速缓存。系统可以获得一个很大的存储器，同时访问速度也很快，原因是利用了告诉**缓存的局部性**原理。
 
-![https://i.quantuminit.com/9812ee33dcfc4593.png](https://i.quantuminit.com/9812ee33dcfc4593.png)
+![https://i.cthee.cyou/9812ee33dcfc4593.png](https://i.cthee.cyou/9812ee33dcfc4593.png)
 
 ## 存储设备形成层次结构
 
-![https://i.quantuminit.com/d72a17d58a814e44.png](https://i.quantuminit.com/d72a17d58a814e44.png)
+![https://i.cthee.cyou/d72a17d58a814e44.png](https://i.cthee.cyou/d72a17d58a814e44.png)
 
 存储器层次结构的主要思想是上一层的存储器作为低一层存储器的高速缓存。因此，从层次结构的上方到下方，每一层都是下一层的高速缓存。分布式文件系统的网络系统中，本地磁盘就是存储在其他系统中磁盘上的数据的高速缓存。
 
@@ -139,14 +139,14 @@ hello, world
 
 hello 程序依靠操作系统提供的服务来访问键盘，磁盘或主存。应用程序尝试对硬件的操作都必须通过操作系统。
 
-![https://i.quantuminit.com/bfbbae7afb6340ee.png](https://i.quantuminit.com/bfbbae7afb6340ee.png)
+![https://i.cthee.cyou/bfbbae7afb6340ee.png](https://i.cthee.cyou/bfbbae7afb6340ee.png)
 
 操作系统有两个基本功能：
 
 1. 防止硬件被失控的应用程序滥用
 2. 向应用程序提供简单一致的机制来控制复杂而又通常大不相同的低级硬件设备。操作系统通过几个基本的抽象概念（**进程**、**虚拟内存**、**文件**）来实现这两个功能。
 
-![https://i.quantuminit.com/4d4d0387f5a24730.png](https://i.quantuminit.com/4d4d0387f5a24730.png)
+![https://i.cthee.cyou/4d4d0387f5a24730.png](https://i.cthee.cyou/4d4d0387f5a24730.png)
 
 ### 进程
 
@@ -154,13 +154,13 @@ hello 程序依靠操作系统提供的服务来访问键盘，磁盘或主存�
 
 操作系统保持跟踪进程运行所需的所有状态信息。这种状态，也就是上下文，包括许多信息，比如 PC 和寄存器文件的当前值，以及主存的内容。在任一时刻，单处理器系统都只能执行一个今晨个的代码。当操作系统决定把控制权从当前进程转移到某个新进程是，就会进行上下文切换，即保存当前进程的上下文、恢复新进程的上下文，然后将控制权传递到新进程。新进程从上次停止的地方开始。
 
-![https://i.quantuminit.com/92e8393943f8487b.png](https://i.quantuminit.com/92e8393943f8487b.png)
+![https://i.cthee.cyou/92e8393943f8487b.png](https://i.cthee.cyou/92e8393943f8487b.png)
 
 当我们通过 shell 程序运行 hello 程序时，这里就产生了俩个并发进程。最开始，只有 shell 进程在运行，即等待命令行上的输入。当我们让它运行hello 程序时，shell 通过调用一个专门的函数，即系统调用，来执行我们的请求，系统调用会将控制权传递给操作系统。
 
 从一个进程到另一个进程的切换是有关操作系统内核（kernel）管理的。内核是操作系统代码常驻主存的部分。内核不是一个独立的进程。相反，它是系统管理全部进程所有代码和数据结构的集合。
 
-![https://i.quantuminit.com/92e8393943f8487b.png](https://i.quantuminit.com/92e8393943f8487b.png)
+![https://i.cthee.cyou/92e8393943f8487b.png](https://i.cthee.cyou/92e8393943f8487b.png)
 
 ### 线程
 
@@ -170,7 +170,7 @@ hello 程序依靠操作系统提供的服务来访问键盘，磁盘或主存�
 
 **虚拟内存**是一个抽象概念，它为每个进程提供了一个假象，及每个进程都在独占地使用贮存。每个进程看到的内存都是一致的，称为**虚拟地址空间**。Linux 进程的虚拟地址空间（其他 Unix 系统的设计也与此类似）。在 Linux 中，地址空间最上面的区域是保留给操作系统中的代码和数据的。地址空间的底部区域存放用户进程定义的代码和数据。
 
-![https://i.quantuminit.com/e8a78e144cc547a8.png](https://i.quantuminit.com/e8a78e144cc547a8.png)
+![https://i.cthee.cyou/e8a78e144cc547a8.png](https://i.cthee.cyou/e8a78e144cc547a8.png)
 
 每个进程看到的虚拟地址空间由大量准确定义的区构成，每个区都有专门的功能。这里先简单了解每个区。从最低的地址开始，逐步向上介绍。
 
@@ -190,7 +190,7 @@ hello 程序依靠操作系统提供的服务来访问键盘，磁盘或主存�
 
 现代系统经常通过网络和其他系统连接到一起。从一个单独的系统来看，网络可视为一个 I/O 设备。
 
-![https://i.quantuminit.com/4c06b9acc501409f.png](https://i.quantuminit.com/4c06b9acc501409f.png)
+![https://i.cthee.cyou/4c06b9acc501409f.png](https://i.cthee.cyou/4c06b9acc501409f.png)
 
 ## 重要主题
 
@@ -200,7 +200,7 @@ hello 程序依靠操作系统提供的服务来访问键盘，磁盘或主存�
 
 这一定律是一个叫 Gene Amdahl 的人的观察得出。定律的主要思想是，当我们对系统的某个部分加速是，其对系统整体性能的影响取决与该部分的重要性和加速程度。假设系统执行某个应用程序使用时间 T<sub>old</sub>。若系统某部分所需执行时间与这个时间的比例为 α，而后来部分性能提升的比例为 k。即该部分系统初始所需时间为 αT<sub>old</sub>，现在执行初始时间是(αT<sub>old</sub>)/k。因此，新的总执行时间应该为 T<sub>new</sub> = (1-α)T<sub>old</sub> + (αT<sub>old</sub>)/k。
 
-![https://i.quantuminit.com/af5db97cb6594354.svg](https://i.quantuminit.com/af5db97cb6594354.svg)
+![https://i.cthee.cyou/af5db97cb6594354.svg](https://i.cthee.cyou/af5db97cb6594354.svg)
 
 由此可以计算出加速比 S = T<sub>old</sub>/T<sub>new</sub> 为 S = 1 / ((1 - α) + (α/k))
 
@@ -214,7 +214,7 @@ Amdahl 定律一个有趣的特殊情况是当 k 趋向于 **∞** 时，意味�
 
     使用线程，能够在一个进程中执行多个控制流。早期的并发执行只是通过模拟出来的，通过是一台计算机在它正在执行的进程见快速切换来实现的。这种并发形式允许多个用户同时与系统交互。例如，在一个窗口中开启 Web 浏览器，在另一个窗口运行文字处理器，同时有播放自己想听的音乐。单处理器系统是一个由单操作系统内核控制的，通过多任务切换来进行处理任务的单处理器组成的系统。多处理器系统是一个由单操作系统内核控制的多处理器组成的系统。
 
-    ![https://i.quantuminit.com/fd4b61fe3bde4849.png](https://i.quantuminit.com/fd4b61fe3bde4849.png)
+    ![https://i.cthee.cyou/fd4b61fe3bde4849.png](https://i.cthee.cyou/fd4b61fe3bde4849.png)
 
     多核处理器是将多个 CPU(称为“核”)集成到一个集成芯片上。到 2020年4月为止，笔者已知的 CPU 核心数最高是 `AMD Ryzen™ Threadripper™ 3990X Processor` 的 64 核，Intel 的核心数最高是 `Intel® Core™ i9-10980XE Extreme Edition Processor` 的 18 核。
 

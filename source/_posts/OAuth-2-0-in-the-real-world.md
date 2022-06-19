@@ -11,7 +11,7 @@ Index: OAuth 2.0 in action - chapter 6.1
 
 客户端完全运行在浏览器中。
 
-![https://i.quantuminit.com/21761a033c5b4ed9.jpg](https://i.quantuminit.com/21761a033c5b4ed9.jpg)
+![https://i.cthee.cyou/21761a033c5b4ed9.jpg](https://i.cthee.cyou/21761a033c5b4ed9.jpg)
 
 它具有严重的局限性：
 
@@ -68,7 +68,7 @@ app.post("/token", function(req, res) {
 
 倘若没有明显的资源拥有者，或资源拥有者不能够与客户端软件本身分别出。这是相当常见的情况，在这种情况中，后端系统需要直接与彼此进行通信并且没必要代表任何一个特定的用户。
 
-![https://i.quantuminit.com/218c305cbfe04e1e.jpg](https://i.quantuminit.com/218c305cbfe04e1e.jpg)
+![https://i.cthee.cyou/218c305cbfe04e1e.jpg](https://i.cthee.cyou/218c305cbfe04e1e.jpg)
 
 客户端代表自己（自己就是资源拥有者）从token端点获取access token。
 
@@ -152,7 +152,7 @@ app.get('/authorize', function(req, res){
 
 假设资源拥有者在授权服务器上拥有普通的用户名以及密码，那么对于客户端来说，能够提示用户使用这一凭证并且使用它们来交换获取一个access token。resource owner credentials 授权类型，也称密码工作流，允许一个客户端仅仅这么做。
 
-![https://i.quantuminit.com/20039fb08a954b51.png](https://i.quantuminit.com/20039fb08a954b51.png)
+![https://i.cthee.cyou/20039fb08a954b51.png](https://i.cthee.cyou/20039fb08a954b51.png)
 
 服务端代码实例：
 
@@ -250,21 +250,21 @@ app.post('/username_password', function(req, res) {
 
 OAuth工作组发布的第一个授权类型，断言授权类型，客户端给出一个结构化并且加密保护的项，该项称为一个*断言*，该项发送到授权服务器用来交换一个token。可以将端口当作一个认证后的文档，比如证书。到目前为止有两种格式是标准化的：一个使用Security Assertion Markup languate（SAML）和另一个使用JSON Web Token（JWT）。这个授权类型不包括使用反向信道。
 
-![https://i.quantuminit.com/e602f36e072343b9.png](https://i.quantuminit.com/e602f36e072343b9.png)
+![https://i.cthee.cyou/e602f36e072343b9.png](https://i.cthee.cyou/e602f36e072343b9.png)
 
 客户端发送给授权服务器的assertion：
 
-![https://i.quantuminit.com/054e0de15b4a4762.png](https://i.quantuminit.com/054e0de15b4a4762.png)
+![https://i.cthee.cyou/054e0de15b4a4762.png](https://i.cthee.cyou/054e0de15b4a4762.png)
 
 对assertion的主体进行解密之后：
 
-![https://i.quantuminit.com/f5810bd42b9b41d7.png](https://i.quantuminit.com/f5810bd42b9b41d7.png)
+![https://i.cthee.cyou/f5810bd42b9b41d7.png](https://i.cthee.cyou/f5810bd42b9b41d7.png)
 
 授权服务器解析 assertion，检查它的加密保护措施以及通过处理它的内容来决定生成什么类型的token。这个 assertion 可以表示任意数量的不同的事情，比如资源拥有者的身份或一系列允许的域（权限）。
 
 ## Choosing the appropriate grant type
 
-![https://i.quantuminit.com/96a515de7dbc4443.svg](https://i.quantuminit.com/96a515de7dbc4443.svg)
+![https://i.cthee.cyou/96a515de7dbc4443.svg](https://i.cthee.cyou/96a515de7dbc4443.svg)
 
 ## 小小的总结
 

@@ -18,7 +18,7 @@ Tier 2 网络系统围绕Tier 1 网络边缘运行。Tier 2 网络可能租约�
 
 一个Tier 3 网络就是大多数人能知道的互联网服务提供上（ISP）。Tier 3 ISPs出租所谓的**point of presence(POP)**连接来给它们线路上的订阅用户访问更广大的互联网。
 
-![https://i.quantuminit.com/911437ac01064775.svg](https://i.quantuminit.com/911437ac01064775.svg)
+![https://i.cthee.cyou/911437ac01064775.svg](https://i.cthee.cyou/911437ac01064775.svg)
 
 贯穿互联网的Tier 1 以及 Tier 2网络（还有一些ISPs）在称为互联网交换点（Internet exchange points，IXPs）的交换基础设施中相交汇。IXPs是大型的基础设施。许多或者有时候成百上千的网络能够在单独一个交换点进行连接。IXP不提供路由服务。而是由成员网络在IXP基础设施可用的一个安全的空间中提供并且维护它们自己的路由器。IXP基础设置本身是一个本地网络，并且流量经过本地网络，这个本地网络在IXP基础设施内，而这个基础设施在由运行在网络接入层（OSI的数据链路层）的交换机来管理的成员网络之间充当接口。
 
@@ -32,7 +32,7 @@ Tier 2 网络系统围绕Tier 1 网络边缘运行。Tier 2 网络可能租约�
 
 特别要记住的是参与在互联网上或任何其他网络上的网络活动的所有计算机都有一个共同的特点：它们运行着参与这些网络活动的软件。不仅仅是发生网络通信。它需要协议软件，也需要在用于和彼此之间进行通信的连接两端的应用程序。如下图所示，互联网上大部分计算机能够被分成要么是客户端（请求服务的计算机）要么是服务器（提供服务的计算机）。
 
-![https://i.quantuminit.com/b4205a93a8e54fa8.svg](https://i.quantuminit.com/b4205a93a8e54fa8.svg)
+![https://i.cthee.cyou/b4205a93a8e54fa8.svg](https://i.cthee.cyou/b4205a93a8e54fa8.svg)
 
 编写出来的客户端计算机上的一个客户端应用程序被用于和服务端计算机上服务端应用程序进行交互。编写出来的服务端应用程序用于监听来自客户端的请求以及相应这个请求。
 
@@ -82,11 +82,11 @@ URI Schemes
 
 //www.google.com
 
-//blog.quantuminit.com
+//i.cthee.cyou
 
 //ftpuser:userp4s5word@google.com
 
-//quantuminit.com:8080
+//cthee.cyou:8080
 
 即使访问需要提供凭证的资源，可能不用一开始就在URL中指定用户。在初始化请求之后，许多服务会提示用户输入用户ID以及密码。
 

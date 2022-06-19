@@ -56,7 +56,7 @@ DHCP是一个用于自动为计算机分配TCPIP配置参数的协议。一个DH
 
 一个relay agent被配置一个固定的IP地址并且知道DHCP服务器的IP地址。因为relay agent 已经配置了IP地址，它们总是能够发送并且接收给DHCP服务器的定向的数据报。因为relay agent与DHCP客户端处在同样的网络上，所以能够通过广播和DHCP客户端进行通信。
 
-![https://i.quantuminit.com/08620e0f601c4ed0.svg](https://i.quantuminit.com/08620e0f601c4ed0.svg)
+![https://i.cthee.cyou/08620e0f601c4ed0.svg](https://i.cthee.cyou/08620e0f601c4ed0.svg)
 
 ### DHCP Time Fields
 
@@ -84,7 +84,7 @@ range 185.142.13.100 185.142.13.200;
 
 正如前面文章提到的一样，DHCP服务经常通过比如路由器/防火墙系统等网络设备来提供。一个路由器设备提供一个网页DHCP配置接口。
 
-![https://i.quantuminit.com/bc30a85b56d74bf5.svg](https://i.quantuminit.com/bc30a85b56d74bf5.svg)
+![https://i.cthee.cyou/bc30a85b56d74bf5.svg](https://i.cthee.cyou/bc30a85b56d74bf5.svg)
 
 一些路由器提供一个成为IP预留的特性，用来将一个IP地址和物理地址（MAC）关联起来。通过这一特性能够确保设备总是收到同样的IP地址。
 
@@ -94,7 +94,7 @@ range 185.142.13.100 185.142.13.200;
 
 NAT设备隐藏本地网络的所有细节，事实上，隐藏了本地网络的存在。
 
-![https://i.quantuminit.com/681d766cc3954b41.svg](https://i.quantuminit.com/681d766cc3954b41.svg)
+![https://i.cthee.cyou/681d766cc3954b41.svg](https://i.cthee.cyou/681d766cc3954b41.svg)
 
 从[The-Internet-Layer](/The-Internet-Layer)中得知，预留了一小部分的IP地址用于“私有”网络：
 
@@ -124,7 +124,7 @@ zero-configuration环境中的三个重要的部分：
 
 一台支持multicast DNS（mDNS）的计算机保存它自己的内部的DNS资源记录表并使用这张表来将名字解析到IP地址。
 
-![https://i.quantuminit.com/4d19f42114644bf7.svg](https://i.quantuminit.com/4d19f42114644bf7.svg)
+![https://i.cthee.cyou/4d19f42114644bf7.svg](https://i.cthee.cyou/4d19f42114644bf7.svg)
 
 DNS服务发现（DNS-SD）为计算机以及设备提供一种通过DNS公布服务的方式。DNS-SD依赖于查询SRV资源记录，该记录标识域内提供的服务。例如，在传统的NDS网络上，一个域的一个SRV记录可能保存有一个FTP服务器或Active Directory 域控制器的主机名和端口号。DNS-SD扩展这一能力到更小的范围并且有策略地利用其他记录类型来完成这个过程。首先，DNS PTR指针记录（反向查询中使用到）的变体指向网络上运行着的可用的服务实例。查询结果可能返回如下信息：
 

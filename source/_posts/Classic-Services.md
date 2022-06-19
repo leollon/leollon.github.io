@@ -41,7 +41,7 @@ FTP使用TCP协议并且因此通过一个在客户端计算机和服务器计�
 - `help`：显示在FTP客户端上可用的FTP命令。
 - `ls` or `dir`：UNIX/Linux 的`ls` 或 `ls -l`命令或Windows`dir`命令用于列出FTP服务器上当前工作目录的文件名以及目录名称。`ls -l`命令类似与`ls`但是它能够列出额外的细节比如读写权限以及文件创建时间。
 
-![https://i.quantuminit.com/4ca26180261540fa.svg](https://i.quantuminit.com/4ca26180261540fa.svg)
+![https://i.cthee.cyou/4ca26180261540fa.svg](https://i.cthee.cyou/4ca26180261540fa.svg)
 
 - `pwd`：`pwd`命令打印在远程服务器上当前工作目录的名字。
 - `cd`：更换FTP服务器上的当前工作目录。
@@ -111,7 +111,7 @@ NFS被设计成独立于操作系统，传输层以及物理网络结构而存�
 
 dn: cn=Ellen Johnson, ou=employees, dc=pearson,dc=com
 
-![https://i.quantuminit.com/85483ac5df90454a.svg](https://i.quantuminit.com/85483ac5df90454a.svg)
+![https://i.cthee.cyou/85483ac5df90454a.svg](https://i.cthee.cyou/85483ac5df90454a.svg)
 
 一个DN可能看起来像是这样子的：
 
@@ -148,7 +148,7 @@ LDAP有时候回合其他验证工具结合起来为用户提供一种用于验�
 
 大部分用户不再从shell提示窗口进行操作，而是喜欢通过鼠标在图形接口（GUI）点击来操作。许多远程接入协议以及工具让用户使用平常的键盘与鼠标的桌面操作来控制远程系统。通过GUI提供远程访问的任务有些复杂，但是原理都是一样的。运行在计算机A的应用层软件部分拦截键盘的输入并且通过协议栈重定向到计算机B。来自计算机B的屏幕输出通过网络发送回计算机A。这样结果是计算机A的键盘和鼠标充当计算机B的键盘鼠标，并且计算机A的屏幕显示计算机B桌面。简而言之，用户可以在计算机A通过远程控制可以看到并且操作计算机B。
 
-![https://i.quantuminit.com/6bfab9684bad43d0.svg](https://i.quantuminit.com/6bfab9684bad43d0.svg)
+![https://i.cthee.cyou/6bfab9684bad43d0.svg](https://i.cthee.cyou/6bfab9684bad43d0.svg)
 
 一些GUI-based远程控制工具，Apple使用Apple Remote Desktop工具，Windows使用支持远程桌面协议（RDP）的远程桌面链接工具，Unix/Linux系统总是通过X Server图形环境的基本架构来简单地实现这个功能。然而，最近的工具，比如虚拟网络计算（VNC）以及NoMachine's NX已经增添了便利性并且给端用户提供了远程访问。
 

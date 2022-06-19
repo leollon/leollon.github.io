@@ -18,7 +18,7 @@ tags: [notes, TCPIP, Networks]
 
 一个典型的线缆调制解调器链接图示：
 
-![b6aee1fb6923494c.svg](https://i.quantuminit.com/b6aee1fb6923494c.svg)
+![b6aee1fb6923494c.svg](https://i.cthee.cyou/b6aee1fb6923494c.svg)
 
 *modem*是modulator/demodulator的缩写。一个像电话调制解调器的线缆调制解调器，调制数字网络传输成为模拟形式并且从模拟形式到有效地通过线缆连接传递数据。
 **线缆调制解调器终端系统（CMTS）**接收来自线缆调制解调器的信号并且将其转回在线缆提供商的网络接口处的数字形式。反过来，提供商从上游互联网服务提供商（ISP）租用带宽，并且提供商网络上的路由器连接用户和余下的网络。提供商可能也提供其他的支持服务，比如动态主机配置协议（DHCP）被用来给网络上的用户分配一个动态的IP地址。线缆调制解调器实际上不是一个路由器，而更像是一个网桥。线缆调制解调器通过网络接入层的媒体接入控制（MAC）地址来过滤流量。**Data Over Cable Service Interface Spedification(DOCSIS)是用于线缆调制解调器的网络的标准。
@@ -27,7 +27,7 @@ tags: [notes, TCPIP, Networks]
 
 其他用于家庭宽带传输媒介的候选是电话网络。Digital Subscriber Line的缩写就是DSL。事实上，在电话网络中使用的双绞线比起用于语音通话时具有更多的容量。DSL收发器充当从本地网络到电话网络的接口，它运行在不与线上语音通话干扰的频率中。DSL网络需要一个在电话线另一端接收信号以及通过提供商的网络和互联网交互的设备。称为数据用户线访问复用器（DSLAM）的设备用作DSL连接的另一端。不想线缆网络，被网络段上的用户共享传输媒介。没DSL顾客从收发器到DSLAM都有专线，这意味着随着流量的增加，线路的性能很少受影响以至于降低。
 
-![769151e41b214515.svg](https://i.quantuminit.com/769151e41b214515.svg)
+![769151e41b214515.svg](https://i.cthee.cyou/769151e41b214515.svg)
 
 还有几种DSL版本，例如ADSL（asyncchronous DSL, 最受小办公室以及家庭欢迎），HDSL(high bit-rate DSL)，VDSL（very high bit-rate DSL），SDSL（symmetric DSL，它的上行和下行的带宽相等）以及IDSL（ISDN over DSL）。
 一些DSL设备将交换机和路由器集成在一起。其他设备充当网桥（与线缆调制解调器相似），在网络接入层通过MAC地址过滤流量。DSL设备经常使用Point-to-Point协议，封闭，比如PPP。所谓的通过以太网协议（PPPoE）的PPP是DSL最受欢迎选项。
@@ -47,7 +47,7 @@ WAN协议几乎总是聚焦在OSI模型上，因此要记住的是Network Access
 
 一个典型的WAN场景：
 
-![b4b9276675534e3b.svg](https://i.quantuminit.com/b4b9276675534e3b.svg)
+![b4b9276675534e3b.svg](https://i.cthee.cyou/b4b9276675534e3b.svg)
 
 供应商保证特定带宽以及从分界点开始的服务等级。
 
@@ -57,7 +57,7 @@ WAN协议几乎总是聚焦在OSI模型上，因此要记住的是Network Access
 
 从[The Network Access Layer](/The-Network-Access-Layer/)中得知，物理网络的细节驻留在TCPIP协议栈的Network Access layer。**IEEE 802.11**规范为网络接入层的无线网络提供了模型。
 
-![489b1c2f1eea41f1.svg](https://i.quantuminit.com/489b1c2f1eea41f1.svg)
+![489b1c2f1eea41f1.svg](https://i.cthee.cyou/489b1c2f1eea41f1.svg)
 
 因为802.11与IEEE 802.3以太网标准相似且兼容，802.11经常称为无线以太网。
 物理层的不同选项表示不同的无线广播格式，frequency-hopping spread spectrum (FHSS)，direct-sequence spread spectrum（DSSS），othogonal frequency-division multiplexing（OFDM）以及 high-rate direct-sequence spread spectrum multiplexing（HR/DSSS）。
@@ -79,15 +79,15 @@ WAN协议几乎总是聚焦在OSI模型上，因此要记住的是Network Access
 
 最简单的无线网络形式有两个或更多携带有无线网卡的设备直接与彼此进行通信。这种类型的网络正式地被称为**独立基本服务集合（independent BSS，或IBSS）**，更常见的名称是自组网络。适用于紧凑空间内少部分计算机之间的通信。Independent BSS网络是有局限性的，因为它依赖参与通信的计算之间的接近，没有基础设施用于管理连接以及没有办法和更大的网络进行连接，比如本地局域网或者互联网。
 
-![ccb646f6530a4edb.svg](https://i.quantuminit.com/ccb646f6530a4edb.svg)
+![ccb646f6530a4edb.svg](https://i.cthee.cyou/ccb646f6530a4edb.svg)
 
 另一种无线网络形式，称为**基础设施基本服务集合（infrastructure BSS)**，在团体网络以及公共机构环境中更常见，并且由于新一代的便宜的无线路由设备，使得它成为家庭以及咖啡店的受欢迎的网络选项。Infrastructure BSS依赖一个称为**接入点（access point，AP）**的固定设备来促成无线设备之间的通信。一个接入点通过无线广播与无线网络进行通信并且通过传统的连接连接到普通的以太网网络。无线设备通过接入点进行通信。无线设备通过发送一个帧到接入点并让接入点传输消息到目的地来完成与同一区域的其他无线设备的通信。
 
-![878a9878e6014e7c.svg](https://i.quantuminit.com/878a9878e6014e7c.svg)
+![878a9878e6014e7c.svg](https://i.cthee.cyou/878a9878e6014e7c.svg)
 
 通过多个接入点服务更大的区域：
 
-![808959b6286540ac.svg](https://i.quantuminit.com/808959b6286540ac.svg)
+![808959b6286540ac.svg](https://i.cthee.cyou/808959b6286540ac.svg)
 
 802.11帧提供四个地址：
 
@@ -105,7 +105,7 @@ WAN协议几乎总是聚焦在OSI模型上，因此要记住的是Network Access
 - Frame body：与帧一起传输的数据。当然，和帧一起传输还包含有上层的协议头部。
 - Frame Check Sequence (FCS)：环形冗余校验，用于检查传输错误以及验证帧在传输过程中没有被修改。
 
-![e06f0810ddec4b44.svg](https://i.quantuminit.com/e06f0810ddec4b44.svg)
+![e06f0810ddec4b44.svg](https://i.cthee.cyou/e06f0810ddec4b44.svg)
 
 因为802.11是一个网络接入层的协议集合，因此802.11帧使用的地址是48-bit的物理地址，而不是IP地址。
 
@@ -129,7 +129,7 @@ WEP2提高了初始化向量到128bits并且添加了身份验证来管理secret
 
 移动IP环境描述图：
 
-![f761c1aea1c04266.svg](https://i.quantuminit.com/f761c1aea1c04266.svg)
+![f761c1aea1c04266.svg](https://i.cthee.cyou/f761c1aea1c04266.svg)
 
 ### Bluetooth
 
@@ -137,23 +137,23 @@ Bluetooth 标准定义的事OSI 数据链路层以及物理层（等同于TCPIP�
 蓝牙使用一个接入点来连接无线网络到常规网络。（接入点在蓝牙术语中，又称为网络接入点，或NAP）。蓝牙封装协议封装TCPP/IP包通过蓝牙网络进行分发传输。
 当然了，如果一个蓝牙设备通过互联网访问，它必须通过TCPIP访问。厂商想象一类通过一个蓝牙功能网桥访问网络即用型的蓝牙设备。一个蓝牙NAP充当网桥，接收进来的TCPIP传输并且使用蓝牙网络接入协议替换进来的网络接入层用于传输到一个等待的设备。
 
-![5a8301d4dce84f7a.svg](https://i.quantuminit.com/5a8301d4dce84f7a.svg)
+![5a8301d4dce84f7a.svg](https://i.cthee.cyou/5a8301d4dce84f7a.svg)
 
 ## Dial-Up Networking
 
 大多数的拨号解决方案使用一个调制解调器连接。调制解调器的目的是将来自计算机的数字信号变换成能够通过电话系统接口的模拟信号以及将从电话线收到的模拟信号变换成接收计算机能够理解的数字信号。
 在电话线两端的两台计算机不需要与另一台计算机竞争传输媒介，它们彼此之间共享传输媒介。这种类型的连接称为**点对点（point-to-point）**连接。
 
-![974b94aa11324d90.svg](https://i.quantuminit.com/974b94aa11324d90.svg)
+![974b94aa11324d90.svg](https://i.cthee.cyou/974b94aa11324d90.svg)
 
 相比基于局域网的配置，点对点链接要更简单。因为没必要提供多计算机共享传输媒介的方式。与此同时，通过电话线连接的最大局限性之一是通过电话连接的传输速率要比通过基于局域网，比如以太网的速率要更慢。
 早期的调制解调器仅仅是用于通过电话线传递信息，并在这种情况中，TCPIP的逻辑地址和网络错误控制不是必需或者甚至是需要的。后来随着本地网络以及互联网的到来，工程师们开始想着使用拨号连接作为网络接入的方式。单拨服务器给远程计算机提供连接本地网络的方法。
 
-![d71676dfff9a4261.svg](https://i.quantuminit.com/d71676dfff9a4261.svg)
+![d71676dfff9a4261.svg](https://i.cthee.cyou/d71676dfff9a4261.svg)
 
 拨号服务器负责更多的网络任务职责，并且充当一个路由器：
 
-![08790b9071514ee3.svg](https://i.quantuminit.com/08790b9071514ee3.svg)
+![08790b9071514ee3.svg](https://i.cthee.cyou/08790b9071514ee3.svg)
 
 来自拨号领域中最受欢迎的拨号网络协议是点对点（PPP）协议。PPP替换早期称为串行线路网络协议（SLIP）。
 
@@ -175,7 +175,7 @@ PPP 必须也转发含有和自己建立以及管理调制解调器连接协议�
 
 PPP 帧的数据格式图：
 
-![a4dd636674604251.svg](https://i.quantuminit.com/a4dd636674604251.svg)
+![a4dd636674604251.svg](https://i.cthee.cyou/a4dd636674604251.svg)
 
 字段说明：
 
@@ -207,7 +207,7 @@ PPP连接的生命周期：
 
 使用集线器的以太网网络：
 
-![d4f3f2f6bb0348b0.svg](https://i.quantuminit.com/d4f3f2f6bb0348b0.svg)
+![d4f3f2f6bb0348b0.svg](https://i.cthee.cyou/d4f3f2f6bb0348b0.svg)
 
 回想起[The Network Access Layer](/The-Network-Access-Layer/)，经典以太网概念要求所有的计算机共享传输媒介。每一次传输都能够被所有的网络适配器监听到。网络设备的一个以太网集线器从它的所有端口其中一个收到传输信号并且回应那个传输信号到它的其他剩下的端口。换句话说就是，该网络表现得就好像是所有的计算机通过一根连续的网线连接在一起了一样。集线器不过滤或路由任何数据。而是，集线器仅仅接收并重新传输信号。
 
@@ -217,13 +217,13 @@ PPP连接的生命周期：
 
 使用集线器的网络依然面临一个以太网的主要责任：随着流量增加，性能下降问题。除非网线是处于非占用状态，否则没有计算机能够传输。更重要的是，每个网络适配器必须接收并处理每个在以太网上的帧。交换机比起集线器更智能的地方在于发送接收到的数据通过它的所有端口之一。大多数交换机将它的每个端口与连接那个端口的适配器的物理地址关联起来。**交换机只往应该接收某个数据帧的适配器发送它。**（只要交换机识别数据帧的目的地址。）交换机减少了多余的传输并且因此提同网络的性能。
 
-![d4f3f2f6bb0348b0.svg](https://i.quantuminit.com/d4f3f2f6bb0348b0.svg)
+![d4f3f2f6bb0348b0.svg](https://i.cthee.cyou/d4f3f2f6bb0348b0.svg)
 
 **刚刚描述的交换机操作的是[物理地址](/The-Network-Access-Layer/)，不是IP地址。**交换机不是路由器，实际上他更像是一个网桥——或着更准确地讲，是多个网桥集中到一起。
 
 交换机隔离每个网络连接：
 
-![79aaa77967a44019.svg](https://i.quantuminit.com/79aaa77967a44019.svg)
+![79aaa77967a44019.svg](https://i.cthee.cyou/79aaa77967a44019.svg)
 
 两种最常见的交换方法：
 
@@ -236,7 +236,7 @@ PPP连接的生命周期：
 
 本地网络中，逐渐使用交换机代替路由器在本地网络中管理流量。在高流量容量中，以太网变得低效，并且交换机提供一种用于过滤网络流量的方式，为的是所有设备没必要监听所有的传输。
 
-![3fec73782b8b4160.svg](https://i.quantuminit.com/3fec73782b8b4160.svg)
+![3fec73782b8b4160.svg](https://i.cthee.cyou/3fec73782b8b4160.svg)
 
 像路由分割网络上路由器，交换机阻止建筑B中的计算机监听限于建筑A的本地流量。事实上，交换机做了更近一步的工作——甚至建筑A中的其他计算机不会监听从计算机1发送的以太网数据帧并且通过一个交换机端口转发到计算机B。）
 交换机场景提供了优于使用路由器以及IP子网划分一个网络的旧方法的优点。路由器必须在物理和逻辑地址之间进行翻译，但是一个交换机使用在网络接入层的物理（MAC）地址执行所有的它的功能。交换机有更少工作要做，因此它能够更高效地运行以及更低的延迟。
@@ -245,7 +245,7 @@ PPP连接的生命周期：
 
 多数家庭以及办公室网络标准布局配置。一个路由器（经常充当防火墙，DHCP 服务器以及网络地址翻译设备）提供网络接口并且放置在路由器的之后的交换机为以太网线缆通向本地网络上的连接设备提供便捷的连接点。
 
-![a606c7c371b644b8.svg](https://i.quantuminit.com/a606c7c371b644b8.svg)
+![a606c7c371b644b8.svg](https://i.cthee.cyou/a606c7c371b644b8.svg)
 
 ## 小小的总结
 

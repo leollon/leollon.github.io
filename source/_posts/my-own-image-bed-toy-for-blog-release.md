@@ -7,12 +7,12 @@ tags: [flask, picbed, imgbed, 图床]
 
 此前开的一个坑，这次填上了。迫于穷，域名又不想备案，vps流量每个月500GB自用也就是十几G这样子而已，所以放着剩下的流量不用简直浪费。加上自己正想实践(梭)一把docker部署.
 
-[用flask做个图床吧](https://quantuminit.com/%E7%94%A8flask%E5%81%9A%E4%B8%80%E4%B8%AA%E5%9B%BE%E5%BA%8A%E5%90%A7/)
+[用flask做个图床吧](https://cthee.cyou/%E7%94%A8flask%E5%81%9A%E4%B8%80%E4%B8%AA%E5%9B%BE%E5%BA%8A%E5%90%A7/)
 
 <!-- more -->
 
-![9959d97e729d41e3.png](https://i.quantuminit.com/9959d97e729d41e3.png)
-![660b0825915b4dad.png](https://i.quantuminit.com/660b0825915b4dad.png)
+![9959d97e729d41e3.png](https://i.cthee.cyou/9959d97e729d41e3.png)
+![660b0825915b4dad.png](https://i.cthee.cyou/660b0825915b4dad.png)
 
 
 解决问题过程中的链接

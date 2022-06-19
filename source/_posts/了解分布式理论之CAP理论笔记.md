@@ -5,7 +5,7 @@ categories: System Design
 tags: [cap理论,分布式系统设计理论,系统设计]
 ---
 
-![914efc5c66474a5e.svg](https://i.quantuminit.com/914efc5c66474a5e.svg)
+![914efc5c66474a5e.svg](https://i.cthee.cyou/914efc5c66474a5e.svg)
 
 CAP理论：
 - 一致性(Consistency): 每次读取收到的都是最近写的或者是一个错误

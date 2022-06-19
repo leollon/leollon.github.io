@@ -15,13 +15,13 @@ Transmission Control Protocol/Internet Protocol(TCPIP) 是一个协议系统—�
 网络是通过通用的传输媒介能够通信的类计算机或计算机的集合。传输媒介可以是计算机之间携带电子脉冲的绝缘导线，
 也可以是是一根电话线，或甚至根本就没有线，比如无线网络。
 
-![a432e83c02a14484.png](https://i.quantuminit.com/a432e83c02a14484.png)
+![a432e83c02a14484.png](https://i.cthee.cyou/a432e83c02a14484.png)
 
 一个计算机通过一个或多个执行特殊任务并且管理通信过程的应用来与世界进行交互。
 
 网络协议是一系列帮助定义网络通信复杂过程的通用规则。协议指导发送来自计算机上的应用的数据到另一台计算机上的应用的过程。
 
-![https://i.quantuminit.com/d6cfa868671642bd.svg](https://i.quantuminit.com/d6cfa868671642bd.svg)
+![https://i.cthee.cyou/d6cfa868671642bd.svg](https://i.cthee.cyou/d6cfa868671642bd.svg)
 
 TCPIP协议定义了网络通信过程并且，更重要的是定义了一个数据单元的查看方式并且应该包含什么数据，这样数据的接收的电脑能够正确地读取这些信息。
 TCPIP以及其相关的协议构成了一个定义数据在TCPIP网络上如何被处理，传输以及接收的方式的计算机系统。一个相关连的协议系统，被称为协议套装。
@@ -85,7 +85,7 @@ B: physical address
 
 router 是一个读取logical address 信息的特殊设备，并且通过网络转发数据到它的目的地。router可以从大型网络中划分出本地子网。
 
-![f36b479819d249bd.svg](https://i.quantuminit.com/f36b479819d249bd.svg)
+![f36b479819d249bd.svg](https://i.cthee.cyou/f36b479819d249bd.svg)
 
 **数据发往子网内的的另一台电脑或设备不经过router。但是如果数据的目的地是子网外的电脑或设备，router将转发该数据。**
 TCPIP包含了定义router如何通过网络查询路径的的协议。
@@ -94,7 +94,7 @@ TCPIP包含了定义router如何通过网络查询路径的的协议。
 
 大型网络图例：
 
-![88f6200ad89940fe.svg](https://i.quantuminit.com/88f6200ad89940fe.svg)
+![88f6200ad89940fe.svg](https://i.cthee.cyou/88f6200ad89940fe.svg)
 
 ### Name Resolution
 
@@ -111,7 +111,7 @@ TCPIP协议确保通过网络传输数据的具有可靠性。TCPIP 的传输层
 
 多个应用运行在同一台计算机时，协议软件必须提供决定收到的数据包属于那个应用。在TCPIP中，可以通过一个称为**ports**的系统的逻辑信道来完成，每个**port**都有被用来识别该port的的数字。
 
-![22f1bd885b804495.svg](https://i.quantuminit.com/22f1bd885b804495.svg)
+![22f1bd885b804495.svg](https://i.cthee.cyou/22f1bd885b804495.svg)
 
 TCPIP工具
 

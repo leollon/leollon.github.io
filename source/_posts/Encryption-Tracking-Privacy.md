@@ -81,7 +81,7 @@ tags: [notes, TCPIP, Networks]
 3. 计算机 B 接收数据并且使用计算机 A 的公钥对鉴别码进行解密。鉴别码中的信息让计算机 B 用来验证数据在传输的过程中没有被修改。事实上，使用计算机 B 的公钥解密数据证明了数据是使用计算机 A 的私钥进行加密的，这确保数据
 是来自计算机 A。
 
-![https://i.quantuminit.com/db88b60159674b35.svg](https://i.quantuminit.com/db88b60159674b35.svg)
+![https://i.cthee.cyou/db88b60159674b35.svg](https://i.cthee.cyou/db88b60159674b35.svg)
 
 ### Digital Certificates
 
@@ -89,7 +89,7 @@ tags: [notes, TCPIP, Networks]
 
 这个证书服务器也称为 Certificate authority (CA)。
 
-![https://i.quantuminit.com/629b33f64ec94681.svg](https://i.quantuminit.com/629b33f64ec94681.svg)
+![https://i.cthee.cyou/629b33f64ec94681.svg](https://i.cthee.cyou/629b33f64ec94681.svg)
 
 这个过程的概要描述如下：
 
@@ -115,7 +115,7 @@ tags: [notes, TCPIP, Networks]
 
 当使用 TLS 之后，诸如 FTP 和 HTTP 等网络服务通过安全的 TLS 协议避免遭受到攻击。
 
-![https://i.quantuminit.com/9dc971dd88b548ee.svg](https://i.quantuminit.com/9dc971dd88b548ee.svg)
+![https://i.cthee.cyou/9dc971dd88b548ee.svg](https://i.cthee.cyou/9dc971dd88b548ee.svg)
 
 TLS Record Protocol 是一个用于访问 TCP 的标准基础。在 Record Protocol 之上的是一组执行特定服务器的相关协议：
 
@@ -123,7 +123,7 @@ TLS Record Protocol 是一个用于访问 TCP 的标准基础。在 Record Proto
 - **TLS Change Cipher Spec Protocol**: 发出过渡信号，比如转变协商的加密参数。
 - **TLS Allert Protocol**: 发送警告。
 
-![https://i.quantuminit.com/a95941d5a839469a.svg](https://i.quantuminit.com/a95941d5a839469a.svg)
+![https://i.cthee.cyou/a95941d5a839469a.svg](https://i.cthee.cyou/a95941d5a839469a.svg)
 
 启用 TLS 的服务直接通过 TLS Record Protocol 运行。在连接建立之后，TLS Record Protocol 提供加密以及必要的验证来确保会话的
 可靠性以及完整性。

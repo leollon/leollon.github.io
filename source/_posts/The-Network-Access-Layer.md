@@ -23,7 +23,7 @@ Network Access layer在TCPIP协议栈中栈底，是服务以及提供和管理�
 
 TCPIP 的Network Access layer 大体上与 OSI的**Physical**以及**Data Link layers**相关联。
 
-![ebdf33f8dafd4b61.svg](https://i.quantuminit.com/ebdf33f8dafd4b61.svg)
+![ebdf33f8dafd4b61.svg](https://i.cthee.cyou/ebdf33f8dafd4b61.svg)
 
 Data Link 功能划分成两部分：
 
@@ -50,7 +50,7 @@ Network Access layer的架构：
 
 TCPIP也支持其他网络架构。由于Network Access layer封装了传输媒介的细节，协议栈的上层能够独立于硬件而运行。
 
-![c524f9e0b45b40a5.svg](https://i.quantuminit.com/c524f9e0b45b40a5.svg)
+![c524f9e0b45b40a5.svg](https://i.cthee.cyou/c524f9e0b45b40a5.svg)
 
 ## Physical Addressing
 
@@ -67,16 +67,16 @@ TCPIP使用Address Resolution Protocol(ARP) 和 Reverse ARP(RARP) 来将IP Addre
 以太网能够使用各种媒介。传统的基于集线器的10BASE-T以太网最开始被用于10Mbps的基础带宽速度上。如今100Mbps相对普遍，另外，1000Mbps（gigabit）也是可用了。
 
 共轴线缆图例：
-![29b71871313549f8.svg](https://i.quantuminit.com/29b71871313549f8.svg)
+![29b71871313549f8.svg](https://i.cthee.cyou/29b71871313549f8.svg)
 
 使用网络设备图例：
-![cf164facc2ba49f4.svg](https://i.quantuminit.com/cf164facc2ba49f4.svg)
+![cf164facc2ba49f4.svg](https://i.cthee.cyou/cf164facc2ba49f4.svg)
 
 ## Anatomy of an ethernet Frame
 
 Network Access layer 接受来自Internet Layer的数据报并转换成与物理网络规范一致的形式：
 
-![c73d911f32a848c4.svg](https://i.quantuminit.com/c73d911f32a848c4.svg)
+![c73d911f32a848c4.svg](https://i.cthee.cyou/c73d911f32a848c4.svg)
 
 数据转换步骤：
 

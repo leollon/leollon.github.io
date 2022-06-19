@@ -30,14 +30,14 @@ tags: [notes, TCPIP, Networks]
 
 在小型网络上常见的网络布置：
 
-![https://i.quantuminit.com/77a7c84811714503.svg](https://i.quantuminit.com/77a7c84811714503.svg)
+![https://i.cthee.cyou/77a7c84811714503.svg](https://i.cthee.cyou/77a7c84811714503.svg)
 
 在大型网络中，可以在前面这张图中，再在服务器前面加上一个防火墙。在两道防火墙之间的区域通常又称为**DMZ**（军事术语*demilitarized zone*）。
 
-![https://i.quantuminit.com/064bdb15a7d54a91.svg](https://i.quantuminit.com/064bdb15a7d54a91.svg)
+![https://i.cthee.cyou/064bdb15a7d54a91.svg](https://i.cthee.cyou/064bdb15a7d54a91.svg)
 
 如果防火墙/路由器有三个或更多的接口，它能够连接两个内部网络并且通过单独的接口DMZ
-![https://i.quantuminit.com/b5e804c3df8e4d1e.svg](https://i.quantuminit.com/b5e804c3df8e4d1e.svg)
+![https://i.cthee.cyou/b5e804c3df8e4d1e.svg](https://i.cthee.cyou/b5e804c3df8e4d1e.svg)
 
 ### Firewall Rules
 
@@ -54,7 +54,7 @@ tags: [notes, TCPIP, Networks]
 
 一个**代理服务器**拦截互联网资源的请求并且代表客户端转发请求，充当客户端和请求的目的服务器之间的中间人。虽然不能充分地保护网络，但也经常与防火墙结合在一起使用（尤其是在网络地址翻译（NAT）的环境中）。
 
-![https://i.quantuminit.com/2ebb07f2b6d246fb.svg](https://i.quantuminit.com/2ebb07f2b6d246fb.svg)
+![https://i.cthee.cyou/2ebb07f2b6d246fb.svg](https://i.cthee.cyou/2ebb07f2b6d246fb.svg)
 
 很多情况下，代理服务器的最初目的出于性能的考虑而不是安全。代理服务器经常执行一种称为内容缓存的服务。一个内容缓存代理服务器存储它访问的网页的拷贝。代理服务器通常配置为在释放缓存以及请求新的页面之前保存页面一段特定的时间。
 
@@ -104,7 +104,7 @@ tags: [notes, TCPIP, Networks]
 
 计算机入侵者的常见的工具称为木马。一般来说，一个木马是一个只做一件事情的计算机程序，但是实际上在后台发生了不可见并且恶意的动作。
 
-![https://i.quantuminit.com/7f675824fc664219.svg](https://i.quantuminit.com/7f675824fc664219.svg)
+![https://i.cthee.cyou/7f675824fc664219.svg](https://i.cthee.cyou/7f675824fc664219.svg)
 
 大多数操作系统有一个用来列出系统上运行的进程，比如Windows中的资源管理器和Linux中的`ps`命令。进程监视器有能力暴露出任何可能代表入侵者运行的秘密进程。有经验的入侵者可能尝试使用忽略任何与入侵者关联的进程并且正常表现的木马版本的进程监视程序替换内置的进程程序。
 
@@ -135,7 +135,7 @@ tags: [notes, TCPIP, Networks]
 
 注入攻击一种新类型的攻击。注入攻击利用使用比如SQL或LDAP服务的程序的问题。
 
-![https://i.quantuminit.com/b19ecfc38a8743f0.svg](https://i.quantuminit.com/b19ecfc38a8743f0.svg)
+![https://i.cthee.cyou/b19ecfc38a8743f0.svg](https://i.cthee.cyou/b19ecfc38a8743f0.svg)
 
 [CVE(Common Vulnerabilities and Exposures project)](cve.mitr.org)，[SANS](www.sans.org)提供关于securiry threats的邮件新闻列表。如果有机会，不要让网络应用运行时使用root用户或具有管理员权限。（某些情况下，可能会别无选择）。对于那些需要高权限来运行的应用，*jail*或*sandbox*工具集比如UNIX/Linux工具*chroot*可以创建一个有限的安全环境，防止入侵者访问系统的剩余部分。
 
@@ -155,7 +155,7 @@ tags: [notes, TCPIP, Networks]
 
 比如防火墙等设备最初的目的是阻止源自外部的攻击。通过用户来初始化连接，攻击者能够绕过许多内置于网络安全基础设施的防护措施。浏览器以及防火钱不容易知道这个连接不同于任何连接到外部网站的连接。当连接建立是，攻击者使用一系列的策略来突破不可能从防火墙外突破的安全防护。这种类型的攻击甚至能够从分配给用户系统的一个不可路由的IP地址的NAT（Network Address Translation）中免疫。
 
-![https://i.quantuminit.com/ed862dea07274db6.svg](https://i.quantuminit.com/ed862dea07274db6.svg)
+![https://i.cthee.cyou/ed862dea07274db6.svg](https://i.cthee.cyou/ed862dea07274db6.svg)
 
 ### Denial-of-Service Attacks
 
@@ -163,7 +163,7 @@ DoS（denial-of-service）攻击一旦开始几乎不可能被阻止，因为这
 
 最危险的DoS攻击是分布式DoS（distributed DoS）攻击。在DDoS攻击中，攻击人使用多台远程计算机知道其他远程计算机发起协同攻击。DoS攻击经常使用标准的TCPIP连接工具。比如，著名的smurf攻击使用`ping`工具释放对受害方的大量的ping响应。
 
-![https://i.quantuminit.com/8f2297b604ff4d46.svg](https://i.quantuminit.com/8f2297b604ff4d46.svg)
+![https://i.cthee.cyou/8f2297b604ff4d46.svg](https://i.cthee.cyou/8f2297b604ff4d46.svg)
 
 攻击人通过定向广播发送ping请求到整个网络。ping请求的源地址被修改后使得它像是请求来自受害方的IP地址。然后网络上的所有计算机不断的响应ping请求。smurf攻击的影响是来自攻击人的起始ping请求在大型网络上形成多倍的ping请求。
 

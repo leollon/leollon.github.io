@@ -36,7 +36,7 @@ TCPIP隐藏了physical address，而是围绕一个logical，hierarchical addres
 
 网关接收发往其他网络的数据报、图1：
 
-![9a541258502c4fb5.svg](https://i.quantuminit.com/9a541258502c4fb5.svg)
+![9a541258502c4fb5.svg](https://i.cthee.cyou/9a541258502c4fb5.svg)
 
 为了在复杂的路由网络中传输数据，Internet layer protocols 必须能够：
 
@@ -56,7 +56,7 @@ IP address 被分割成两部分：
 - The host ID
 
 通过观察IP address 可以知道主机在那个网络或者子网：
-![7f71074523bf4ac8.svg](https://i.quantuminit.com/7f71074523bf4ac8.svg)
+![7f71074523bf4ac8.svg](https://i.cthee.cyou/7f71074523bf4ac8.svg)
 
 大型网络必须为大量的主机保留大量的主机bit位数，小型网络不需要太多的bits去给定主机一个唯一的ID。然而大量的小型网意味着
 需要更多的IP address的bits来产生network ID。
@@ -78,7 +78,7 @@ Classless InterDomain Routing（CIDR）提供了简单，灵活并且无二异�
 **IP header的最小值是20 bytes。**
 
 IP header的内容：
-![2283d52d20c9421c.svg](https://i.quantuminit.com/2283d52d20c9421c.svg)
+![2283d52d20c9421c.svg](https://i.cthee.cyou/2283d52d20c9421c.svg)
 
 - Vesion: 4-bit表示使用的IP版本。当前的版本是4，用二进制表示就是0100。
 - IHL（Internet Header Length）: 4-bit字段给出在32-bit字长中IP header的长度。在32-bit字长中，
@@ -177,7 +177,7 @@ E类网络地址是被当作实验性的并且不会在生产环境中被使用�
 ARP 能够将IP address 映射到 physical address。网络段上的每个主机都在内存中维护着称之为ARP table或者ARP cache的表。当主机需要发送数据给网络段上另外一台主机时，主机将检查这个表来决定数据接收端的物理地址（physical address）。如果要接收的物理地址不存在表中，主机将发送一个ARP请求帧的广播。该请求帧包含有未解析的IP地址和发送请求帧的主机的IP地址以及物理地址。
 
 ARP 映射图例：
-![2a21b232a5684d55.svg](https://i.quantuminit.com/2a21b232a5684d55.svg)
+![2a21b232a5684d55.svg](https://i.cthee.cyou/2a21b232a5684d55.svg)
 
 ARP 缓存表中的条目在过了一段时间会失效，失效的条目将会被移除，解析过程将在下一次发送数据的到过期条目的IP地址时进行。
 

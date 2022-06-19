@@ -17,12 +17,12 @@ tags: [notes, TCPIP, Networks]
 
 主机名系统是在TCPIP历史上早期开发的简单的名字解析技术。系统中，每台计算机被分配给一个称为**主机名**的含有字母数字的名字。如果操作系统希望是一个IP地址的时候却碰上一个字母数字名字，则操作系统会查询一个**hosts文件**。hosts文件是一个包含主机名和IP地址关联的列表。如果字母数字名字在主机名列表上，计算机读取和名字相关联的IP地址。然后计算机使用相关的IP地址替换命令中主机名并且执行命令。
 
-![93625dcb59ed467d.svg](https://i.quantuminit.com/93625dcb59ed467d.svg)
+![93625dcb59ed467d.svg](https://i.cthee.cyou/93625dcb59ed467d.svg)
 
 - 在每组特殊的域名服务器之间分发名字解析的责任。名字解析服务器维护定义了名字到地址关联的表。
 - 授权本地名字解析权利给本地管理员。换句话说，就是不维护一份所有名字到地址关联表的中心化，主要版本，让网络A上个一个管理员负责网络A上的名字解析，以及让网络B上的管理员管理网络B上的名字解析。通过那样子的方式，每个单独的网络上的管理员负责网络上的任何更新也要负责确保那些更新反应到名字解析的基础设施。
 
-以上两点优先级主导了域名系统（DNS）的开发。DNS将名字空间分割成称为域名的层次实体。域名可以和主机包含在一起，称之为主机域名全称（FQDN）。例如，主机名是www，且在域名quantuminit.com中，则构成的FQDN是www.quantuminit.com。
+以上两点优先级主导了域名系统（DNS）的开发。DNS将名字空间分割成称为域名的层次实体。域名可以和主机包含在一起，称之为主机域名全称（FQDN）。例如，主机名是www，且在域名cthee.cyou中，则构成的FQDN是www.cthee.cyou。
 
 ## Name Resolution Using Hosts Files
 
@@ -36,7 +36,7 @@ hosts文件包含有一台计算机需要想要与之通信的主机条目，允
 
 一个hosts文件示例：
 
-![c18b44dc38ee4716.svg](https://i.quantuminit.com/c18b44dc38ee4716.svg)
+![c18b44dc38ee4716.svg](https://i.cthee.cyou/c18b44dc38ee4716.svg)
 
 当一台计算机上的一个应用需要解析一个名字成一个IP地址的时候，系统首先比较它自己的名字和被请求的名字。如果不匹配，系统将会进入hosts文件中查找（如果存在）是否有该计算机名在里面。如果能够匹配到一个，返回这个IP地址到本地计算机。通过使用IP以及ARP传输技术两台计算机之间产生通信。
 
@@ -55,7 +55,7 @@ hosts文件包含有一台计算机需要想要与之通信的主机条目，允
 
 DNS 存储名字解析在一台或多台特殊的服务器中。DNS服务器为网络提供名字解析服务。
 
-![818cd5af384348c7.svg](https://i.quantuminit.com/818cd5af384348c7.svg)
+![818cd5af384348c7.svg](https://i.cthee.cyou/818cd5af384348c7.svg)
 
 上图中的DNS服务器的优点之一，为本地网络以及提供单一的DNS配置点以及高校的利用网络资源。然而并未为更大型网络基础设施的提供去中心化管理，以及不能够有效地运行一个含有网络上每个主机的IP地址记录的数据库。即使可以，但是在单台DNS服务器上维护所有互联网上的数据库是禁止的。
 
@@ -64,15 +64,15 @@ DNS 存储名字解析在一台或多台特殊的服务器中。DNS服务器为�
 - 如果名字服务器能够在自己的地址数据库中找到请求的地址，则立即发送这个地址给客户端。
 - 如果服务器不能在自己的数据库记录中找到地址，则向其他名字服务器查找该地址然后发送该地址给客户端。
 
-![35d10c4a3a6b449c.svg](https://i.quantuminit.com/35d10c4a3a6b449c.svg)
+![35d10c4a3a6b449c.svg](https://i.cthee.cyou/35d10c4a3a6b449c.svg)
 
 DNS不是严格地与主机名协作，而是与FADNs协作。在DNS树的顶部是一个称为根的单个结点。根有时候又称为句点（.)，尽管根的实际符号是null字符。根的下面是一组称为顶级域名（TLDs）的的域名。
 
-![https://i.quantuminit.com/79848b7aecf24386.svg](https://i.quantuminit.com/79848b7aecf24386.svg)
+![https://i.cthee.cyou/79848b7aecf24386.svg](https://i.cthee.cyou/79848b7aecf24386.svg)
 
 总的来说，DNS系统支持高达127层域名分级。
 
-![https://i.quantuminit.com/8e38575d227848b7.svg](https://i.quantuminit.com/8e38575d227848b7.svg)
+![https://i.cthee.cyou/8e38575d227848b7.svg](https://i.cthee.cyou/8e38575d227848b7.svg)
 
 当网络上的一台主机需要一个IP地址的时候，它通常发送一个递归查询到邻近的名字服务器。这个查询告诉名字服务器，要么给出和这个名字相关联的IP地址，否则返回响应表示不能找到。名字查询过程中使用递归查询（主机发送）以及迭代查询（名字服务器发送）。总结出查询的过程就是，客户端发送一个单独的递归查询该名字服务器，然后名字服务器发送一系列的迭代查询到其他名字服务器来解析这个名字。当名字服务器获取到与这个名字相关联的地址时，则使用这个地址响应客户端的查询。
 
@@ -86,7 +86,7 @@ DNS名字解析过程：
 6. 名字服务器A发送获取该IP地址的请求到名字服务器D。名字服务器D查询主机c.b.a.edu的地址并且发送这个地址给名字服务器A。然后名字服务器A发送这个地址给主机1。
 7. 主机1初始化一个连接到主机c.b.a.edu的连接。
 
-![https://i.quantuminit.com/7fd227e581c7494f.svg](https://i.quantuminit.com/7fd227e581c7494f.svg)
+![https://i.cthee.cyou/7fd227e581c7494f.svg](https://i.cthee.cyou/7fd227e581c7494f.svg)
 
 ## Registering a Domain
 
@@ -130,7 +130,7 @@ ICANN有完整域名注册任务的授权但是委托特定的顶级域名的注
 - 在区域内的主机的别名（备用名字）之内的DNS-name-to-IP-address映射。
 
 一个区域文件示例：
-![https://i.quantuminit.com/8b03b3e9906345d6.svg](https://i.quantuminit.com/8b03b3e9906345d6.svg)
+![https://i.cthee.cyou/8b03b3e9906345d6.svg](https://i.cthee.cyou/8b03b3e9906345d6.svg)
 
 SOA记录中包含有几个使用主DNS服务器上的原版区域文件更新备份DNS服务器的参数。一个serial number表示区域文件自己的版本号，其他参数：
 
@@ -181,7 +181,7 @@ IN NS boris.cocacola.com.
 
 保存在初始入口点的DNS数据包括用于任何子区域的DS记录。例如，.com区域的官方服务器包含了一条famousIT.com的DS记录。DS记录识别以及验证用于子区域的DNSKEY。
 
-![https://i.quantuminit.com/2f3f823b39164d9c.svg](https://i.quantuminit.com/2f3f823b39164d9c.svg)
+![https://i.cthee.cyou/2f3f823b39164d9c.svg](https://i.cthee.cyou/2f3f823b39164d9c.svg)
 
 DNSSEC依赖于在DNSKEY以及DS资源记录之间的一连串交互。父区域可能含有用于多个子区域的DS记录，以及每个DS记录提共必要的信息来验证在子区域中相关的DNSKEY记录是正确的并且表示一个服务器在信任链内。
 
@@ -208,7 +208,7 @@ ping 198.1.14.2  # 通过IP地址给这台计算机发送信号，如果命令�
 通过DNS名字：
 
 ```shell
-ping quantuminit.com
+ping cthee.cyou
 ```
 
 #### Checking Name Resolution with NSLookup
@@ -223,7 +223,7 @@ NSLook工具用处：
 - Batch模式：在Batch模式中，运行NSLookup并提供输入参数。NSLookup使用输入的参数执行请求的功能，显示结果然后结束。
 - Interactive模式：在Interactive模式中，不提供输入参数而直接运行NSLookup，然后NSLookup提示输入参数。当输入输入参数时，NSLookup执行请求的操作，显示结果，再次提示输入参数。
 
-![https://i.quantuminit.com/6ad2ac608ebb448e.svg](https://i.quantuminit.com/6ad2ac608ebb448e.svg)
+![https://i.cthee.cyou/6ad2ac608ebb448e.svg](https://i.cthee.cyou/6ad2ac608ebb448e.svg)
 
 nslookup的interactive模式中可用的命令：
 
@@ -238,25 +238,25 @@ nslookup的interactive模式中可用的命令：
 最基本的用法：
 
 ```bash
-dig quantuminit.com
+dig cthee.cyou
 ```
 
 在指定DNS服务器进行查询：
 
 ```bash
-dig @8.8.8.8 quantuminit.com
+dig @8.8.8.8 cthee.cyou
 ```
 
 查询指定的资源记录类型：
 
 ```bash
-dig blog.quantuminit.com NS # 显示与域名相关连的NS记录。
+dig i.cthee.cyou NS # 显示与域名相关连的NS记录。
 ```
 
 查找邮件服务器：
 
 ```bash
-dig quantuminit.com MX
+dig cthee.cyou MX
 ```
 
 当指定IP地址时，`-x`选项执行反向查询。`-4`选项限制查询为IPv4。`-6`用于IPv6。
@@ -267,7 +267,7 @@ dig quantuminit.com MX
 
 主机从一个DHCP服务器获取一个IP地址，并用这个IP地址更新DNS服务器。
 
-![https://i.quantuminit.com/110b21ae66a9498b.svg](https://i.quantuminit.com/110b21ae66a9498b.svg)
+![https://i.cthee.cyou/110b21ae66a9498b.svg](https://i.cthee.cyou/110b21ae66a9498b.svg)
 
 ## NetBIOS Name Resolution
 

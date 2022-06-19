@@ -178,7 +178,7 @@ tags: [hexo,git,blog]
      ```
     server {
         listen 80;
-        server_name blog.quantuminit.com;
+        server_name i.cthee.cyou;
 
         access_log  /home/git/log/nginx/host.access.log  main;
         error_log  /home/git/log/nginx/host.error.log  info;

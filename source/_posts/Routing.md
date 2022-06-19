@@ -28,11 +28,11 @@ Access layer）头部信息，所以路由器能够连接不相似的网络类�
 个或更多网络适配器的计算机（称之为多重连接计算机）。理解路由的第一步是要记住IP地址是属于适配器而不是计算机。事实
 上，两个适配器是有可能处在对应于完全不同物理网络的完全不同的IP子网上。
 
-![e7dc4d3cf4c249b8.svg](https://i.quantuminit.com/e7dc4d3cf4c249b8.svg)
+![e7dc4d3cf4c249b8.svg](https://i.cthee.cyou/e7dc4d3cf4c249b8.svg)
 
 复杂网络上的路由：
 
-![7be3ab7d8e30478d.svg](https://i.quantuminit.com/7be3ab7d8e30478d.svg)
+![7be3ab7d8e30478d.svg](https://i.cthee.cyou/7be3ab7d8e30478d.svg)
 
 ### The Routing process
 
@@ -48,7 +48,7 @@ Access layer）头部信息，所以路由器能够连接不相似的网络类�
 
 路由过程图示：
 
-![a188425ba8714eed.svg](https://i.quantuminit.com/a188425ba8714eed.svg)
+![a188425ba8714eed.svg](https://i.cthee.cyou/a188425ba8714eed.svg)
 
 根据获取路由表信息来源，两种主要类型路由的命名：
 
@@ -71,7 +71,7 @@ Access layer）头部信息，所以路由器能够连接不相似的网络类�
 
 一张极其基本的路由表内容：
 
-![dba2c75bdb7e4654.svg](https://i.quantuminit.com/dba2c75bdb7e4654.svg)
+![dba2c75bdb7e4654.svg](https://i.cthee.cyou/dba2c75bdb7e4654.svg)
 
 路由表本质上是将目的网络IDs映射到下一跳的IP地址——数据报在去往目的网络的下一站。路由表在网络直接连接路由器本身和网
 络通过其他路由器间接链接是有区别的。下一跳可能是目的网络（如果是直接连接）或前往目的网络的下一个下游路由器。
@@ -101,7 +101,7 @@ Network Access层，Network Access层的协议软件使用一个分开的单独�
 7. 如果数据报不能被任何和路由器相连的网络段传输，路由器发送数据报到另外一个路由器，然后重复（回到步骤 1），直到最
 后的路由器能够直接将数据报传输给目的主机。
 
-![e092c3a432134421.svg](https://i.quantuminit.com/e092c3a432134421.svg)
+![e092c3a432134421.svg](https://i.cthee.cyou/e092c3a432134421.svg)
 
 上述描述的步骤6是一个路由器的一个重要特征。一个设备想要像一个路由器一样工作，除了有两个网卡，还得这个设备有支持IP
 转发的必需软件，否则数据不会从一个接口传递到另外一个接口。当一台计算机未被配置为IP路由时，它收到的数据报是发往不同
@@ -112,11 +112,11 @@ Network Access层，Network Access层的协议软件使用一个分开的单独�
 如果一个路由器仅仅是连接两个子网，那这个路由器的路由表可能会很简单。该路由器将不会碰上IP地址不会和它的端口相关联的
 情况，并且路由器是直接连接在所有的子网上。
 
-![037834ce7d2943e8.svg](https://i.quantuminit.com/037834ce7d2943e8.svg)
+![037834ce7d2943e8.svg](https://i.cthee.cyou/037834ce7d2943e8.svg)
 
 稍微更复杂的网络：
 
-![ac4b3279001f4b27.svg](https://i.quantuminit.com/ac4b3279001f4b27.svg)
+![ac4b3279001f4b27.svg](https://i.cthee.cyou/ac4b3279001f4b27.svg)
 
 有两种方式知道间接路由：从系统管理员或其他路由器。这两个选项各自与静态路由和动态路由相关。系统管理员直接输入网络路
 由到路由表中，这是静态路由，或Router B告诉Router A相关的网段，这是动态路由。
@@ -155,7 +155,7 @@ count，则不使用通过B的路由。路由器A继续使用原来路由表中�
 
 距离向量路由更新例子图示：
 
-![118546cf06904ea8.svg](https://i.quantuminit.com/118546cf06904ea8.svg)
+![118546cf06904ea8.svg](https://i.cthee.cyou/118546cf06904ea8.svg)
 
 #### Link-State Routing
 

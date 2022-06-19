@@ -22,7 +22,7 @@ tags: [notes, TCPIP, Networks]
 
 图示：
 
-![505959fc7fa2453b.svg](https://i.quantuminit.com/505959fc7fa2453b.svg)
+![505959fc7fa2453b.svg](https://i.cthee.cyou/505959fc7fa2453b.svg)
 
 将物理网络分段扩大了网络的整体容量，并且因此使得网络能够使用更大一部分的地址空间。在这个常见的场景中，在地址空间范
 围内，分割网络段的路由器需要一些往哪个网络传输数据的暗示。因为发送的每个数据报都有相同的network ID(99.0.0.0)，
@@ -30,7 +30,7 @@ tags: [notes, TCPIP, Networks]
 
 划分更小的网络段：
 
-![9d25ba35007a4548.svg](https://i.quantuminit.com/9d25ba35007a4548.svg)
+![9d25ba35007a4548.svg](https://i.cthee.cyou/9d25ba35007a4548.svg)
 
 子网掩码的使用，子网掩码用来告诉有多少地址能够用于子网 ID以及还剩下多少实际的host ID。CIDR已经大部分替代了子网掩
 码。但它们是说同一种事物的两种方式。
@@ -45,11 +45,11 @@ tags: [notes, TCPIP, Networks]
 
 IP地址/子网掩码对图示。
 
-![0ec96e5925d64d33.svg](https://i.quantuminit.com/0ec96e5925d64d33.svg)
+![0ec96e5925d64d33.svg](https://i.cthee.cyou/0ec96e5925d64d33.svg)
 
 未划分子网的网络以及划分子网的网络图示：
 
-![a3ce55e07b254e29.svg](https://i.quantuminit.com/a3ce55e07b254e29.svg)
+![a3ce55e07b254e29.svg](https://i.cthee.cyou/a3ce55e07b254e29.svg)
 
 路由使用的路由表以及子网上的主机含有子网掩码关联的每一个IP地址的信息。
 根据数据报的network ID转发数据报到相应的网络，然后根据该网络的subnet ID将数据路由到适当的子网，接着根据host
@@ -57,7 +57,7 @@ ID，将数据发送到正确的计算机上。
 
 数据报在划分子网中的转发过程：
 
-![10b12bd0e16c44d1.svg](https://i.quantuminit.com/10b12bd0e16c44d1.svg)
+![10b12bd0e16c44d1.svg](https://i.cthee.cyou/10b12bd0e16c44d1.svg)
 
 配置子网掩码，手动方式是在配置TCPIP的同时也配置它，而如果IP地址是通过DHCP获取的，DHCP服务器分配IP地址的同时也
 一起分配一个子网掩码，而如果从ISP那里得到一个静态IP地址，与此同时也会有一个和这个IP地址一起使用的子网掩码。所有子
@@ -89,7 +89,7 @@ ID，将数据发送到正确的计算机上。
   - Network ID: 129.100.0.0
   - Subnet ID: 0.0.240.0.0
 
-![6fd5abeab32c43c9.svg](https://i.quantuminit.com/6fd5abeab32c43c9.svg)
+![6fd5abeab32c43c9.svg](https://i.cthee.cyou/6fd5abeab32c43c9.svg)
 
 全0或全1的Network/subnet 以及host IDS都不能分配，全0时，是网络本身，全1时是广播地址。因此如果使用B类地址的第
 三个8位字节作为子网ID时，可划分出2<sup>8</sup> - 2 个子网，每个子网内可以含有2<sup>8</sup> - 2 个地址。

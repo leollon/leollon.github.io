@@ -8,7 +8,7 @@ tags: [bash, notes, shell]
 - `man` 用来阅读命令的官方文档， 比如 `man` `man`
 
   命令的分区号
-  ![分区号](https://i.quantuminit.com/eed7d1556634417e.png)
+  ![分区号](https://i.cthee.cyou/eed7d1556634417e.png)
   - 1 普通命令
   - 5 文件/约定
   - 8 管理命令

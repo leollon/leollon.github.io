@@ -17,7 +17,7 @@ tags: [notes, TCPIP, Networks]
 
 CMS 本质上是 web 服务器的一个扩展。通常跑在 web 服务器机器上并且来自远程客户工作站通过一个 web 接口和这个机器进行交互。通过 CMS 管理的 web 内容通过可扩展标记语言或一些后端数据库的形式作为系统的属性值被存储以及管理。
 
-![https://i.quantuminit.com/b921a1e627784f49.svg](https://i.quantuminit.com/b921a1e627784f49.svg)
+![https://i.cthee.cyou/b921a1e627784f49.svg](https://i.cthee.cyou/b921a1e627784f49.svg)
 
 ## Social Networking
 
@@ -45,7 +45,7 @@ Peer-to-peer实际上借鉴了在本地区域网络（LANs）中的相关配置�
 
 Peer-to-peer 网络最好的部分是在软件内部处理请求 IP 地址的细节以及网络连接的建立。
 
-![https://i.quantuminit.com/25f738c9e0124250.svg](https://i.quantuminit.com/25f738c9e0124250.svg)
+![https://i.cthee.cyou/25f738c9e0124250.svg](https://i.cthee.cyou/25f738c9e0124250.svg)
 
 Peer-to-peer 网络会涉及到版权问题。
 
@@ -82,7 +82,7 @@ XML 定义了一种用于交换应用程序数据的通用格式。SOAP 是在�
 
 SOAP 设计用于支持在所谓的 SOAP 节点之间的通信。SOAP 规范定义了从 SOAP 发送放到 SOAP 接受方的传递的消息结构。
 
-![https://i.quantuminit.com/d2b13dee62584647.svg](https://i.quantuminit.com/d2b13dee62584647.svg)
+![https://i.cthee.cyou/d2b13dee62584647.svg](https://i.cthee.cyou/d2b13dee62584647.svg)
 
 SOAP 消息的结构由一个可选的头部以及消息主体组成。头部含有给消息通过的路径上的节点上使用的编号，定义以及元信息。主体含有发送给消息接受端的数据。
 

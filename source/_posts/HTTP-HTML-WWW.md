@@ -24,11 +24,11 @@ tags: [notes, TCPIP, Networks]
 
 超文本（在文本中一个能够切换到该链接指向的文档的链接）的概念在1960s年代得到了发展。Berners-Lee通过开发统一资源定位符（URL）或统一资源标识符（URI）给互联网带来了超文本的概念。HTML 文档能够组合成统一的页面和链接系统。
 
-![https://i.quantuminit.com/7d6c0268e79f472b.svg](https://i.quantuminit.com/7d6c0268e79f472b.svg)
+![https://i.cthee.cyou/7d6c0268e79f472b.svg](https://i.cthee.cyou/7d6c0268e79f472b.svg)
 
 从[上一篇](/The-Internet-A-Closer-Look)文章可以知道，URL 大多与 Web 相关连：
 
-https://quantuminit.com
+https://cthee.cyou
 
 也能常常见到在 URL 的后面跟着一个路径以及文件：
 
@@ -163,11 +163,11 @@ field:value...
 
 常见的 HTTP 状态码：
 
-![https://i.quantuminit.com/fca3ee943d6c48fd.png](https://i.quantuminit.com/fca3ee943d6c48fd.png)
+![https://i.cthee.cyou/fca3ee943d6c48fd.png](https://i.cthee.cyou/fca3ee943d6c48fd.png)
 
 HTTP Header 字段例子：
 
-![https://i.quantuminit.com/22cbfcb558824cc3.png](https://i.quantuminit.com/22cbfcb558824cc3.png)
+![https://i.cthee.cyou/22cbfcb558824cc3.png](https://i.cthee.cyou/22cbfcb558824cc3.png)
 
 早期的 HTTP 1.0 版本，每个请求/相应周期需要一个新的 TCP 连接。客户端打开一个连接并且初始化一个请求。服务器完成请求，然后关闭连接。在那种情况下，当服务器已经停止发送数据时，客户端能够知道，因为服务器关闭了 TCP 连接。这个过程需要频繁地打开和关闭连接。
 
@@ -196,7 +196,7 @@ HTTP/2 不需要加密但是强烈支持它并且给 TLS 加密提供了一个�
 3. 用户网表单中输入必要的信息，并且浏览器传输表单会服务端。（注意 HTML 表单特性反转通常的过程。浏览器根据服务器要求服务器发送内容。）
 4. 服务器接收来自浏览器的数据并且使用一个编程接口将数据传到能够处理用户信息的程序。如果用户是购买一个商品，后台的程序可能检查信用卡信息或者发送一个发货单到邮箱。如果用户是添加他/她的名字到一个邮件列表或加入一个有限制的在线站点，程序可能添加用户到数据库中。
 
-![https://i.quantuminit.com/1c985e4326af40c5.svg](https://i.quantuminit.com/1c985e4326af40c5.svg)
+![https://i.cthee.cyou/1c985e4326af40c5.svg](https://i.cthee.cyou/1c985e4326af40c5.svg)
 
 多种编程语言以及环境已经能够帮助到开发者建立基于服务器的 web 应用程序。一种用于接入一个含有 web 页面的程序或脚本是通过通用网关接口（Common Gateway Interface，CGI）。CGI 是开发用于接收来自 web 用户的基于表单的输入，处理该输入，然后以 HTML 的形式生成输出。CGI 脚本通常使用 Perl 语言编写，但是 CGI 也能够与其他语言兼容，包括 C 语言。
 

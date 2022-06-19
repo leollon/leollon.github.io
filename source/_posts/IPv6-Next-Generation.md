@@ -30,7 +30,7 @@ IPv6的一些目标：
 
 相比IPv4头部，IPv6头部要更简单的部分原因是更详细的信息被归属入跟在主要头部后的特殊的扩展头部中。
 
-![https://i.quantuminit.com/2c59efb426604e60.svg](https://i.quantuminit.com/2c59efb426604e60.svg)
+![https://i.cthee.cyou/2c59efb426604e60.svg](https://i.cthee.cyou/2c59efb426604e60.svg)
 
 字段说明：
 
@@ -56,7 +56,7 @@ IPv6规范定义如下扩展头部：
 
 每个头部类型与一个8-bit标识符关联。在主要头部或在扩展头部中的“Next Header”定义链中下一个头部的标识符。
 
-![https://i.quantuminit.com/90d3a419361c4cd5.svg](https://i.quantuminit.com/90d3a419361c4cd5.svg)
+![https://i.cthee.cyou/90d3a419361c4cd5.svg](https://i.cthee.cyou/90d3a419361c4cd5.svg)
 
 上面的列表中描述的扩展头部中，只有Hop-by-Hop Options 和 Routing被传输路径上中间结点处理。路由器没必要处理其他扩展头部；他们只需要传递就可以了。
 
@@ -76,7 +76,7 @@ Routing头部被用于指定一个或多个在去往目的地路上数据报路�
 
 路由头部格式图：
 
-![https://i.quantuminit.com/d35c7ad5ad29414e.svg](https://i.quantuminit.com/d35c7ad5ad29414e.svg)
+![https://i.cthee.cyou/d35c7ad5ad29414e.svg](https://i.cthee.cyou/d35c7ad5ad29414e.svg)
 
 数据字段说明：
 
@@ -182,7 +182,7 @@ IPv4地址169.219.13.133映射到IPv6地址的结果是0000:0000:0000:0000:0000:
 
 最常见的用于获取远程IPv6连接的方式是使用一个IPv6隧道代理。**IPv6隧道**的思想是在IPv4中封装IPv6流量。在隧道端点的隧道服务器收到一个IPv6数据包并且将其包装进一个IPv4头部中，传输到另一个提取出原始IPv6数据包的端点并且转发到目的IPv6网络。这种类型的隧道让IPv6网络能够与其他Ipv6网络进行通信。管理员能够实现并且在主网络和分支网络上测试完全的IPv6配置并且使用隧道代理连接部分网络。
 
-![https://i.quantuminit.com/a8c425e9376e4b88.svg](https://i.quantuminit.com/a8c425e9376e4b88.svg)
+![https://i.cthee.cyou/a8c425e9376e4b88.svg](https://i.cthee.cyou/a8c425e9376e4b88.svg)
 
 有时候网络直接与隧道代理连接来支持IPv6流量和有时候是ISP连接隧道代理然后提供数据包给提供IPv6支持的端用户网络。
 
@@ -194,7 +194,7 @@ IPv4地址169.219.13.133映射到IPv6地址的结果是0000:0000:0000:0000:0000:
 
 6to4中继服务器收到这个篡改的IPv6地址，提取出IPv4地址并且在IPv4数据包中封装IPv6数据包，这个数据包被发往目的地址。在数据包的目的地，这个数据包被发往在任播（anycast）地址运行的6to4中继服务器，在这个中继服务器上原来的IPv6数据包被提取出来并且传输。
 
-![https://i.quantuminit.com/66ad365e7ca24fd7.svg](https://i.quantuminit.com/66ad365e7ca24fd7.svg)
+![https://i.cthee.cyou/66ad365e7ca24fd7.svg](https://i.cthee.cyou/66ad365e7ca24fd7.svg)
 
 因为在协议字段中使用*41*，6in4和6to4又称为proto-41机制。
 
@@ -204,7 +204,7 @@ TSP是IPv6隧道技术中的另外一个，该技术允许隧道参数的动态�
 
 在下图中可以看出，TSP最初是关注于协商链接参数并且TSP实际使用时支持许多的潜在的数据包封装协议。在某些情况下，TSP服务器甚至能够使协议适应于网络情况，比如，为了通过NAT设备，将会切换到UDP-based隧道协议。
 
-![https://i.quantuminit.com/88acd54e5ff14471.svg](https://i.quantuminit.com/88acd54e5ff14471.svg)
+![https://i.cthee.cyou/88acd54e5ff14471.svg](https://i.cthee.cyou/88acd54e5ff14471.svg)
 
 ## 小小的总结
 

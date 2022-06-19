@@ -19,7 +19,7 @@ tags: [notes, TCPIP, Networks]
 
 TCPIP的应用层与OSI的应用层，表现层以及会话层相关。
 
-![bb3dcf7b5d06401e.svg](https://i.quantuminit.com/bb3dcf7b5d06401e.svg)
+![bb3dcf7b5d06401e.svg](https://i.cthee.cyou/bb3dcf7b5d06401e.svg)
 
 与TCPIP应用层相关的OSI分层描述：
 
@@ -72,7 +72,7 @@ Transfer Protocol (TFTP)。
 
 文件服务场景示意图：
 
-![fd822f26bd8d43c9.svg](https://i.quantuminit.com/fd822f26bd8d43c9.svg)
+![fd822f26bd8d43c9.svg](https://i.cthee.cyou/fd822f26bd8d43c9.svg)
 
 ## Name Resolution Services
 
@@ -85,7 +85,7 @@ Transfer Protocol (TFTP)。
 requester的服务。Redirector在本地计算机中拦截服务请求并且检查是否这个请求应该在本地完成或是转发到网络上的另外一
 台计算机。
 
-![0ae5007c0d38412b.svg](https://i.quantuminit.com/0ae5007c0d38412b.svg)
+![0ae5007c0d38412b.svg](https://i.cthee.cyou/0ae5007c0d38412b.svg)
 
 例如，远程硬盘能够以本地硬盘出现在客户计算机上。
 
@@ -100,7 +100,7 @@ Hypertext Transfer Protocol (HTTP) 是我们所知的万维网生态系统的心
 
 应用程序通过API访问TCPIP协议栈：
 
-![d91fbe6b3a864831.svg](https://i.quantuminit.com/d91fbe6b3a864831.svg)
+![d91fbe6b3a864831.svg](https://i.cthee.cyou/d91fbe6b3a864831.svg)
 
 例如Sockets API的网络API通过[socket](/The-Transport-Layer/#Ports-和-Sockets)接收并传递数据给应用程序。因此那些APIs在应用层运行。
 

@@ -34,7 +34,7 @@ $ echo bXNzbShkb3QpZ29vZCNvdXRsb29rKHBlcmlvZCljb20K | base64 -D  # MacOS
 
    Aka be an it，whatever. Short but not good. Already registered by other.
 
-2. quantuminit.com
+2. cthee.cyou
 
    Long but sounds good.
 

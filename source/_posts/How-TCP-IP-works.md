@@ -21,7 +21,7 @@ TCPIP是一个协议系统，并且协议是一个规则和过程的系统。
 
 描述TCPIP网络的通用模型图例，但不是唯一的模型:
 
-![4cfd4cc419584b0a.svg](https://i.quantuminit.com/4cfd4cc419584b0a.svg)
+![4cfd4cc419584b0a.svg](https://i.cthee.cyou/4cfd4cc419584b0a.svg)
 
 ARPAnet模型使用三层描述，Network Interface layer, Host-to-Host layer, Process-Level/Application layer.
 其他的描述：Application layer, Transport layer, Internet layer, Data link layer, Physical layer.
@@ -46,7 +46,7 @@ Internet layer 有时候又可称为Internetwork layer 或 Network layer.
 
 标准四层TCPIP模型与OSI七层模型的关系：
 
-![1789ea1fe6bd4db7.svg](https://i.quantuminit.com/1789ea1fe6bd4db7.svg)
+![1789ea1fe6bd4db7.svg](https://i.cthee.cyou/1789ea1fe6bd4db7.svg)
 
 Physical layer：将数据转换成实际上会通过传输媒介的电流或模拟脉冲信号，并且察看数据的传输
 
@@ -67,7 +67,7 @@ Presentation layer：翻译数据成标准格式；管理加密和数据压缩
 
 给数据打上每层的头部的过程图例：
 
-![fa4f802018704533.svg](https://i.quantuminit.com/fa4f802018704533.svg)
+![fa4f802018704533.svg](https://i.cthee.cyou/fa4f802018704533.svg)
 
 每一层的的数据包看起来都不一样，且有着不同的名字，在每一层创建的数据包名如下：
 
@@ -98,7 +98,7 @@ Presentation layer：翻译数据成标准格式；管理加密和数据压缩
 
 基本的TCPIP协议网络系统：
 
-![6b826ab818a64712.svg](https://i.quantuminit.com/6b826ab818a64712.svg)
+![6b826ab818a64712.svg](https://i.cthee.cyou/6b826ab818a64712.svg)
 
 ## 小小的总结
 
