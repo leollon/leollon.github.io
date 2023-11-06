@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="本文目的是学习：  HTTP Email FTP file transfer File and print services LDAP IRC and IM messaging  HTTP在World Wide Web中心的HTTP（Hypertext Transfer Protocol）本质上是用于以超文本标记语言（Hypertext Markup Language， HTML）格式来传输以及请">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Classic Services">
+<meta property="og:url" content="https://www.cthee.cyou/Classic-Services/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="本文目的是学习：  HTTP Email FTP file transfer File and print services LDAP IRC and IM messaging  HTTP在World Wide Web中心的HTTP（Hypertext Transfer Protocol）本质上是用于以超文本标记语言（Hypertext Markup Language， HTML）格式来传输以及请">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.cthee.cyou/4ca26180261540fa.svg">
+<meta property="og:image" content="https://i.cthee.cyou/85483ac5df90454a.svg">
+<meta property="og:image" content="https://i.cthee.cyou/6bfab9684bad43d0.svg">
+<meta property="article:published_time" content="2019-09-23T14:19:32.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.201Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="TCPIP">
+<meta property="article:tag" content="Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.cthee.cyou/4ca26180261540fa.svg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Classic Services</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/asyncio-xiao-xiao-de-shi-jian-bi-ji/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/Classic-Tools/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Classic-Services/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Classic-Services/&text=Classic Services"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Classic-Services/&title=Classic Services"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Classic-Services/&is_video=false&description=Classic Services"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Classic Services&body=Check out this article: https://www.cthee.cyou/Classic-Services/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Classic-Services/&title=Classic Services"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Classic-Services/&title=Classic Services"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Classic-Services/&title=Classic Services"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Classic-Services/&title=Classic Services"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Classic-Services/&name=Classic Services&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP"><span class="toc-number">1.</span> <span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Email"><span class="toc-number">2.</span> <span class="toc-text">Email</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FTP"><span class="toc-number">3.</span> <span class="toc-text">FTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trivial-File-Transfer-Protocol"><span class="toc-number">4.</span> <span class="toc-text">Trivial File Transfer Protocol</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#File-and-Print-Service"><span class="toc-number">5.</span> <span class="toc-text">File and Print Service</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-File-System"><span class="toc-number">5.1.</span> <span class="toc-text">Network File System</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Server-Message-Block-and-Common-Internet-File-System"><span class="toc-number">5.2.</span> <span class="toc-text">Server Message Block and Common Internet File System</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lightweight-Directory-Access-Protocol"><span class="toc-number">6.</span> <span class="toc-text">Lightweight Directory Access Protocol</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remote-Control"><span class="toc-number">7.</span> <span class="toc-text">Remote Control</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Classic Services
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-09-23T14:19:32.000Z" itemprop="datePublished">2019-09-23</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Networks/" rel="tag">Networks</a>, <a class="tag-link-link" href="/tags/TCPIP/" rel="tag">TCPIP</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>本文目的是学习：</p>
+<ul>
+<li>HTTP</li>
+<li>Email</li>
+<li>FTP file transfer</li>
+<li>File and print services</li>
+<li>LDAP</li>
+<li>IRC and IM messaging</li>
+</ul>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>在World Wide Web中心的HTTP（Hypertext Transfer Protocol）本质上是用于以超文本标记语言（Hypertext Markup Language， HTML）格式来传输以及请求数据和图片的应用层协议。一个web服务器首先是一个HTTP服务器。</p>
+<h2 id="Email"><a href="#Email" class="headerlink" title="Email"></a>Email</h2><p>标准的邮件依赖于一对服务器系统，这也就是为什么需要在邮件阅读器配置界面配置一个“接收服务器”以及一个“发出服务器”的原因。使用简单邮件传输协议（SMTP）的发送服务器从用户接收发送出去的消息并且通过其他SMTP服务器网络转发到目的地址。通常使用POP或IMAP协议的接收服务器接收发送到用户邮箱帐号的信息并且等待用户的邮件阅读器请求连接并且访问消息。</p>
+<h2 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h2><p>广泛使用的文件传输协议（File Transfer Protocol）让用户能够在TCPIP网络上的计算机之间进行传输文件。用户在一台计算机上运行FTP客户端，并且在另外一台计算机上运行FTP服务器应用程序，比如UNIX&#x2F;Linux计算机上的ftpd（FTP 守护程序）或其他平台上的FTP服务。FTP最初是用于传输文件，尽管它能够执行其他比如创建目录，删除目录以及列出文件的功能。</p>
+<p>FTP使用TCP协议并且因此通过一个在客户端计算机和服务器计算机之间的可靠的，面向连接的会话运行。服务器上标准的FTP守护程序使用TCP端口21监听来自客户端的请求。</p>
+<p>在UNIX世界中，一个守护程序使用运行在后台的一个进程并且当请求服务时提供服务。在Windows世界中，一个守护程序被称为一个服务。</p>
+<p>当使用FTP传输文件的时，必须向FTP指定将要传输的文件的文件类型。最常见的选项是二进制和ASCII。当传输的文件是简单的文本文件时，使用ASCII。当传输的文件使用程序文件，word文档或一个图形文件时选择二进制。默认的文件传输模式是ASCII。</p>
+<p>在本地计算机上的当前目录开始FTP会话时，当前目录是文件传输过程中的默认目录。</p>
+<p>常用的FTP命令列表及其解释：</p>
+<ul>
+<li><code>ftp</code>：ftp命令用于运行ftp客户端程序。可以输入只输入ftp或输入他的同时后面跟上空格并且加上IP地址或域名。</li>
+<li><code>user</code>：用于更改当前会话的用户ID以及密码信息。将会提示输入新的用户ID以及密码。这个命令相当于退出当前会话然后又开启一个新的用户。</li>
+<li><code>help</code>：显示在FTP客户端上可用的FTP命令。</li>
+<li><code>ls</code> or <code>dir</code>：UNIX&#x2F;Linux 的<code>ls</code> 或 <code>ls -l</code>命令或Windows<code>dir</code>命令用于列出FTP服务器上当前工作目录的文件名以及目录名称。<code>ls -l</code>命令类似与<code>ls</code>但是它能够列出额外的细节比如读写权限以及文件创建时间。</li>
+</ul>
+<p><img src="https://i.cthee.cyou/4ca26180261540fa.svg" alt="https://i.cthee.cyou/4ca26180261540fa.svg"></p>
+<ul>
+<li><code>pwd</code>：<code>pwd</code>命令打印在远程服务器上当前工作目录的名字。</li>
+<li><code>cd</code>：更换FTP服务器上的当前工作目录。</li>
+<li><code>mkdir</code>：在FTP服务器上的当前工作目录内部创建一个目录。通常匿名的FTP会话不允许使用这个命令。</li>
+<li><code>rmdir</code>：从FTP服务器上的当前工作目录删除一个目录。通常匿名会话不允许使用这个命令。</li>
+<li><code>binary</code>：将FTP客户端使用的默认ASCII传输模式切换成二进制传输模式。二进制模式在传输二进制文件时能够用到。比如使用<code>get</code>，<code>put</code>，<code>mget</code>以及<code>mput</code>传输程序以及图形文件时。</li>
+<li><code>ascii</code>：将客户端传输模式从二进制传输模式切换成ASCII传输模式。</li>
+<li><code>type</code>：显示当前的文件传输模式。</li>
+<li><code>status</code>：显示FTP客户端上多个的设置信息。比如客户端设置的传输模式以及是否客户端是否设置显示详细的系统信息。</li>
+<li><code>get</code>：从FPT服务器上获取一个文件。get后面接单个文件名时，将从服务器上复制该文件到本地计算机当前目录中。如果接两个文件名，第二文件名将会是复制的文件在本地计算机上的文件名。</li>
+<li><code>mget</code>：<code>mget</code>命令与get相似除了它可以获取多个文件之外。</li>
+<li><code>put</code>：从FTP客户端传输一个文件到FTP服务器中。put后面接一个参数时，在服务器上的文件名和客户端上的一只，接两个参数时，第二个参数是在FTP服务器上的该复制文件的文件名。</li>
+<li><code>open</code>：用于与FTP服务器建立一个新会话。本质上是退出FTP和再次开启的快捷方式。<code>open</code>命令能够用于和一个完全不同的FTP服务器打开一个会话或与当前的服务器重新开启一个会话。</li>
+<li><code>close</code>：<code>close</code>命令用于关闭与一个FTP服务器的当前会话。FTP客户端程序依旧处于打开状态，并且可以使用<code>open</code>命令和服务器打开一个新的会话。</li>
+<li><code>bye</code>或<code>quit</code>：关闭当前的FTP会话并且终止FTP客户端运行。</li>
+</ul>
+<p>如果想要使用比FTP更安全的文件传输工具，可以使用含有<code>scp</code>和<code>sftp</code>工具的SSH工具包。</p>
+<h2 id="Trivial-File-Transfer-Protocol"><a href="#Trivial-File-Transfer-Protocol" class="headerlink" title="Trivial File Transfer Protocol"></a>Trivial File Transfer Protocol</h2><p>TFTP（Trivial File Transer Protocol）用于在TFTP客户端与TFTP服务器之间传输文件的协议。这个协议使用用户数据报（UDP）作为传输层（TCPIP模型中从上往下的第二层），不像FTP，不需要用户登录来传输文件。TFTP被设计得很小，因此它和UDP都能够在PROM（programmable read-only memory，可编程只读内存）芯片上实现。TFTP只能读写文件，不能列出目录中的内容，创建或删除目录或像FTP一样允许用户登录。TFTP最开始是与RARP和BOOTP协议联合使用来启动无盘工作站以及在某种情况下，上传新系统代码或给路由器或其他网络设备打补丁。它使用称为netascii的ASCII格式或称为octet的二进制格式两者之一来传输文件。</p>
+<p>使用tftp传输完文件之后，会话将关闭并终止。tftp命令使用语法格式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TFTP [-i] host [get | put] &lt;<span class="built_in">source</span> filename&gt; [&lt;destination filenae&gt;]</span><br></pre></td></tr></table></figure>
+
+<p>阅读<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc1350">RFC 1350</a>，获取学习TFTP协议细节。</p>
+<h2 id="File-and-Print-Service"><a href="#File-and-Print-Service" class="headerlink" title="File and Print Service"></a>File and Print Service</h2><p>如<code>ftp</code>和<code>tftp</code>工具都是运行在TCPIP协议栈的应用层的独立应用程序。介绍两种提供完整的网络文件访问的协议：</p>
+<ul>
+<li>Network File System(NFS)：在UNIX和Linux系统上使用的协议</li>
+<li>Common Internet File System&#x2F;Server Message Block(CIFS&#x2F;SMB)：WIndows客户端用于提供远程访问文件的协议</li>
+</ul>
+<h3 id="Network-File-System"><a href="#Network-File-System" class="headerlink" title="Network File System"></a>Network File System</h3><p>NFS最初由Sun开发，现在在UNIX，Linux和其他系统上都得到支持。NFS允许用户访问（读写，创建以及删除）位于远程计算机上的目录以及文件，就好像这个目录和文件在本地计算机上一样。NFS在本地文件系统和远程文件系统之间都有实现，所以不需要应用程序的任何改变。程序能够通过NFS而不需要任何重新编译或其他改变就能够访问本地文件和远程文件以及目录，就好像它们只存在在本地文件系统上一样。</p>
+<p>NFS被设计成独立于操作系统，传输层以及物理网络结构而存在。在客户端计算机和服务器计算机之间使用远程过程调用（Remote Procedure Calls，RPCs）来实现这一独立性。RPC是一个使运行在一台计算机上的一个程序调用运行在另一台计算机上的程序的内部代码段的过程。在NFS例子中，客户端操作系统向服务器上的操作系统发起一个远程过程调用。</p>
+<p>在远程文件和目录在NFS系统可以使用之前，得先经过挂载。在成功挂载之后，远程文件和目录存在并可以像在本地文件系统上一样操作。</p>
+<h3 id="Server-Message-Block-and-Common-Internet-File-System"><a href="#Server-Message-Block-and-Common-Internet-File-System" class="headerlink" title="Server Message Block and Common Internet File System"></a>Server Message Block and Common Internet File System</h3><p>服务器消息块（SMB）是支持Windows用户界面的具有网络功能的工具的一个协议，比如，Explorer，网络邻居以及映射网络驱动。SMB是设计运行于各种不同协议系统之上，包括IPX&#x2F;SPX，NetBEUI，以及TCPIP。</p>
+<p>每个SMB的会话以一个初始信息交换而开始，在信息中协商SMB对话规范以及验证一个客户端并登录到服务器上。验证过程的细节根据操作系统以及配置有所变化，但就SMB关注的而言，登录信息被封装在<em>sesssetupX</em>SMB中。在SMB协议之下的的协议传输简单称为一个SMB。）</p>
+<p>如果登录成功，客户端发送一个指定网络共享名字的SMB给服务器，这个网络共享也是客户端想要访问的。如果共享访问成功，客户端能够打开，关闭，读取，或写入网络资源，并且服务器发送必要的数据来完成客户端的请求。</p>
+<p>另一个等同于SMB的版本是公用文件系统（CIFS）。开发者以及其他支持服务器与Window客户端通过SMB交流的操作系统都知晓SMB和CIFS协议的细节。一个称为Samba的开源服务器为UNIX&#x2F;Linux系统提供SMB文件服务。</p>
+<p>当在Windows中配置文件共享时，本质上是配置这台计算机，使其充当一个CIFS服务器。</p>
+<h2 id="Lightweight-Directory-Access-Protocol"><a href="#Lightweight-Directory-Access-Protocol" class="headerlink" title="Lightweight Directory Access Protocol"></a>Lightweight Directory Access Protocol</h2><p>在大型网络上，以统一高效地管理资源信息的任务的困难日益增加。当初开发轻量目录访问协议（LDAP）是作为基于TCPIPX.500数据模型的继承人。LDAP是一个<strong>目录服务</strong>。一个LDAP服务器维护一个关于按逻辑且类似树状结构组织管理的网络资源的信息目录。LDAP运行TCPIP应用层 并且监听到达TCP端口389的请求。</p>
+<p>也许最著名的基于LDAP的系统就是微软的活跃目录（Active Directory）。在开源世界中，OpenLDAP更受到倾睐。</p>
+<p>一个LDAP目录的结构定义在一种模式中。这个模式清楚的说明了定义存在目录中的数据的属性集合。例如一个雇员记录的目录中可能包括雇员的姓名，地址以及用户ID等的属性。</p>
+<p>一个LDAP目录被有层次地进行组织管理，就像一个文件目录结构一样。每个条目都有一个定义它在树中位置的distinguished name（DN）。这个DN由一个唯一定义容器中的条目的relative distinguished name（RDN），加上一系列定义条目所在的容器的层次的部件构成。如下图。</p>
+<p>dn: cn&#x3D;Ellen Johnson, ou&#x3D;employees, dc&#x3D;pearson,dc&#x3D;com</p>
+<p><img src="https://i.cthee.cyou/85483ac5df90454a.svg" alt="https://i.cthee.cyou/85483ac5df90454a.svg"></p>
+<p>一个DN可能看起来像是这样子的：</p>
+<p>dn: cn&#x3D;Ellen Johnson, ou&#x3D;employees,dc&#x3D;pearson,dc&#x3D;com</p>
+<p>注意到与名字值关联的两个字母的属性类型（在等号左边的）。LDAP预先定义一些用于在建立DN中定义的标准属性类型，包括如下：</p>
+<ul>
+<li>Domain component（dc）：在定义目录层次的嵌套容器链中的一个条目。在之前的例子中，<em>dc</em>条目提到一个DNS域名（pearson.com)。</li>
+<li>Organization unit（ou）：为了管理方便对条目进行分组的一个容器。一个ou可能定应一些逻辑组，比如一个部门，然而一个<em>dc</em>更可能反映网络自身的结构。</li>
+<li>Canonical name（cn）：在容器中唯一的对象的一个可读性友好的名字。</li>
+</ul>
+<p>在之前的例子中，cn充当RDN。也有可能使用另一个别的名字，比如一个用户ID或员工工号做为在区别名字内的RDN元素：</p>
+<p>dn: userid&#x3D;ejohnson,ou&#x3D;Employees,dc&#x3D;pearson,dc&#x3D;com</p>
+<p>LDAP是一个二进制格式。字母数字表现形式，比如之前的例子实际上是能用于读取并且报告LDAP数据的LDAP Data Interchange Format（LDIF）。</p>
+<p>读取目录信息通过采取传递URLs到LDAP服务器的形式。前缀（或这说方案）<code>ladp</code>用于将URL和LDAP协议管理起来。如下：</p>
+<p>ldap:&#x2F;&#x2F;ldap.pearson.com&#x2F;userid&#x3D;ejohnson,ou&#x3D;employees,dc&#x3D;pearson,dc&#x3D;com</p>
+<p>读取所有在ldap.pearson.com与下面关联的专有的名字的属性：<br>userid&#x3D;ejohnson, ou&#x3D;employees,dc&#x3D;pearson,dc&#x3D;com</p>
+<p>指定一个特定的属性，用问号符号包起来：</p>
+<p>ldap:&#x2F;&#x2F;ldap.pearson.com&#x2F;userid&#x3D;ejohnson,ou&#x3D;employees,dc&#x3D;pearson,dc&#x3D;com?phonenumber?</p>
+<p>LDAP有时候回合其他验证工具结合起来为用户提供一种用于验证LDAP数据存储的安全方式。例如，Active Directory 集成Kerberos验证。Unix&#x2F;Linux管理员可能将LDAP和Kerberos或即插即用验证模块（PAM）系统组合起来一起使用。</p>
+<p>除了支持由现成系统比如Active Directory提供标准用户和资源管理服务之外，LDAP也能够容易地适配自定义的应用程序。对于LDAP来说，任何需要从常见的数据存储中进行网络查询，以及从目录风格的数据结构而不是扁平文件或SQL风格的数据库中受益的场景，这些场景LDAP都能够提供参考。LDAP的协议（schema）框架能够容易的轻松地适配面向对象变成方法，并且许多编程环境提供应用编程接口（APIs）和用于支持LDAP查询的其他工具。</p>
+<h2 id="Remote-Control"><a href="#Remote-Control" class="headerlink" title="Remote Control"></a>Remote Control</h2><p>大部分用户不再从shell提示窗口进行操作，而是喜欢通过鼠标在图形接口（GUI）点击来操作。许多远程接入协议以及工具让用户使用平常的键盘与鼠标的桌面操作来控制远程系统。通过GUI提供远程访问的任务有些复杂，但是原理都是一样的。运行在计算机A的应用层软件部分拦截键盘的输入并且通过协议栈重定向到计算机B。来自计算机B的屏幕输出通过网络发送回计算机A。这样结果是计算机A的键盘和鼠标充当计算机B的键盘鼠标，并且计算机A的屏幕显示计算机B桌面。简而言之，用户可以在计算机A通过远程控制可以看到并且操作计算机B。</p>
+<p><img src="https://i.cthee.cyou/6bfab9684bad43d0.svg" alt="https://i.cthee.cyou/6bfab9684bad43d0.svg"></p>
+<p>一些GUI-based远程控制工具，Apple使用Apple Remote Desktop工具，Windows使用支持远程桌面协议（RDP）的远程桌面链接工具，Unix&#x2F;Linux系统总是通过X Server图形环境的基本架构来简单地实现这个功能。然而，最近的工具，比如虚拟网络计算（VNC）以及NoMachine’s NX已经增添了便利性并且给端用户提供了远程访问。</p>
+<h2 id="小小的总结"><a href="#小小的总结" class="headerlink" title="小小的总结"></a>小小的总结</h2><ul>
+<li>现代网络上LDAP的主要的角色是维护一个能够通过TCPIP轻松访问到的网络和用户信息目录。</li>
+<li>TFTP不能列出目录中的内容，创建或移除目录，或允许用户像FTP一样登录。</li>
+<li>TFTP主要用于和RARP以及BOOTP协议联合起来用于启动无盘工作站，以及在某些情况下，用于上传新系统代码或补丁到路由器或其他网络设备中。</li>
+<li>NFS通过在客户端以及服务器之间使用RPC来完成不依赖于操作系统的特性。</li>
+<li>SMB以及CIFS是能够支持文件共享功能的协议。</li>
+</ul>
+<p><a href="/Classic-Tools/">上一篇</a><br><a href="/The-Internet-A-Closer-Look/">下一篇</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP"><span class="toc-number">1.</span> <span class="toc-text">HTTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Email"><span class="toc-number">2.</span> <span class="toc-text">Email</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FTP"><span class="toc-number">3.</span> <span class="toc-text">FTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trivial-File-Transfer-Protocol"><span class="toc-number">4.</span> <span class="toc-text">Trivial File Transfer Protocol</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#File-and-Print-Service"><span class="toc-number">5.</span> <span class="toc-text">File and Print Service</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-File-System"><span class="toc-number">5.1.</span> <span class="toc-text">Network File System</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Server-Message-Block-and-Common-Internet-File-System"><span class="toc-number">5.2.</span> <span class="toc-text">Server Message Block and Common Internet File System</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lightweight-Directory-Access-Protocol"><span class="toc-number">6.</span> <span class="toc-text">Lightweight Directory Access Protocol</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Remote-Control"><span class="toc-number">7.</span> <span class="toc-text">Remote Control</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Classic-Services/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Classic-Services/&text=Classic Services"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Classic-Services/&title=Classic Services"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Classic-Services/&is_video=false&description=Classic Services"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Classic Services&body=Check out this article: https://www.cthee.cyou/Classic-Services/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Classic-Services/&title=Classic Services"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Classic-Services/&title=Classic Services"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Classic-Services/&title=Classic Services"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Classic-Services/&title=Classic Services"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Classic-Services/&name=Classic Services&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

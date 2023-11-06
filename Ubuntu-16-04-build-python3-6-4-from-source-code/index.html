@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="刚开始我是按常规的编译安装方法： 12341. $ .&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;2. $ .&#x2F;configure --enable-optimizations # 这个是上一步结束给的提示，索性也就运行这条命令，就是开启优化的一个选项3. $ make -j 8   # 开八个线程进行编译，超快，慢就慢在一些test， test example高达400+项。4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 16.04 - build python3.6.4 from source code">
+<meta property="og:url" content="https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="刚开始我是按常规的编译安装方法： 12341. $ .&#x2F;configure --prefix&#x3D;&#x2F;usr&#x2F;local&#x2F;2. $ .&#x2F;configure --enable-optimizations # 这个是上一步结束给的提示，索性也就运行这条命令，就是开启优化的一个选项3. $ make -j 8   # 开八个线程进行编译，超快，慢就慢在一些test， test example高达400+项。4">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-01-18T02:43:08.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.205Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="Ubuntu16.04">
+<meta property="article:tag" content="build-Python3.6.4">
+<meta property="article:tag" content="Debian8">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Ubuntu 16.04 - build python3.6.4 from source code</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/fix-js-got-me/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/MySQL-How-to-reset-root-s-password/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&text=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&title=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&is_video=false&description=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ubuntu 16.04 - build python3.6.4 from source code&body=Check out this article: https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&title=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&title=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&title=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&title=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&name=Ubuntu 16.04 - build python3.6.4 from source code&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E5%B0%9D%E8%AF%95%E6%9B%B4%E6%96%B0%E5%8D%87%E7%BA%A7Ubuntu"><span class="toc-number">1.</span> <span class="toc-text">先尝试更新升级Ubuntu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85build%E9%9C%80%E8%A6%81%E7%9A%84%E5%B7%A5%E5%85%B7%E9%93%BE%E6%8E%A5"><span class="toc-number">2.</span> <span class="toc-text">安装build需要的工具链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85build-Python%E9%9C%80%E8%A6%81%E7%9A%84"><span class="toc-number">3.</span> <span class="toc-text">安装build Python需要的</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debian-8"><span class="toc-number"></span> <span class="toc-text">Debian 8</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#build-Python3-6-4"><span class="toc-number">1.</span> <span class="toc-text">build Python3.6.4</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#References"><span class="toc-number">1.1.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Ubuntu 16.04 - build python3.6.4 from source code
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-01-18T02:43:08.000Z" itemprop="datePublished">2018-01-18</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Debian8/" rel="tag">Debian8</a>, <a class="tag-link-link" href="/tags/Ubuntu16-04/" rel="tag">Ubuntu16.04</a>, <a class="tag-link-link" href="/tags/build-Python3-6-4/" rel="tag">build-Python3.6.4</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>刚开始我是按常规的编译安装方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1. $ ./configure --prefix=/usr/local/</span><br><span class="line">2. $ ./configure --enable-optimizations <span class="comment"># 这个是上一步结束给的提示，索性也就运行这条命令，就是开启优化的一个选项</span></span><br><span class="line">3. $ make -j 8   <span class="comment"># 开八个线程进行编译，超快，慢就慢在一些test， test example高达400+项。</span></span><br><span class="line">4. $ sudo make install</span><br></pre></td></tr></table></figure>
+<p>安装完后，在python3.6 console里面<code>import ssl</code>的时候，就会找不到对应的模块。<br>在编译完之后，还有提示其他模块没有找到的，比如<code>readline</code>啥。这些在开始test之前都可以找得到。</p>
+<p>下面是推荐的做法</p>
+<h2 id="先尝试更新升级Ubuntu"><a href="#先尝试更新升级Ubuntu" class="headerlink" title="先尝试更新升级Ubuntu"></a>先尝试更新升级Ubuntu</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt update</span><br><span class="line">$ sudo apt upgrade -y</span><br></pre></td></tr></table></figure>
+<h2 id="安装build需要的工具链接"><a href="#安装build需要的工具链接" class="headerlink" title="安装build需要的工具链接"></a>安装build需要的工具链接</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install -y build-essential <span class="comment"># gcc, g++, make等</span></span><br></pre></td></tr></table></figure>
+<h2 id="安装build-Python需要的"><a href="#安装build-Python需要的" class="headerlink" title="安装build Python需要的"></a>安装build Python需要的</h2><p>这里也是解决一些模块没有找到的问题。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt install libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev</span><br><span class="line">$ sudo apt install libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev</span><br></pre></td></tr></table></figure>
+
+<h1 id="Debian-8"><a href="#Debian-8" class="headerlink" title="Debian 8"></a>Debian 8</h1><p><strong>注意事项</strong></p>
+<p>Ubuntu 跳过这一步。</p>
+<p>因为我的小鸡(vps)使用的Linux发行版是Debian8，而Debian8的默认的Python最高版本是3.4.2。</p>
+<p>贴一下这台小鸡的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CPU model            : Intel(R) Xeon(R) CPU E5-2650L v4 @ 1.70GHz</span><br><span class="line">Number of cores      : 1</span><br><span class="line">CPU frequency        : 1699.998 MHz</span><br><span class="line">Total size of Disk   : 18.5 GB (4.2 GB Used)</span><br><span class="line">Total amount of Mem  : 984 MB (912 MB Used)</span><br><span class="line">Total amount of Swap : 1903 MB (3 MB Used)</span><br><span class="line">System uptime        : 0 days, 6 hour 29 min</span><br><span class="line">Load average         : 0.00, 0.00, 0.05</span><br><span class="line">OS                   : Debian GNU/Linux 8</span><br><span class="line">Arch                 : x86_64 (64 Bit)</span><br><span class="line">Kernel               : 4.14.0-041400rc8-generic</span><br></pre></td></tr></table></figure>
+<p>配置也就这样子了。<br>目前Python的最新版本已经是3.6.4了，而我又不想升级Debian9,因此也就只能自己动手丰衣足食，手动编译安装了。<br>至于为什么有这一步呢，是因为，我在部署基于Python3.6.4并用Django(1.11.7)写的blog的时候，<br><code>pip install -r requirements</code>到了最后一步的之后，总是提示诸如</p>
+<ol>
+<li>Python-3.6.4&#x2F;Modules&#x2F;csv.gcda:Cannot Open</li>
+<li>Python-3.6.4&#x2F;Modules&#x2F;fcntlmodule.gcda Cannot open<br>….<br>然后Google也没有结果。<br>当时的错误还有几项，但是浏览器中历史记录只有这样子两条记录了。<br>所以就自己尝试通过下面的方法给解决了。</li>
+</ol>
+<p>192行-252行改成下面这样子。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim Modules/Setup.dist</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">fcntl fcntlmodule.c     <span class="comment"># fcntl(2) and ioctl(2)</span></span><br><span class="line">spwd spwdmodule.c               <span class="comment"># spwd(3)</span></span><br><span class="line">grp grpmodule.c         <span class="comment"># grp(3)</span></span><br><span class="line"><span class="keyword">select</span> selectmodule.c   <span class="comment"># select(2); not on ancient System V</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Memory-mapped files (also works on Win32).</span></span><br><span class="line">mmap mmapmodule.c</span><br><span class="line"></span><br><span class="line"><span class="comment"># CSV file helper</span></span><br><span class="line">_csv _csv.c</span><br><span class="line"></span><br><span class="line"><span class="comment"># Socket module helper for socket(2)</span></span><br><span class="line">_socket socketmodule.c</span><br><span class="line"></span><br><span class="line"><span class="comment"># Socket module helper for SSL support; you must comment out the other</span></span><br><span class="line"><span class="comment"># socket line above, and possibly edit the SSL variable:</span></span><br><span class="line"><span class="comment">#SSL=/usr/local/ssl</span></span><br><span class="line"><span class="comment">#_ssl _ssl.c \</span></span><br><span class="line"><span class="comment">#       -DUSE_SSL -I$(SSL)/include -I$(SSL)/include/openssl \</span></span><br><span class="line"><span class="comment">#       -L$(SSL)/lib -lssl -lcrypto</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The crypt module is now disabled by default because it breaks builds</span></span><br><span class="line"><span class="comment"># on many systems (where -lcrypt is needed), e.g. Linux (I believe).</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># First, look at Setup.config; configure may have set this for you.</span></span><br><span class="line"></span><br><span class="line">_crypt _cryptmodule.c <span class="comment"># -lcrypt # crypt(3); needs -lcrypt on some systems</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Some more UNIX dependent modules -- off by default, since these</span></span><br><span class="line"><span class="comment"># are not supported by all UNIX systems:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#nis nismodule.c -lnsl  # Sun yellow pages -- not everywhere</span></span><br><span class="line"><span class="comment">#termios termios.c      # Steen Lumholt&#x27;s termios module</span></span><br><span class="line"><span class="comment">#resource resource.c    # Jeremy Hylton&#x27;s rlimit interface</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#_posixsubprocess _posixsubprocess.c  # POSIX subprocess module helper</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Multimedia modules -- off by default.</span></span><br><span class="line"><span class="comment"># These don&#x27;t work for 64-bit platforms!!!</span></span><br><span class="line"><span class="comment"># #993173 says audioop works on 64-bit platforms, though.</span></span><br><span class="line"><span class="comment"># These represent audio samples or images as strings:</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#audioop audioop.c      # Operations on audio samples</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Note that the _md5 and _sha modules are normally only built if the</span></span><br><span class="line"><span class="comment"># system does not have the OpenSSL libs containing an optimized version.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The _md5 module implements the RSA Data Security, Inc. MD5</span></span><br><span class="line"><span class="comment"># Message-Digest Algorithm, described in RFC 1321.</span></span><br><span class="line"></span><br><span class="line">_md5 md5module.c</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># The _sha module implements the SHA checksum algorithms.</span></span><br><span class="line"><span class="comment"># (NIST&#x27;s Secure Hash Algorithms.)</span></span><br><span class="line">_sha1 sha1module.c</span><br><span class="line">_sha256 sha256module.c</span><br><span class="line">_sha512 sha512module.c</span><br><span class="line"><span class="comment">#_sha3 _sha3/sha3module.c</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="build-Python3-6-4"><a href="#build-Python3-6-4" class="headerlink" title="build Python3.6.4"></a>build Python3.6.4</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./configure --enable-optimizations</span><br><span class="line">$ make -j 8 <span class="comment"># 开八个jobs进行编译快一些</span></span><br><span class="line">$ sudo make altinstall</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><p><a target="_blank" rel="noopener" href="https://solarianprogrammer.com/2017/06/30/building-python-ubuntu-wsl-debian/">Building Python 3.6 from source on Ubuntu and Debian Linux</a></p>
+<p><a target="_blank" rel="noopener" href="https://techglimpse.com/install-python-openssl-support-tutorial/">How to Compile and Install Python with OpenSSL Support?</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E5%B0%9D%E8%AF%95%E6%9B%B4%E6%96%B0%E5%8D%87%E7%BA%A7Ubuntu"><span class="toc-number">1.</span> <span class="toc-text">先尝试更新升级Ubuntu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85build%E9%9C%80%E8%A6%81%E7%9A%84%E5%B7%A5%E5%85%B7%E9%93%BE%E6%8E%A5"><span class="toc-number">2.</span> <span class="toc-text">安装build需要的工具链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85build-Python%E9%9C%80%E8%A6%81%E7%9A%84"><span class="toc-number">3.</span> <span class="toc-text">安装build Python需要的</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debian-8"><span class="toc-number"></span> <span class="toc-text">Debian 8</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#build-Python3-6-4"><span class="toc-number">1.</span> <span class="toc-text">build Python3.6.4</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#References"><span class="toc-number">1.1.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&text=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&title=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&is_video=false&description=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ubuntu 16.04 - build python3.6.4 from source code&body=Check out this article: https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&title=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&title=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&title=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&title=Ubuntu 16.04 - build python3.6.4 from source code"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Ubuntu-16-04-build-python3-6-4-from-source-code/&name=Ubuntu 16.04 - build python3.6.4 from source code&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

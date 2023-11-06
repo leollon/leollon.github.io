@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="什么是TCPIPTransmission Control Protocol&#x2F;Internet Protocol(TCPIP) 是一个协议系统——支持网络通信的协议集合。 那么问题就来了，回答什么是协议之前，先谈谈什么是网络？ 网络及协议网络是通过通用的传输媒介能够通信的类计算机或计算机的集合。传输媒介可以是计算机之间携带电子脉冲的绝缘导线，也可以是是一根电话线，或甚至根本就没有线，比如无">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What&#39;s the TCPIP">
+<meta property="og:url" content="https://www.cthee.cyou/What-is-TCP-IP/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="什么是TCPIPTransmission Control Protocol&#x2F;Internet Protocol(TCPIP) 是一个协议系统——支持网络通信的协议集合。 那么问题就来了，回答什么是协议之前，先谈谈什么是网络？ 网络及协议网络是通过通用的传输媒介能够通信的类计算机或计算机的集合。传输媒介可以是计算机之间携带电子脉冲的绝缘导线，也可以是是一根电话线，或甚至根本就没有线，比如无">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.cthee.cyou/a432e83c02a14484.png">
+<meta property="og:image" content="https://i.cthee.cyou/d6cfa868671642bd.svg">
+<meta property="og:image" content="https://i.cthee.cyou/f36b479819d249bd.svg">
+<meta property="og:image" content="https://i.cthee.cyou/88f6200ad89940fe.svg">
+<meta property="og:image" content="https://i.cthee.cyou/22f1bd885b804495.svg">
+<meta property="article:published_time" content="2019-07-29T09:30:48.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.205Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="TCPIP">
+<meta property="article:tag" content="Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.cthee.cyou/a432e83c02a14484.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>What&#39;s the TCPIP</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/vps-sheng-le-ge-ji/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/docker-persisting-data-volumes-notes/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/What-is-TCP-IP/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/What-is-TCP-IP/&text=What&#39;s the TCPIP"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/What-is-TCP-IP/&title=What&#39;s the TCPIP"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/What-is-TCP-IP/&is_video=false&description=What&#39;s the TCPIP"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=What&#39;s the TCPIP&body=Check out this article: https://www.cthee.cyou/What-is-TCP-IP/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/What-is-TCP-IP/&title=What&#39;s the TCPIP"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/What-is-TCP-IP/&title=What&#39;s the TCPIP"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/What-is-TCP-IP/&title=What&#39;s the TCPIP"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/What-is-TCP-IP/&title=What&#39;s the TCPIP"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/What-is-TCP-IP/&name=What&#39;s the TCPIP&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFTCPIP"><span class="toc-number">1.</span> <span class="toc-text">什么是TCPIP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCPIP-%E7%89%B9%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">TCPIP 特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Logical-addressing"><span class="toc-number">2.1.</span> <span class="toc-text">Logical addressing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Routing"><span class="toc-number">2.2.</span> <span class="toc-text">Routing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Resolution"><span class="toc-number">2.3.</span> <span class="toc-text">Name Resolution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Error-Control-and-Flow-control"><span class="toc-number">2.4.</span> <span class="toc-text">Error Control and Flow control</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-Support"><span class="toc-number">2.5.</span> <span class="toc-text">Application Support</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        What&#39;s the TCPIP
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-07-29T09:30:48.000Z" itemprop="datePublished">2019-07-29</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Networks/" rel="tag">Networks</a>, <a class="tag-link-link" href="/tags/TCPIP/" rel="tag">TCPIP</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="什么是TCPIP"><a href="#什么是TCPIP" class="headerlink" title="什么是TCPIP"></a>什么是TCPIP</h2><p>Transmission Control Protocol&#x2F;Internet Protocol(TCPIP) 是一个协议系统——支持网络通信的协议集合。</p>
+<p>那么问题就来了，回答什么是协议之前，先谈谈什么是网络？</p>
+<p>网络及协议<br>网络是通过通用的传输媒介能够通信的类计算机或计算机的集合。传输媒介可以是计算机之间携带电子脉冲的绝缘导线，<br>也可以是是一根电话线，或甚至根本就没有线，比如无线网络。</p>
+<p><img src="https://i.cthee.cyou/a432e83c02a14484.png" alt="a432e83c02a14484.png"></p>
+<p>一个计算机通过一个或多个执行特殊任务并且管理通信过程的应用来与世界进行交互。</p>
+<p>网络协议是一系列帮助定义网络通信复杂过程的通用规则。协议指导发送来自计算机上的应用的数据到另一台计算机上的应用的过程。</p>
+<p><img src="https://i.cthee.cyou/d6cfa868671642bd.svg" alt="https://i.cthee.cyou/d6cfa868671642bd.svg"></p>
+<p>TCPIP协议定义了网络通信过程并且，更重要的是定义了一个数据单元的查看方式并且应该包含什么数据，这样数据的接收的电脑能够正确地读取这些信息。<br>TCPIP以及其相关的协议构成了一个定义数据在TCPIP网络上如何被处理，传输以及接收的方式的计算机系统。一个相关连的协议系统，被称为协议套装。</p>
+<p>TCPIP标准是定义在TCPIP网络上通信的规则系统。<br>TCPIP实现是执行将一台计算机加入到TCPIP网络中的功能的软件。</p>
+<p>TCPIP标准的目的是确保所有的TCPIP实现能够互相兼容，而不用在意版本或是硬件厂商。</p>
+<p>不是由TCPIP模型提供服务，而是定义应该提供的服务。事实上是由实现TCPIP的厂商软件提供服务。</p>
+<p>TCPIP提供去中心化环境的两个重要特性：</p>
+<ul>
+<li>端节点验证：两台互相通信的计算机都处在消息传输链上的两端，因此称之为端节点，有责任告知收到并且验证传输。</li>
+<li>动态路由：结点通过多路径连接，并且路由器基于现在的情况选择一个路径传输数据。</li>
+</ul>
+<p>随后个人电脑的普及带来了<code>LAN</code>(local area network)，接着为了让处于LAN的计算机能够连接上基于TCPIP的网络，此时负责协议翻译的特殊网关(gateways)应运而生。</p>
+<h2 id="TCPIP-特性"><a href="#TCPIP-特性" class="headerlink" title="TCPIP 特性"></a>TCPIP 特性</h2><p>专注于TCPIP解决如下问题的方式：</p>
+<ul>
+<li>Logical addressing</li>
+<li>Routing</li>
+<li>Name resolution</li>
+<li>Error control and flow control</li>
+<li>Application support</li>
+</ul>
+<p>这些问题是TCPIP的核心部分。</p>
+<h3 id="Logical-addressing"><a href="#Logical-addressing" class="headerlink" title="Logical addressing"></a>Logical addressing</h3><p>网络适配器都有一个唯一的物理地址。以太网中，物理地址（有时候成为Media Access Control[MAC]）在工厂中被分配好。在一个LAN上，底层硬件协议使用适配器的物理地址通过物理网络传送数据。有多种网络类型，并且每一种都有不同的传送数据的方式。<br>举个例子，在基本的以太网上，一台计算机直接通过传输媒介发送消息。</p>
+<p>在大型网络中，需要划分子网并且使用层级设计，目的是消息能够有效地传输到达目的。通过logical addressing，<code>TCPIP</code>提供了子网划分的能力。<strong>logical address</strong>是一个可以通过网络软件进行配置的的地址。在<code>TCPIP</code>中，一台计算机的的logical address 被称为<strong>IP address</strong>。一个IP address能够包含：</p>
+<ul>
+<li>能用于识别网络的网络ID号码</li>
+<li>能识别网络上子网的子网ID号码</li>
+<li>能识别子网上这台计算机的主机ID号码</li>
+</ul>
+<p>如果要将自己的网络作为互联网的一部分，ICANN将分配一个网络ID到你的网络中，这个网络ID构成IP address的第一部分。<br>一项有意思的开发是一个称为Network Address Translation(NAT)的系统，这一系统使得本地使用私有的不能够在互联网上路由的IP地址范围。<br>NAT设备翻译本地地址成正式的网络即用型地址来进行互联网通信。<br>在TCPIP中，Logical address 和 phsical address分别使用Address Resolution Protocol(ARP) 和 Reverse ARP(RARP)，可以解析通过一方翻译出另一方。</p>
+<p>A: logical address</p>
+<p>B: physical address</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">|-----|   RARP   |-----|</span><br><span class="line">|     |   &lt;---   |     |</span><br><span class="line">|  A  |          |  B  |</span><br><span class="line">|     |   ARP    |     |</span><br><span class="line">|-----|   ---&gt;   |-----|</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Routing"><a href="#Routing" class="headerlink" title="Routing"></a>Routing</h3><p>router 是一个读取logical address 信息的特殊设备，并且通过网络转发数据到它的目的地。router可以从大型网络中划分出本地子网。</p>
+<p><img src="https://i.cthee.cyou/f36b479819d249bd.svg" alt="f36b479819d249bd.svg"></p>
+<p><strong>数据发往子网内的的另一台电脑或设备不经过router。但是如果数据的目的地是子网外的电脑或设备，router将转发该数据。</strong><br>TCPIP包含了定义router如何通过网络查询路径的的协议。</p>
+<p>一个大型网络包含众多路由器并且多个从源地点到目的地点的多个路径</p>
+<p>大型网络图例：</p>
+<p><img src="https://i.cthee.cyou/88f6200ad89940fe.svg" alt="88f6200ad89940fe.svg"></p>
+<h3 id="Name-Resolution"><a href="#Name-Resolution" class="headerlink" title="Name Resolution"></a>Name Resolution</h3><p>TCPIP提供面向用户的字母数字名字，它可以称之为<strong>domain name</strong> 或者 Domain Name System(DNS) names。域名映射到IP address 称之为<strong>name resolution</strong>。<br>称为<strong>name servers</strong>的特殊计算机存储了一张表示如何双向翻译domain names 和 IP address的表。<br>DNS是用于互联网(Internet)的域名解析系统并且是最普通的域名解析方式。当然还有一些已经渐渐退出舞台的的其他系统，但是比如解析NetBIOS names 到 IP addresses的Windows Internet Name Services(WINS)依然在这个世界上运行着。</p>
+<h3 id="Error-Control-and-Flow-control"><a href="#Error-Control-and-Flow-control" class="headerlink" title="Error Control and Flow control"></a>Error Control and Flow control</h3><p>TCPIP协议确保通过网络传输数据的具有可靠性。TCPIP 的传输层通过TCP协议定义了许多的error-control，flow-control, 以及通知功能。<br>在TCPIP的Network Access layer的更底层的协议扮演整个系统中的error control。</p>
+<h3 id="Application-Support"><a href="#Application-Support" class="headerlink" title="Application Support"></a>Application Support</h3><p>多个应用运行在同一台计算机时，协议软件必须提供决定收到的数据包属于那个应用。在TCPIP中，可以通过一个称为<strong>ports</strong>的系统的逻辑信道来完成，每个<strong>port</strong>都有被用来识别该port的的数字。</p>
+<p><img src="https://i.cthee.cyou/22f1bd885b804495.svg" alt="22f1bd885b804495.svg"></p>
+<p>TCPIP工具</p>
+<table>
+<thead>
+<tr>
+<th align="left">工具名</th>
+<th align="left">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">ftp</td>
+<td align="left">文件传输</td>
+</tr>
+<tr>
+<td align="left">lpr</td>
+<td align="left">打印</td>
+</tr>
+<tr>
+<td align="left">ping</td>
+<td align="left">配置&#x2F;网络问题解决</td>
+</tr>
+<tr>
+<td align="left">nslookup</td>
+<td align="left">配置&#x2F;域名解析</td>
+</tr>
+<tr>
+<td align="left">traceroute</td>
+<td align="left">配置&#x2F;网络问题解决</td>
+</tr>
+</tbody></table>
+<p>Logical address：可以通过协议软件进行配置的network address。<br>Gateway：连接a LAN和a Larger network的router。在有着那些私有的LAN协议的日子中，gateway有时候<br>适用于负责某类协议转换的router。<br>Network Protocol：定义通信过程中指定部分的通用规则集合。</p>
+<p>Router：通过logical address转发数据的网络设备，并且也能够用于将大型网络分段成更小的子网络。</p>
+<p>小小的概括:</p>
+<ul>
+<li>网络应用通过端口和传输层进行通信。</li>
+<li>Router可以用于划分子网的网络设备，属于硬件范畴。</li>
+<li>TCPIP去中心化的两个特性：端节点验证以及动态路由。</li>
+<li>ARP和RARP负责在logical address 和 physical address之间进行相互解析。</li>
+</ul>
+<p><a href="/How-TCP-IP-works">下一篇</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFTCPIP"><span class="toc-number">1.</span> <span class="toc-text">什么是TCPIP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCPIP-%E7%89%B9%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">TCPIP 特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Logical-addressing"><span class="toc-number">2.1.</span> <span class="toc-text">Logical addressing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Routing"><span class="toc-number">2.2.</span> <span class="toc-text">Routing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Name-Resolution"><span class="toc-number">2.3.</span> <span class="toc-text">Name Resolution</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Error-Control-and-Flow-control"><span class="toc-number">2.4.</span> <span class="toc-text">Error Control and Flow control</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Application-Support"><span class="toc-number">2.5.</span> <span class="toc-text">Application Support</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/What-is-TCP-IP/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/What-is-TCP-IP/&text=What&#39;s the TCPIP"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/What-is-TCP-IP/&title=What&#39;s the TCPIP"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/What-is-TCP-IP/&is_video=false&description=What&#39;s the TCPIP"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=What&#39;s the TCPIP&body=Check out this article: https://www.cthee.cyou/What-is-TCP-IP/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/What-is-TCP-IP/&title=What&#39;s the TCPIP"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/What-is-TCP-IP/&title=What&#39;s the TCPIP"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/What-is-TCP-IP/&title=What&#39;s the TCPIP"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/What-is-TCP-IP/&title=What&#39;s the TCPIP"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/What-is-TCP-IP/&name=What&#39;s the TCPIP&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

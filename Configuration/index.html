@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="本文目的在于：  描述DHCP及其提供的好处 描述通过通过DHCP租用一个IP地址的过程 描述网络地址翻译（NAT）的目的 展示计算机如何使用零配置的协议  Getting on the Network尽管不同的系统使用不同的方式配置，但是最基本的选择是根据如下之一来做：  配置一个静态IP地址 将计算机配置成从DHCP接收一个动态地址  即使如果你的计算机没有成功的配置一个静态或动态的IP地址，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Configuration">
+<meta property="og:url" content="https://www.cthee.cyou/Configuration/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="本文目的在于：  描述DHCP及其提供的好处 描述通过通过DHCP租用一个IP地址的过程 描述网络地址翻译（NAT）的目的 展示计算机如何使用零配置的协议  Getting on the Network尽管不同的系统使用不同的方式配置，但是最基本的选择是根据如下之一来做：  配置一个静态IP地址 将计算机配置成从DHCP接收一个动态地址  即使如果你的计算机没有成功的配置一个静态或动态的IP地址，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.cthee.cyou/08620e0f601c4ed0.svg">
+<meta property="og:image" content="https://i.cthee.cyou/bc30a85b56d74bf5.svg">
+<meta property="og:image" content="https://i.cthee.cyou/681d766cc3954b41.svg">
+<meta property="og:image" content="https://i.cthee.cyou/4d19f42114644bf7.svg">
+<meta property="article:published_time" content="2019-09-05T09:38:04.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.201Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="TCPIP">
+<meta property="article:tag" content="Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.cthee.cyou/08620e0f601c4ed0.svg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Configuration</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/IPv6-Next-Generation/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/TCP-IP-Security/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Configuration/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Configuration/&text=Configuration"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Configuration/&title=Configuration"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Configuration/&is_video=false&description=Configuration"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Configuration&body=Check out this article: https://www.cthee.cyou/Configuration/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Configuration/&title=Configuration"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Configuration/&title=Configuration"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Configuration/&title=Configuration"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Configuration/&title=Configuration"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Configuration/&name=Configuration&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-on-the-Network"><span class="toc-number">1.</span> <span class="toc-text">Getting on the Network</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Case-for-ServerSupplied-IP-Address"><span class="toc-number">2.</span> <span class="toc-text">The Case for ServerSupplied IP Address</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Is-DHCP"><span class="toc-number">3.</span> <span class="toc-text">What Is DHCP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-DHCP-Works"><span class="toc-number">4.</span> <span class="toc-text">How DHCP Works</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Relay-Agents"><span class="toc-number">4.1.</span> <span class="toc-text">Relay Agents</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DHCP-Time-Fields"><span class="toc-number">4.2.</span> <span class="toc-text">DHCP Time Fields</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DHCP-Server-Configuration"><span class="toc-number">4.3.</span> <span class="toc-text">DHCP Server Configuration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Address-Translation"><span class="toc-number">5.</span> <span class="toc-text">Network Address Translation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Zero-Configuration"><span class="toc-number">6.</span> <span class="toc-text">Zero Configuration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuring-TCPIP"><span class="toc-number">7.</span> <span class="toc-text">Configuring TCPIP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Configuration
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-09-05T09:38:04.000Z" itemprop="datePublished">2019-09-05</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Networks/" rel="tag">Networks</a>, <a class="tag-link-link" href="/tags/TCPIP/" rel="tag">TCPIP</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>本文目的在于：</p>
+<ul>
+<li>描述DHCP及其提供的好处</li>
+<li>描述通过通过DHCP租用一个IP地址的过程</li>
+<li>描述网络地址翻译（NAT）的目的</li>
+<li>展示计算机如何使用零配置的协议</li>
+</ul>
+<h2 id="Getting-on-the-Network"><a href="#Getting-on-the-Network" class="headerlink" title="Getting on the Network"></a>Getting on the Network</h2><p>尽管不同的系统使用不同的方式配置，但是最基本的选择是根据如下之一来做：</p>
+<ul>
+<li>配置一个静态IP地址</li>
+<li>将计算机配置成从DHCP接收一个动态地址</li>
+</ul>
+<p>即使如果你的计算机没有成功的配置一个静态或动态的IP地址，一些系统依然能够通过零配置技术来执行一类最基本的TCPIP网络。</p>
+<h2 id="The-Case-for-ServerSupplied-IP-Address"><a href="#The-Case-for-ServerSupplied-IP-Address" class="headerlink" title="The Case for ServerSupplied IP Address"></a>The Case for ServerSupplied IP Address</h2><p>在TCPIP网络运行每台计算机必须要有一个IP地址。静态地址的局限：</p>
+<ul>
+<li>More configuration：每个客户端必须进行独立配置。地址空间或某些参数上的改变（比如DNS服务器地址）都意味着每个客户端必须重新独立配置。</li>
+<li>More addresses：每台计算机使用一个IP地址不管当前是否在网络上。</li>
+<li>Reduced flexibility：如果被分配到不同的子网，一台计算机必须手动重新配置。</li>
+</ul>
+<p>为了解决这一局限，另一个IP地址系统使用DHCP来分配IP地址。DHCP从早期用于启动无盘计算机的<strong>BOOTP</strong>协议开发而来。无盘计算机随着它启动的时候通过网络接收一个完整的操作系统。</p>
+<h2 id="What-Is-DHCP"><a href="#What-Is-DHCP" class="headerlink" title="What Is DHCP"></a>What Is DHCP</h2><p>DHCP是一个用于自动为计算机分配TCPIP配置参数的协议。一个DHCP服务器可以提供给一个DHCP客户端许多TCPIP设置，比如一个IP地址，一个子网掩码，以及一个DNS服务器的地址。</p>
+<p>因为DHCP服务器负责分配IP地址，所以理论上只有DHCP服务器必须配置静态地址信息。对于用户工作站，笔记本以及其他网络客户端系统，对于客户端来说，唯一需要配置网络参数选项的是发送IP地址信息的DHCP服务器。剩下的TCPIP配置通过网络传输。这样子以来，如果网络上TCPIP配置某些方面发生改变，网络管理员仅仅只需要更新DHCP服务器，而不是手动更新每个客户端。</p>
+<p>更重要的时候，每个客户端接收一个有租约时间限制的IP地址。DHCP租约特性的优点是网络没必要和含有的客户端一样需要很多的IP地址。</p>
+<h2 id="How-DHCP-Works"><a href="#How-DHCP-Works" class="headerlink" title="How DHCP Works"></a>How DHCP Works</h2><p>当一个DHCP客户端计算机启动时，TCPIP软件载入内存中并开始运行。然而，由于TCPIP栈还没有IP地址，因此它不能够发送或接收定向的数据报。但是，计算机可以发送并且监听广播。通过广播通信的能力是DHCP能够工作的基本。从DHCP服务器租用一个IP地址过程的四个步骤：</p>
+<ol>
+<li>DHCPDISCOVER：DHCP客户端通过广播一个发往端口67（BOOTP以及DHCP服务器使用）的数据报来初始化这个过程。第一个数据报又称为DHCP发现消息，它是一个请求任何DHCP服务器接收用于配置信息的数据报。DHCP发现数据报中含有许多字段，但是最重要的一个是含有DHCP客户端物理地址的字段。</li>
+<li>DHCPOFFER：DHCP服务器为驻留在网络上的客户端计算机构造一个称为DHCP offer的响应数据报并且通过广播将数据报发到发起DHCP discover的计算机上。这个广播被发往UDP端口68并且含有DHCP客户端物理地址。同时包含在DHCP offer中的还有DHCP服务器的物理地址以及IP地址，分配给DHCP客户端的IP地址以及子网掩码。如果有不只一个能够给DHCP客户端提供IP地址的DHCP服务器，此时DHCP客户端有可能接收到几个DHCP offers。大多数情况下，DHCP客户端接收第一个到达的DHCP offer。</li>
+<li>DHCPREQUEST：客户端选择一个offer并且构造以及广播DHCP请求数据报。DHCP请求数据报包含有能发出offer的服务器的IP地址以及DHCP客户端的地址。DHCP请求执行两个基本任务。第一告诉DHCP服务器客户端请求给DHCP客户端分配一个IP地址（以及其他配置设置）。第二，通知所有其他有更好的offer的DHCP服务器它们的offers不会被接受。</li>
+<li>DHCPACK：当被选择的来自DHCP服务器的offer的服务器接受DHCP请求报文是，服务器构造最终的租用过程的数据报。这个数据报又称为<strong>DHCP ack</strong>（*acknowledgment的缩写)。DHCPack包含分配给DHCP客户端的一个IP地址以及子网掩码。可选地，DHCP客户端经常也被配置默认网关，几个DNS服务器和可能一或两个WINS服务器的IP地址。除了IP地址之外，DHCP客户端能够接收其他比如NetBIOS结点类型的信息，该信息可能改变BetBIOS名字解析的顺序。</li>
+</ol>
+<p>包含在DHCPack中的三个其他关键的字段，每一个都暗示时间段，一个说明租约长度的字段，两个其他时间字段，又称为T1和T2，当客户端尝试重新更新租约时，将会使用到。</p>
+<h3 id="Relay-Agents"><a href="#Relay-Agents" class="headerlink" title="Relay Agents"></a>Relay Agents</h3><p>如果DHCP客户端和DHCP服务器在同一网络段上，这个过程处理和之前描述的一样。如果DHCP客户端和DHCP服务器在由一个或更多的路由分割开来的不同的网络中，这个过程会变得更复杂。路由器一般不转发广播到其他网络。为了使DHCP工作，必须有一个辅助DHCP过程的中间人。这个中间人可以是同一网络上另外一个作为DHCP客户端的主机，但是经常是路由器本身。在任何情况，执行这个中间人功能的过程被称为<strong>BOOTP relay agent</strong>或是<strong>DHCP relay agent</strong>。</p>
+<p>一个relay agent被配置一个固定的IP地址并且知道DHCP服务器的IP地址。因为relay agent 已经配置了IP地址，它们总是能够发送并且接收给DHCP服务器的定向的数据报。因为relay agent与DHCP客户端处在同样的网络上，所以能够通过广播和DHCP客户端进行通信。</p>
+<p><img src="https://i.cthee.cyou/08620e0f601c4ed0.svg" alt="https://i.cthee.cyou/08620e0f601c4ed0.svg"></p>
+<h3 id="DHCP-Time-Fields"><a href="#DHCP-Time-Fields" class="headerlink" title="DHCP Time Fields"></a>DHCP Time Fields</h3><p>DHCP客户端从DHCP服务器租用一个固定时间的IP地址。实际的租约时间长度一般在DHCP服务器上面定义。与DHCP ack消息发送的T1和T2时间的值在租约重新更新过程中用到。T1值暗示客户端什么时候开始重新更新租约过程。T1一般设置为实际租约时间的二分之一。更新租约的时候，DHCP request 和 ack两个数据报不是广播，而是作为定向的数据报发送。因为两台计算机此时都含有有效的IP地址，所以这是有可能的。</p>
+<p>当DHCP客户端在实际租约时间二分之一时发起第一个更新租约请求，如果DHCP服务器不可用，客户端等待并在租约时间的4&#x2F;3时进行尝试更新租约。如果请求也还是失败，DHCP客户端在7&#x2F;8的租约时间时第三次进行尝试更新。如果DHCP客户端不能在总的租约时间的87.5%更新它的租约，T2时间生效。T2时间允许DHCP客户端向任何DHCP服务器发起广播请求。如果DHCP客户端不能更新租约或在租约过期时从另外一个DHCP服务器获取到新的租约，客户端必须停止使用该IP地址和停止使用TCPIP用于普通的网络操作。</p>
+<h3 id="DHCP-Server-Configuration"><a href="#DHCP-Server-Configuration" class="headerlink" title="DHCP Server Configuration"></a>DHCP Server Configuration</h3><p>除非你是在中型或大型网络上的一个系统管理员，否则你不可能有机会配置一台计算来充当一个DHCP服务器。Windows提同一个图形界面的工具来配置DHCP服务器。Linux系统通过dhcpd（DHCP守护程序）提供DHCP服务。根据不同的厂商，安装dhcpd的命令也不一样。DHCP配置信息存储在&#x2F;etc&#x2F;dhcpd.conf配置文件中。</p>
+<p>&#x2F;etc&#x2F;dhcpd.conf文件包含DHCP守护程序将分配给客户端的IP地址配置信息和可选的比如广播地址，域名，DNS服务器地址以及路由器地址等设置。</p>
+<p>&#x2F;etc&#x2F;dhcpd.conf配置文件实例：</p>
+<p>default-lease-time 600;<br>max-lease-time 7200;<br>option domain-name “macmillan.com”;<br>option subnet-mask 255.255.255.0;<br>option broadcast-address 185.142.13.255;<br>subnet 185.142.13.0 netmask 255.255.255.0 {<br>range 185.142.13.10 185.142.13.50;<br>range 185.142.13.100 185.142.13.200;<br>}</p>
+<p>正如前面文章提到的一样，DHCP服务经常通过比如路由器&#x2F;防火墙系统等网络设备来提供。一个路由器设备提供一个网页DHCP配置接口。</p>
+<p><img src="https://i.cthee.cyou/bc30a85b56d74bf5.svg" alt="https://i.cthee.cyou/bc30a85b56d74bf5.svg"></p>
+<p>一些路由器提供一个成为IP预留的特性，用来将一个IP地址和物理地址（MAC）关联起来。通过这一特性能够确保设备总是收到同样的IP地址。</p>
+<h2 id="Network-Address-Translation"><a href="#Network-Address-Translation" class="headerlink" title="Network Address Translation"></a>Network Address Translation</h2><p>只要路由器本身有一个即用型的网络地址，它就能够充当网络上客户端代理——接收来自客户端的请求并且转换来自和去到互联网地址空间的请求。如今许多路由器&#x2F;DHCP也执行一个称为网络地址转换（NAT）的服务。</p>
+<p>NAT设备隐藏本地网络的所有细节，事实上，隐藏了本地网络的存在。</p>
+<p><img src="https://i.cthee.cyou/681d766cc3954b41.svg" alt="https://i.cthee.cyou/681d766cc3954b41.svg"></p>
+<p>从<a href="/The-Internet-Layer">The-Internet-Layer</a>中得知，预留了一小部分的IP地址用于“私有”网络：</p>
+<ul>
+<li>10.0.0.0 到 10.255.255.255</li>
+<li>172.16.0.0 到 172.16.255.255</li>
+<li>192.168.0.0 到 192.168.255.255</li>
+</ul>
+<p>后面也有不能路由的169.254.0.0 到 169.254.255.255地址范围，该地址范围用于配置链路本地（link-local）地址以及不是被NAT所使用。NAT设备一般分配一个来自私有地址范围内的IP地址。这些地址在传统意义上是不可路由的，所以到达NAT客户端计算机唯一的方式是通过地址转换过程。</p>
+<h2 id="Zero-Configuration"><a href="#Zero-Configuration" class="headerlink" title="Zero Configuration"></a>Zero Configuration</h2><p>一些操作系统厂商探索出了用于让本地网络的计算机在没有配置静态IP地址或基于DHCP的动态IP地址配置的情况下进行连接。像NetBEUI（Windows 系统）和AppleTalk（Apple 网络）这两个早先的LAN协议提供开箱即用的无配置连接，并且供应商已经寻找到一种通过TCP &#x2F; IP返回它的方法。</p>
+<p>迈出这条路的第一步就是一个称为链路本地地址寻址（IPv4LL）。链路本地地址自从OS 9开始已经是Apple系统的一部分，并且从Windows 98开始，也已经包含在内了。微软称Windows版本的IPv4LL为自动私有IP寻址（Automatic Private IP Addressing，APIPA）。大部分的Windows版本含有一个用于关闭APIPA的注册表键。得通过查阅Window文档才能得知。</p>
+<p>APIPA确实造成一些在问题排查过程中的问题。比如，如果网络中的其他计算机配置正常并且某一台不可达，那么得检查看是否这台计算机丢失了DHCP服务器的连接并且给它自己分配了一个不能与本地地址空间兼容的APIPA地址。</p>
+<p>功能更强大以及完整的无配置环境的<strong>Zeroconf</strong>扩展了IPv4LL的原理来给小型本地网络提供一个大而全的网络环境的可能性。Apple Macintosh 系统中的<strong>Bonjour</strong>。Linx和UNIX系统中与Apple版本相似的Avahi。</p>
+<p>zero-configuration环境中的三个重要的部分：</p>
+<ul>
+<li><strong>链路本地地址寻址</strong>：计算机给它们分配一个在<em>169.254.0.0</em> 到 <em>169.254.255.255</em>私有地址范围内的IP地址。</li>
+<li><strong>多址通信DNS</strong>：在没有一个服务器或是一个预配置的hosts文件情况下的DNS名字解析。通过查询一个指定的IP地址和端口，名字被解析为IP地址（和地址被解析成名字）。其他设备监听发送到这个地址的请求并且响应信息。</li>
+<li><strong>DNS服务发现</strong>：客户端用于知道网络上有可用服务的一种方式。</li>
+</ul>
+<p>这些部分的相互作用创造出了一个环境，在这个环境中，一台计算机能够没有任何TCPIP配置的情况下启动，而又能够接收到一个本地兼容的，不可路由的IP地址以及和网络上的其他计算机注册它的主机名并且通过像网络邻居那样的，点击式的文件浏览器的轻松访问方式来浏览可用的网络服务（比如文件与打印服务器）。</p>
+<p>一台支持multicast DNS（mDNS）的计算机保存它自己的内部的DNS资源记录表并使用这张表来将名字解析到IP地址。</p>
+<p><img src="https://i.cthee.cyou/4d19f42114644bf7.svg" alt="https://i.cthee.cyou/4d19f42114644bf7.svg"></p>
+<p>DNS服务发现（DNS-SD）为计算机以及设备提供一种通过DNS公布服务的方式。DNS-SD依赖于查询SRV资源记录，该记录标识域内提供的服务。例如，在传统的NDS网络上，一个域的一个SRV记录可能保存有一个FTP服务器或Active Directory 域控制器的主机名和端口号。DNS-SD扩展这一能力到更小的范围并且有策略地利用其他记录类型来完成这个过程。首先，DNS PTR指针记录（反向查询中使用到）的变体指向网络上运行着的可用的服务实例。查询结果可能返回如下信息：</p>
+<ul>
+<li>Instance：一个指定的服务实例。（网络上有可能有几个服务器提供同样的服务。）</li>
+<li>Service：服务的名字。（保存在<a target="_blank" rel="noopener" href="http://www.dns-sd.org的dns-sd服务类型的主要登记库.)/">www.dns-sd.org的DNS-SD服务类型的主要登记库。）</a></li>
+<li>Domain：该服务所在的域。</li>
+</ul>
+<p>通过收集查询的响应，DNS-SD客户端创建出一个网络上可用的服务以及服务实例的浏览列表。</p>
+<p>当用户或客户端应用程序选择浏览列表中的一个指定的服务实例的时候，一个关联的SRV记录的查询返回用于访问网络上的服务必要的主机名和端口号。DNS-SD还使用TXT资源记录来返回关于服务的额外信息。</p>
+<p>DNS服务发现设计用于与multicast DNS一同工作来提供完整，零配置的DNS环境，但是DNS-SD也能够与具有最小预备的配置的传统的DNS服务一同工作。</p>
+<p>微软定义了另一种称之为链路本地多址通信名字解析（LLMNR）。微软的简单服务发现协议（SSDP）提供服务发现。SSDP基于HTTP而不是传统的DNS，这与更加强调基于URL的服务的发展趋势相匹配，但是与传统的DNS基础设施之间存在一些不连续性。</p>
+<p>提供类似与DNS-SD的通用即插即玩（Universal Plug and Play，UPnp）协议系统依赖于SSDP。</p>
+<p>另一个称为Service Location Protocol（SLP）的服务发现选项在HP打印机和许多其他设备中有使用到。</p>
+<h2 id="Configuring-TCPIP"><a href="#Configuring-TCPIP" class="headerlink" title="Configuring TCPIP"></a>Configuring TCPIP</h2><p>在&#x2F;etc&#x2F;network&#x2F;interfaces文件中，eth0接口（第一块以太网网卡）的静态地址配置的如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iface eth0 inet static</span><br><span class="line">address 203.121.14.13</span><br><span class="line">netmask 255.255.255.0</span><br><span class="line">gateway 203.121.14.1</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;etc&#x2F;network&#x2F;interfaces中一个网络接口被配置成DHCP的条目如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto eth0</span><br><span class="line">iface eth0 inet dhcp</span><br></pre></td></tr></table></figure>
+
+<p>&#x2F;etc&#x2F;network&#x2F;interfaces文件可以含有许多其定义配置的设置。不过得需要查看Linux文档。</p>
+<p>Ubuntu无线网络问题排查<a target="_blank" rel="noopener" href="https://help.ubuntu.com/community/WifiDocs/WirelessTroubleShootingGuide">向导</a>以及<a target="_blank" rel="noopener" href="http://wireless.wiki.kernel.org/">无线维基</a>是了解Linux中关于无线的大概信息的好去处。</p>
+<h2 id="小小的总结"><a href="#小小的总结" class="headerlink" title="小小的总结"></a>小小的总结</h2><ul>
+<li>DHCP客户端与DHCP服务器刚开始时通过广播以及接收广播来与彼此进行通信。</li>
+<li>一个DHCP客户端从另外一个网络上的DHCP服务器租用一个IP地址需要一个DHCP中继代理，中继代理费负责发送和接收给DHCP服务器的定向的数据报，中继代理与DHCP客户端处在相同的网络上，可以通过广播与DHCP客户端进行通信。</li>
+</ul>
+<p><a href="/TCP-IP-Security">上一篇</a><br><a href="/IPv6-Next-Generation">下一篇</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-on-the-Network"><span class="toc-number">1.</span> <span class="toc-text">Getting on the Network</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Case-for-ServerSupplied-IP-Address"><span class="toc-number">2.</span> <span class="toc-text">The Case for ServerSupplied IP Address</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#What-Is-DHCP"><span class="toc-number">3.</span> <span class="toc-text">What Is DHCP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How-DHCP-Works"><span class="toc-number">4.</span> <span class="toc-text">How DHCP Works</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Relay-Agents"><span class="toc-number">4.1.</span> <span class="toc-text">Relay Agents</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DHCP-Time-Fields"><span class="toc-number">4.2.</span> <span class="toc-text">DHCP Time Fields</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DHCP-Server-Configuration"><span class="toc-number">4.3.</span> <span class="toc-text">DHCP Server Configuration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Address-Translation"><span class="toc-number">5.</span> <span class="toc-text">Network Address Translation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Zero-Configuration"><span class="toc-number">6.</span> <span class="toc-text">Zero Configuration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuring-TCPIP"><span class="toc-number">7.</span> <span class="toc-text">Configuring TCPIP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Configuration/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Configuration/&text=Configuration"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Configuration/&title=Configuration"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Configuration/&is_video=false&description=Configuration"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Configuration&body=Check out this article: https://www.cthee.cyou/Configuration/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Configuration/&title=Configuration"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Configuration/&title=Configuration"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Configuration/&title=Configuration"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Configuration/&title=Configuration"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Configuration/&name=Configuration&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

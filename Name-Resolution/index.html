@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="本文目的：  解释如何进行域名解析 解释主机名（hostname），域名和FQDNs的区别 描述主机名解析 描述DNS名字解析 描述在某些遗留微软网络上使用的NetBIOS名字解析  What is Name Resolution主机名系统是在TCPIP历史上早期开发的简单的名字解析技术。系统中，每台计算机被分配给一个称为主机名的含有字母数字的名字。如果操作系统希望是一个IP地址的时候却碰上一个字">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Name Resolution">
+<meta property="og:url" content="https://www.cthee.cyou/Name-Resolution/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="本文目的：  解释如何进行域名解析 解释主机名（hostname），域名和FQDNs的区别 描述主机名解析 描述DNS名字解析 描述在某些遗留微软网络上使用的NetBIOS名字解析  What is Name Resolution主机名系统是在TCPIP历史上早期开发的简单的名字解析技术。系统中，每台计算机被分配给一个称为主机名的含有字母数字的名字。如果操作系统希望是一个IP地址的时候却碰上一个字">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.cthee.cyou/93625dcb59ed467d.svg">
+<meta property="og:image" content="https://i.cthee.cyou/c18b44dc38ee4716.svg">
+<meta property="og:image" content="https://i.cthee.cyou/818cd5af384348c7.svg">
+<meta property="og:image" content="https://i.cthee.cyou/35d10c4a3a6b449c.svg">
+<meta property="og:image" content="https://i.cthee.cyou/79848b7aecf24386.svg">
+<meta property="og:image" content="https://i.cthee.cyou/8e38575d227848b7.svg">
+<meta property="og:image" content="https://i.cthee.cyou/7fd227e581c7494f.svg">
+<meta property="og:image" content="https://i.cthee.cyou/8b03b3e9906345d6.svg">
+<meta property="og:image" content="https://i.cthee.cyou/2f3f823b39164d9c.svg">
+<meta property="og:image" content="https://i.cthee.cyou/6ad2ac608ebb448e.svg">
+<meta property="og:image" content="https://i.cthee.cyou/110b21ae66a9498b.svg">
+<meta property="article:published_time" content="2019-08-24T14:20:28.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.201Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="TCPIP">
+<meta property="article:tag" content="Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.cthee.cyou/93625dcb59ed467d.svg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Name Resolution</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/TCP-IP-Security/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/Getting-Connected/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Name-Resolution/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Name-Resolution/&text=Name Resolution"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Name-Resolution/&title=Name Resolution"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Name-Resolution/&is_video=false&description=Name Resolution"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Name Resolution&body=Check out this article: https://www.cthee.cyou/Name-Resolution/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Name-Resolution/&title=Name Resolution"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Name-Resolution/&title=Name Resolution"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Name-Resolution/&title=Name Resolution"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Name-Resolution/&title=Name Resolution"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Name-Resolution/&name=Name Resolution&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-Name-Resolution"><span class="toc-number">1.</span> <span class="toc-text">What is Name Resolution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Name-Resolution-Using-Hosts-Files"><span class="toc-number">2.</span> <span class="toc-text">Name Resolution Using Hosts Files</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS-Name-Resolution"><span class="toc-number">3.</span> <span class="toc-text">DNS Name Resolution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Registering-a-Domain"><span class="toc-number">4.</span> <span class="toc-text">Registering a Domain</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Name-Server-Types"><span class="toc-number">5.</span> <span class="toc-text">Name Server Types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Domains-and-Zones"><span class="toc-number">5.1.</span> <span class="toc-text">Domains and Zones</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zone-Files"><span class="toc-number">5.2.</span> <span class="toc-text">Zone Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Reverse-Lookup-Zone-File"><span class="toc-number">5.3.</span> <span class="toc-text">The Reverse Lookup Zone File</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-Security-Extension-%EF%BC%88DNSSEC%EF%BC%89"><span class="toc-number">5.4.</span> <span class="toc-text">DNS Security Extension （DNSSEC）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS%E5%B7%A5%E5%85%B7"><span class="toc-number">5.5.</span> <span class="toc-text">DNS工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Checking-Name-Resolution-with-Ping"><span class="toc-number">5.5.1.</span> <span class="toc-text">Checking Name Resolution with Ping</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Checking-Name-Resolution-with-NSLookup"><span class="toc-number">5.5.2.</span> <span class="toc-text">Checking Name Resolution with NSLookup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Domain-Information-Grouper-Dig"><span class="toc-number">5.5.3.</span> <span class="toc-text">Domain Information Grouper (Dig)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-DNS"><span class="toc-number">6.</span> <span class="toc-text">Dynamic DNS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NetBIOS-Name-Resolution"><span class="toc-number">7.</span> <span class="toc-text">NetBIOS Name Resolution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Name Resolution
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-08-24T14:20:28.000Z" itemprop="datePublished">2019-08-24</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Networks/" rel="tag">Networks</a>, <a class="tag-link-link" href="/tags/TCPIP/" rel="tag">TCPIP</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>本文目的：</p>
+<ul>
+<li>解释如何进行域名解析</li>
+<li>解释主机名（hostname），域名和FQDNs的区别</li>
+<li>描述主机名解析</li>
+<li>描述DNS名字解析</li>
+<li>描述在某些遗留微软网络上使用的NetBIOS名字解析</li>
+</ul>
+<h2 id="What-is-Name-Resolution"><a href="#What-is-Name-Resolution" class="headerlink" title="What is Name Resolution"></a>What is Name Resolution</h2><p>主机名系统是在TCPIP历史上早期开发的简单的名字解析技术。系统中，每台计算机被分配给一个称为<strong>主机名</strong>的含有字母数字的名字。如果操作系统希望是一个IP地址的时候却碰上一个字母数字名字，则操作系统会查询一个<strong>hosts文件</strong>。hosts文件是一个包含主机名和IP地址关联的列表。如果字母数字名字在主机名列表上，计算机读取和名字相关联的IP地址。然后计算机使用相关的IP地址替换命令中主机名并且执行命令。</p>
+<p><img src="https://i.cthee.cyou/93625dcb59ed467d.svg" alt="93625dcb59ed467d.svg"></p>
+<ul>
+<li>在每组特殊的域名服务器之间分发名字解析的责任。名字解析服务器维护定义了名字到地址关联的表。</li>
+<li>授权本地名字解析权利给本地管理员。换句话说，就是不维护一份所有名字到地址关联表的中心化，主要版本，让网络A上个一个管理员负责网络A上的名字解析，以及让网络B上的管理员管理网络B上的名字解析。通过那样子的方式，每个单独的网络上的管理员负责网络上的任何更新也要负责确保那些更新反应到名字解析的基础设施。</li>
+</ul>
+<p>以上两点优先级主导了域名系统（DNS）的开发。DNS将名字空间分割成称为域名的层次实体。域名可以和主机包含在一起，称之为主机域名全称（FQDN）。例如，主机名是www，且在域名cthee.cyou中，则构成的FQDN是<a target="_blank" rel="noopener" href="http://www.cthee.cyou./">www.cthee.cyou。</a></p>
+<h2 id="Name-Resolution-Using-Hosts-Files"><a href="#Name-Resolution-Using-Hosts-Files" class="headerlink" title="Name Resolution Using Hosts Files"></a>Name Resolution Using Hosts Files</h2><p>操作系统支持TCPIP识别hosts文件并且在需要很少或者没有来自用户的干预下用它来进行名字解析。根据实现方式，配置主机名的细节也不相同。步骤大致如下：</p>
+<ol>
+<li>给每台计算机分配一个IP地址以及主机名</li>
+<li>创建一个映射IP地址到每台计算机的主机名的host文件。host文件经常命名为hosts，尽管有些实现使用的文件名为hosts.txt。</li>
+<li>将hosts文件放置到每台计算机设计好的目录中。根据不同的操作系统，目录的位置也不相同。</li>
+</ol>
+<p>hosts文件包含有一台计算机需要想要与之通信的主机条目，允许输入和主机名，FQDN或是其他静态地别名相关的IP地址。当然里面还有一个条目用于<a href="/The-Internet-Layer/#Special-IP-Address">loopback 地址</a>，即127.0.0.1。这个loopbakc地址用于给TCPIP诊断并且代表当前这台计算机。</p>
+<p>一个hosts文件示例：</p>
+<p><img src="https://i.cthee.cyou/c18b44dc38ee4716.svg" alt="c18b44dc38ee4716.svg"></p>
+<p>当一台计算机上的一个应用需要解析一个名字成一个IP地址的时候，系统首先比较它自己的名字和被请求的名字。如果不匹配，系统将会进入hosts文件中查找（如果存在）是否有该计算机名在里面。如果能够匹配到一个，返回这个IP地址到本地计算机。通过使用IP以及ARP传输技术两台计算机之间产生通信。</p>
+<p>创建或编辑hosts文件时的一些要点：</p>
+<ul>
+<li>IP地址必须左对齐并且使用一个或多个空格将它与主机名分隔开</li>
+<li>名字必须被至少一个空格分隔开</li>
+<li>在单行上多余的名字将会是第一个名字的别名。</li>
+<li>文件从上到下被解析（计算机读取）。使用第一个和IP地址关联的匹配。当匹配成功时，则停止解析。</li>
+<li>因为是从上到下进行解析，所以应该将常用的名字放置在上方。这样子可以加速解析过程。</li>
+<li>使用*#*开头后面跟文本来表示注释</li>
+<li>记住hosts文件是静态的；当IP地址发生更改时，必须手动更改hosts文件。</li>
+<li>尽管FQDNs被允许以及在存在hosts文件中，但是不鼓励在hosts文件这么使用它们并且导致管理员在诊断时造成问题。控制hosts文件的管理员不能控制远程网络上的地址的分配以及主机名。</li>
+</ul>
+<h2 id="DNS-Name-Resolution"><a href="#DNS-Name-Resolution" class="headerlink" title="DNS Name Resolution"></a>DNS Name Resolution</h2><p>DNS 存储名字解析在一台或多台特殊的服务器中。DNS服务器为网络提供名字解析服务。</p>
+<p><img src="https://i.cthee.cyou/818cd5af384348c7.svg" alt="818cd5af384348c7.svg"></p>
+<p>上图中的DNS服务器的优点之一，为本地网络以及提供单一的DNS配置点以及高校的利用网络资源。然而并未为更大型网络基础设施的提供去中心化管理，以及不能够有效地运行一个含有网络上每个主机的IP地址记录的数据库。即使可以，但是在单台DNS服务器上维护所有互联网上的数据库是禁止的。</p>
+<p>更好的方式是然每个办公室或学术机构配置运行一台本地的名字服务器，然后为所有的名字服务器提供能够与彼此之间进行通信的方式。当某个DNS客户端发送名字解析请求到名字解析服务器的时候，名字服务器按如下的方式之一进行工作：</p>
+<ul>
+<li>如果名字服务器能够在自己的地址数据库中找到请求的地址，则立即发送这个地址给客户端。</li>
+<li>如果服务器不能在自己的数据库记录中找到地址，则向其他名字服务器查找该地址然后发送该地址给客户端。</li>
+</ul>
+<p><img src="https://i.cthee.cyou/35d10c4a3a6b449c.svg" alt="35d10c4a3a6b449c.svg"></p>
+<p>DNS不是严格地与主机名协作，而是与FADNs协作。在DNS树的顶部是一个称为根的单个结点。根有时候又称为句点（.)，尽管根的实际符号是null字符。根的下面是一组称为顶级域名（TLDs）的的域名。</p>
+<p><img src="https://i.cthee.cyou/79848b7aecf24386.svg" alt="https://i.cthee.cyou/79848b7aecf24386.svg"></p>
+<p>总的来说，DNS系统支持高达127层域名分级。</p>
+<p><img src="https://i.cthee.cyou/8e38575d227848b7.svg" alt="https://i.cthee.cyou/8e38575d227848b7.svg"></p>
+<p>当网络上的一台主机需要一个IP地址的时候，它通常发送一个递归查询到邻近的名字服务器。这个查询告诉名字服务器，要么给出和这个名字相关联的IP地址，否则返回响应表示不能找到。名字查询过程中使用递归查询（主机发送）以及迭代查询（名字服务器发送）。总结出查询的过程就是，客户端发送一个单独的递归查询该名字服务器，然后名字服务器发送一系列的迭代查询到其他名字服务器来解析这个名字。当名字服务器获取到与这个名字相关联的地址时，则使用这个地址响应客户端的查询。</p>
+<p>DNS名字解析过程：</p>
+<ol>
+<li>主机1发送一个递归查询给名字服务器A询问和域名c.b.a.edu相关联的IP地址。</li>
+<li>名字服务器A检查自己的记录是否有这个请求的地址。如果名字服务器A有这个地址，则返回该地址给主机1。</li>
+<li>如果名字服务器A没有这个地址。由A初始查找地址的过程。名字服务器A为了获取该地址发送一个迭代请求到名字服务器B，.edu域名的顶级名字服务器询问和c.b.a.edu相关联的地址。</li>
+<li>名字服务器B不能提供地址，但是能够发送名字服务器C的地址给名字服务器A，即a.edu的名字服务器。</li>
+<li>名字服务器A发送查询该地址的请求给名字服务器C。名字服务器C不能够提供这个地址，但是能够发送名字服务器D的地址，就b.a.edu的名字服务器。</li>
+<li>名字服务器A发送获取该IP地址的请求到名字服务器D。名字服务器D查询主机c.b.a.edu的地址并且发送这个地址给名字服务器A。然后名字服务器A发送这个地址给主机1。</li>
+<li>主机1初始化一个连接到主机c.b.a.edu的连接。</li>
+</ol>
+<p><img src="https://i.cthee.cyou/7fd227e581c7494f.svg" alt="https://i.cthee.cyou/7fd227e581c7494f.svg"></p>
+<h2 id="Registering-a-Domain"><a href="#Registering-a-Domain" class="headerlink" title="Registering a Domain"></a>Registering a Domain</h2><p>ICANN有完整域名注册任务的授权但是委托特定的顶级域名的注册到其他组织。VeriSign当前负责维护DNS根区域。其他组织维护顶级域名的系统。例如：</p>
+<ul>
+<li><strong>.com, org 以及 .net</strong>：许多称为登记处的公司被授权为受欢迎的.com，.org和.net顶级域名提供名字解析服务，还有很少被人们所知的域，例如.info，.museum，.name以及.pro。VeriSign负责授权登记.com和.net域，以及公共互联网注册(PIR) 维护.org。</li>
+<li><strong>.gov</strong>：给US联邦政府所保留的域。</li>
+<li>National domains：可能你已经注意到许多国家都有它们自己的域名空间。比如.uk，.fr，.de，.ca，.us等国家代码顶级域名（ccTLDs）。</li>
+</ul>
+<h2 id="Name-Server-Types"><a href="#Name-Server-Types" class="headerlink" title="Name Server Types"></a>Name Server Types</h2><p>在网络上实现DNS，至少需要一个主服务器负责维护域名。从本地文件中获取负责区域的所有信息的主名字服务器，从主名字服务器的<strong>区域文件</strong>获取信息并响应服务请求的备份名字服务器（又称第二名字服务器），响应来自本地网络上的客户端的域名解析请求查询的只缓存服务器。只缓存服务器向其他DNS服务器查询域名信息以及提供比如Web和FTP服务的计算机。当收到来自其他DNS服务器的信息是，将那些信息存储在缓存中以防万一再次请求这些信息。只缓存服务器被本地网络上的客户端计算用来解析名字。互联网上的其他DNS服务器不会知道这些只缓存服务器并且因此不会查询它们。</p>
+<p>最受欢迎的DNS实现是BIND，Berkeley Internet Name Domain。</p>
+<h3 id="Domains-and-Zones"><a href="#Domains-and-Zones" class="headerlink" title="Domains and Zones"></a>Domains and Zones</h3><p>在含有一组通用的DNS服务器的集合配置中的一组DNS主机称为<strong>区域（zone）</strong>。简单网络上，一个区域可能代表了一个完整的DNS域。更复杂的网络上，子域的DNS配置有时候委托到服务这个子域的另一个区域。区域委托让管理员具备更快速地知道管理一个子网络管理那个子网络的DNS配置。<br>区域（zone）以及域（domain）的区别不仅体现在精细的语义上（域是命名空间的细分并且区域是一个主机集合），区域和域的概念不是平行的。在读这部分内容事，要记住：</p>
+<ul>
+<li>在子域中的成员资格暗示了在父域中的成员资格。例如，在b.a.edu中的一台主机是a.edu的一部分。相反，如果b.a.edu的域是被委托的，则在b.a.edu的主机不是a.edu区域中的一部分。</li>
+<li>如果子域不是被特别地委托，则不需要一个单独的区域并且简单地与父域的区域文件包含在一起。</li>
+</ul>
+<p>一个区域代表一组DNS服务器以及主机的集合配置，并且DNS管理员为了提高管理效率可选择性地委托部分名字空间到其他区域。</p>
+<h3 id="Zone-Files"><a href="#Zone-Files" class="headerlink" title="Zone Files"></a>Zone Files</h3><p>一个DNS区域是一个表示存在DNS命名空间中的一个计算机集合的管理单元。一个区域的DNS配置被存在一个区域文件中。当响应查询以及初始请求的时候，DNS服务器查询在区域文件中的信息。一个区域文件是一个具有标准化结构的文本文档。区域文件由多个<strong>资源记录</strong>构成。一些资源记录的常见类型：</p>
+<ul>
+<li>SOA：SOA表示Start of Authority。SOA记录指明了这个区域的权威的名字服务器。</li>
+<li>NS：NS表示Name Server。NS记录指明了这个区域的一个名字服务器。一个区域可能含有几个名字服务器（因此，有多个NS记录）但是只能有一个SOA记录用于权威的名字服务器。</li>
+<li>A：一条A记录将一个DNS名字映射到一个IPv4地址。</li>
+<li>AAAA：一条AAAA记录将一个DNS名字映射到一个IPv6地址。</li>
+<li>PTR：一条PTR记录将一个IP地址映射到一个DNS名字。</li>
+<li>CNAME：CNAME是canonical name的缩写。一条CNAME记录映射一个别名到由一条A记录表示的实际的主机名。</li>
+</ul>
+<p>因此，这个区域文件告诉DNS服务器一下信息：</p>
+<ul>
+<li>这个区域的权威的名字服务器。</li>
+<li>在这个区域的DNS服务器（权威的以及非权威的）。</li>
+<li>在区域内的主机的别名（备用名字）之内的DNS-name-to-IP-address映射。</li>
+</ul>
+<p>一个区域文件示例：<br><img src="https://i.cthee.cyou/8b03b3e9906345d6.svg" alt="https://i.cthee.cyou/8b03b3e9906345d6.svg"></p>
+<p>SOA记录中包含有几个使用主DNS服务器上的原版区域文件更新备份DNS服务器的参数。一个serial number表示区域文件自己的版本号，其他参数：</p>
+<ul>
+<li>Refresh time：备份DNS服务器查询主DNS服务器来更新区域文件的时间间隔。</li>
+<li>Retry time：区域文件未成功更新，再次尝试更新之前需等待的时间。</li>
+<li>Expiration time：备份DNS服务器无更新再获取一条记录的上限时间。</li>
+<li>Minimum Time to Live (TTL)：导出的区域记录的默认TTL。</li>
+</ul>
+<h3 id="The-Reverse-Lookup-Zone-File"><a href="#The-Reverse-Lookup-Zone-File" class="headerlink" title="The Reverse Lookup Zone File"></a>The Reverse Lookup Zone File</h3><p>DNS名字解析必需的另一种类型的区域文件是反向查询文件。当一个客户端提供一个IP地址并且请求相关的主机名时，将使用到这个文件。在IP地址中，最左边部分是普遍的，最右边部分是特殊的。然而在域名中确实相反的，左边部分是特殊的，右边部分，比如，.com或.edu都普遍的。创建一个反向查询区域文件，必须将网络地址顺序进行逆序，这样普遍的以及特殊的部分会遵循在域名中使用的模式。例如，192.59.66.0网络的区域会有是66.59.192.in-addr.arpa的名字。<em>in-addr</em>部分表示反向地址，<em>arpa</em>部分表示另一个顶级域名并且是来自发生互联网之前的原本的ARPAnet的预留部分。这个文件与普通的区域文件一样含有SOA以及为区域定义的名字服务器的NS记录，但是反向查询区域文件包含将地址映射到名字的PTR记录，而不是将域名映射到地址的A记录。只有主机地址部分是被包含在地址映射中——网络部分从文件名字中获取：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">; zone file for 23.21.181.in-addr.arpa</span><br><span class="line">@ IN SOA boris.cocacola.com. hostmaster.cocacola.com. (</span><br><span class="line">     201.9 ; serial number incremented with each</span><br><span class="line">           ; file update</span><br><span class="line">           ;</span><br><span class="line">     3600 ; refresh time (in seconds)</span><br><span class="line">     1800 ; retry time (in seconds)</span><br><span class="line">     4000000 ; expiration time (in weeks)</span><br><span class="line">     3600) ; minimum TTL</span><br><span class="line">IN NS horace.cocacola.com.</span><br><span class="line">IN NS boris.cocacola.com.</span><br><span class="line">;</span><br><span class="line">; IP address to host mappings</span><br><span class="line">;</span><br><span class="line">4 IN PTR chuck</span><br><span class="line">5 IN PTR amy</span><br></pre></td></tr></table></figure>
+
+<p>起初计划用于IPv6反向查询区域文件是以<em>ip6.int</em>结尾，但是互联网当前正向<em>ip6.arpa</em>过渡。因此可能碰上两中形式之一。和IPv4一样，网络地址部分有文件名反映出来（逆序的）；主机ID是文件中的一个条目（也是逆序的）并且被映射到一个主机名。</p>
+<h3 id="DNS-Security-Extension-（DNSSEC）"><a href="#DNS-Security-Extension-（DNSSEC）" class="headerlink" title="DNS Security Extension （DNSSEC）"></a>DNS Security Extension （DNSSEC）</h3><p>拦截DNS查询的攻击人可以发送一个虚假的响应，将客户端重定向到一个能够提供发起攻击方式的秘密的DNS服务器。只要虚假的行应在真实响应到达之前，DNS客户端一点也不聪慧的。</p>
+<p>可以通过验证返回DNS数据的源头的方式来解决这个问题。DNS Security Extensions（DNSSEC）为验证DNS数据提供了这个系统。DNSSEC通过一组加密密钥和数字签名来实现。DNSSEC需要定义在RFC 2671中的Extension Mechanisms for DNS（EDNS）的支持。EDNS DO头部位标志一个DNSSEC查询。DNSSEC添加一个验证有效的过程来确保DNS查询的结果是真实可靠的。</p>
+<p>为了达到安全验证的目的，DNSSEC添加四个新的DNS资源记录类型：</p>
+<ul>
+<li>DNSKEY：用于签名以及鉴定DNS资源记录集合的公钥。</li>
+<li>DS：指向（并且验证）一个子区域的DNSKEY的资源记录。</li>
+<li>RRSIG：和区域数据关联的数字签名。</li>
+<li>NSEC：下一个权威数据的拥有人的名字。</li>
+</ul>
+<p>服务器拥有构成信任链的安全的DNS数据。解析方必须能够独立访问和用于顶层区域的一条DNSKEY记录关联的公钥。这个密钥是分开获取的。公钥鉴定存储在信任点上的数据，包括一条验证以及鉴定与在下一个查找过程步骤相关联的子区域的DS记录。解析方遍历信任链，通过低层级子区域，使用在父区域上的DS key验证子区域上的DNSKEY。最后一步，DNSKEY解密存储在RRSIG资源记录内的数据签名并且将其和由普通的DNS查询过程返回的签名进行比较。如果这个过程成功完成，则用于DNS查询的源得到了验证，并且数据被认为是真实的。</p>
+<p>保存在初始入口点的DNS数据包括用于任何子区域的DS记录。例如，.com区域的官方服务器包含了一条famousIT.com的DS记录。DS记录识别以及验证用于子区域的DNSKEY。</p>
+<p><img src="https://i.cthee.cyou/2f3f823b39164d9c.svg" alt="https://i.cthee.cyou/2f3f823b39164d9c.svg"></p>
+<p>DNSSEC依赖于在DNSKEY以及DS资源记录之间的一连串交互。父区域可能含有用于多个子区域的DS记录，以及每个DS记录提共必要的信息来验证在子区域中相关的DNSKEY记录是正确的并且表示一个服务器在信任链内。</p>
+<p>另一个必要的要素是RRSIG记录包含用于区域数据的签名。为了给一个区域签名，这个区域的管理员生成一个或多个公共&#x2F;私有的密钥对并且使用密钥为区域内的权威数据进行签名。对于每一个用于在一个区域中创建RRSIG记录的私钥，这个区域应该包含一个含有相关公钥的区域DNSKEY。</p>
+<p>RRSIG记录含有比如拥有人名字，一个分类值（a class value），一个TTL值，包含数据的区域的名字以及其他识别记录的数据的信息。</p>
+<p>万一名字错误或是当一个用于查找名字的实际匹配不可用时，则使用NSEC记录。</p>
+<h3 id="DNS工具"><a href="#DNS工具" class="headerlink" title="DNS工具"></a>DNS工具</h3><p>如果使用资源的IP地址可以连接到资源，但是不能通过一个主机名或是FQDN连接这个资源，有可能的问题是名字解析问题。</p>
+<h4 id="Checking-Name-Resolution-with-Ping"><a href="#Checking-Name-Resolution-with-Ping" class="headerlink" title="Checking Name Resolution with Ping"></a>Checking Name Resolution with Ping</h4><p>简单且好用的<code>ping</code>是一个用于测试DNS配置的工具。</p>
+<p>通过IP地址：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping 198.1.14.2  # 通过IP地址给这台计算机发送信号，如果命令成功，表示可以通过IP地址连接到远程计算机</span><br></pre></td></tr></table></figure>
+
+<p>通过DNS名字：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping cthee.cyou</span><br></pre></td></tr></table></figure>
+
+<h4 id="Checking-Name-Resolution-with-NSLookup"><a href="#Checking-Name-Resolution-with-NSLookup" class="headerlink" title="Checking Name Resolution with NSLookup"></a>Checking Name Resolution with NSLookup</h4><p>NSLook工具用处：</p>
+<ul>
+<li>查询DNS服务器以及查看比如资源记录等信息</li>
+<li>DNS问题排查</li>
+</ul>
+<p>运行模式：</p>
+<ul>
+<li>Batch模式：在Batch模式中，运行NSLookup并提供输入参数。NSLookup使用输入的参数执行请求的功能，显示结果然后结束。</li>
+<li>Interactive模式：在Interactive模式中，不提供输入参数而直接运行NSLookup，然后NSLookup提示输入参数。当输入输入参数时，NSLookup执行请求的操作，显示结果，再次提示输入参数。</li>
+</ul>
+<p><img src="https://i.cthee.cyou/6ad2ac608ebb448e.svg" alt="https://i.cthee.cyou/6ad2ac608ebb448e.svg"></p>
+<p>nslookup的interactive模式中可用的命令：</p>
+<ul>
+<li>host [server]：使用当前默认的服务器或使用提供的指定的服务器。</li>
+<li>server domain&#x2F;lserver domain：更改默认服务器到domain。<strong>lserver</strong>使用初始服务器查询关于domain的信息，而<strong>server</strong>使用当前的默认服务器。</li>
+<li>set all：打印当前频繁用于<strong>set</strong>的选项值。包括当前使用的默认服务器和主机信息。</li>
+</ul>
+<p>使用<code>man nslookup</code>查看更多信息。要注意的是大部分商业DNS服务器以及跟服务器拒绝<code>ls</code>命令，因为它们可以生成巨大的流量并且可能引发安全漏洞。</p>
+<h4 id="Domain-Information-Grouper-Dig"><a href="#Domain-Information-Grouper-Dig" class="headerlink" title="Domain Information Grouper (Dig)"></a>Domain Information Grouper (Dig)</h4><p>最基本的用法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig cthee.cyou</span><br></pre></td></tr></table></figure>
+
+<p>在指定DNS服务器进行查询：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig @8.8.8.8 cthee.cyou</span><br></pre></td></tr></table></figure>
+
+<p>查询指定的资源记录类型：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig i.cthee.cyou NS <span class="comment"># 显示与域名相关连的NS记录。</span></span><br></pre></td></tr></table></figure>
+
+<p>查找邮件服务器：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig cthee.cyou MX</span><br></pre></td></tr></table></figure>
+
+<p>当指定IP地址时，<code>-x</code>选项执行反向查询。<code>-4</code>选项限制查询为IPv4。<code>-6</code>用于IPv6。</p>
+<h2 id="Dynamic-DNS"><a href="#Dynamic-DNS" class="headerlink" title="Dynamic DNS"></a>Dynamic DNS</h2><p>每次计算机启动时，IP地址通过动态主机配置协议（DHCP）进行配置。企业目录系统比如微软的Active Directory使用动态DNS来管理在目录结构内的DHCP客户系统。</p>
+<p>主机从一个DHCP服务器获取一个IP地址，并用这个IP地址更新DNS服务器。</p>
+<p><img src="https://i.cthee.cyou/110b21ae66a9498b.svg" alt="https://i.cthee.cyou/110b21ae66a9498b.svg"></p>
+<h2 id="NetBIOS-Name-Resolution"><a href="#NetBIOS-Name-Resolution" class="headerlink" title="NetBIOS Name Resolution"></a>NetBIOS Name Resolution</h2><p><strong>NetBIOS</strong>是一个应用编程接口（API）并且最初由IBM开发的名字解析系统成为了微软Windows网络演化起到了重要作用。旧版的Windows系统，NetBIOS名字是分配给Windows计算机的计算机名字。<br>NetBIOS过去是为那些不使用TCPIP的网络而开发的。NetBIOS不仅仅是在所有的Windows上有，流行的开源Samba文件服务以及其他独立工具也支持NetBIOS名字解析。</p>
+<p>因为NetBIOS通过广播运行，所以在小型网络上的一个用户不需要做任何事情来配置NetBIOS名字解析（除了设置网络以及分配一个计算机名字）。大型网络上，可以通过使用称为Windows互联网名字服务（Windows Internet Name Service，WINS）服务器来解析NetBIOS名字成IP地址。也可以配置一个静态的<strong>LMHosts</strong>文件（和DNS下的hosts文件相似）用于名字解析查询。</p>
+<p>NetBIOS名字是单个长度限制为15个字符的名字。NetBIOS不允许网络上有相同的计算机名。技术上来说，一个NetBIOS名字包含16个字符。然后第十六个字符被底层应用所有使用并且一般来说不能由用户直接配置。</p>
+<h2 id="小小的总结"><a href="#小小的总结" class="headerlink" title="小小的总结"></a>小小的总结</h2><ul>
+<li>域名是一个用于识别一个网络的名字。主机名是分配给特别的主机并且映射到一个IP地址的单独的名字。</li>
+<li>DNS资源记录是包含在一个DNS区域文件中的条目。不同的资源记录用来识别不同的计算机或服务的类型。</li>
+<li>处于DDNS 网络中的计算向DHCP获取一个IP地址，再将这个IP地址发送给一个DNS服务器用于更新。</li>
+<li>CNAME资源记录用于给一个A记录进行别名。</li>
+<li>DNSSEC使用一条存储在父区域的DS资源记录来识别和鉴定存储在子区域的DNSKEY资源记录。为了有必要验证查询响应的真实性，保存在父区域的DS记录允许查询遍历信任链。DS资源记录指向（以及验证）子区域的DNSKEY。</li>
+</ul>
+<p><a href="/Getting-Connected">名字解析</a><br><a href="/TCP-IP-Security">TCPIP安全</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-is-Name-Resolution"><span class="toc-number">1.</span> <span class="toc-text">What is Name Resolution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Name-Resolution-Using-Hosts-Files"><span class="toc-number">2.</span> <span class="toc-text">Name Resolution Using Hosts Files</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNS-Name-Resolution"><span class="toc-number">3.</span> <span class="toc-text">DNS Name Resolution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Registering-a-Domain"><span class="toc-number">4.</span> <span class="toc-text">Registering a Domain</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Name-Server-Types"><span class="toc-number">5.</span> <span class="toc-text">Name Server Types</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Domains-and-Zones"><span class="toc-number">5.1.</span> <span class="toc-text">Domains and Zones</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Zone-Files"><span class="toc-number">5.2.</span> <span class="toc-text">Zone Files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Reverse-Lookup-Zone-File"><span class="toc-number">5.3.</span> <span class="toc-text">The Reverse Lookup Zone File</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS-Security-Extension-%EF%BC%88DNSSEC%EF%BC%89"><span class="toc-number">5.4.</span> <span class="toc-text">DNS Security Extension （DNSSEC）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNS%E5%B7%A5%E5%85%B7"><span class="toc-number">5.5.</span> <span class="toc-text">DNS工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Checking-Name-Resolution-with-Ping"><span class="toc-number">5.5.1.</span> <span class="toc-text">Checking Name Resolution with Ping</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Checking-Name-Resolution-with-NSLookup"><span class="toc-number">5.5.2.</span> <span class="toc-text">Checking Name Resolution with NSLookup</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Domain-Information-Grouper-Dig"><span class="toc-number">5.5.3.</span> <span class="toc-text">Domain Information Grouper (Dig)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic-DNS"><span class="toc-number">6.</span> <span class="toc-text">Dynamic DNS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NetBIOS-Name-Resolution"><span class="toc-number">7.</span> <span class="toc-text">NetBIOS Name Resolution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Name-Resolution/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Name-Resolution/&text=Name Resolution"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Name-Resolution/&title=Name Resolution"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Name-Resolution/&is_video=false&description=Name Resolution"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Name Resolution&body=Check out this article: https://www.cthee.cyou/Name-Resolution/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Name-Resolution/&title=Name Resolution"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Name-Resolution/&title=Name Resolution"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Name-Resolution/&title=Name Resolution"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Name-Resolution/&title=Name Resolution"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Name-Resolution/&name=Name Resolution&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

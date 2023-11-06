@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="man 用来阅读命令的官方文档， 比如 man man 命令的分区号  1 普通命令 5 文件&#x2F;约定 8 管理命令   help和help -d可得知一个命令是否是可执行程序。shell内置命令或者别名，使用type command，例如 fg, bg, jobs&#96;等。  curl cheat.sh&#x2F;command会给出如何使用shell命令常用例子的表单。   重定向  &amp;g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="the art of command line 笔记整理">
+<meta property="og:url" content="https://www.cthee.cyou/bash-notes/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="man 用来阅读命令的官方文档， 比如 man man 命令的分区号  1 普通命令 5 文件&#x2F;约定 8 管理命令   help和help -d可得知一个命令是否是可执行程序。shell内置命令或者别名，使用type command，例如 fg, bg, jobs&#96;等。  curl cheat.sh&#x2F;command会给出如何使用shell命令常用例子的表单。   重定向  &amp;g">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.cthee.cyou/eed7d1556634417e.png">
+<meta property="article:published_time" content="2019-06-02T04:39:02.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.205Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="bash">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.cthee.cyou/eed7d1556634417e.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>the art of command line 笔记整理</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/%E4%BA%86%E8%A7%A3%E5%88%86%E5%B8%83%E5%BC%8F%E7%90%86%E8%AE%BA%E4%B9%8BCAP%E7%90%86%E8%AE%BA%E7%AC%94%E8%AE%B0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/quick-sort-based-on-linked-list/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/bash-notes/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/bash-notes/&text=the art of command line 笔记整理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/bash-notes/&title=the art of command line 笔记整理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/bash-notes/&is_video=false&description=the art of command line 笔记整理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=the art of command line 笔记整理&body=Check out this article: https://www.cthee.cyou/bash-notes/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/bash-notes/&title=the art of command line 笔记整理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/bash-notes/&title=the art of command line 笔记整理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/bash-notes/&title=the art of command line 笔记整理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/bash-notes/&title=the art of command line 笔记整理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/bash-notes/&name=the art of command line 笔记整理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">日常使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E4%B8%8E%E6%95%B0%E6%8D%AE"><span class="toc-number"></span> <span class="toc-text">处理文件与数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E8%AF%95"><span class="toc-number"></span> <span class="toc-text">系统调试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number"></span> <span class="toc-text">一行命令</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        the art of command line 笔记整理
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-06-02T04:39:02.000Z" itemprop="datePublished">2019-06-02</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/bash/" rel="tag">bash</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>, <a class="tag-link-link" href="/tags/shell/" rel="tag">shell</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <ul>
+<li><p><code>man</code> 用来阅读命令的官方文档， 比如 <code>man</code> <code>man</code></p>
+<p>命令的分区号<br><img src="https://i.cthee.cyou/eed7d1556634417e.png" alt="分区号"></p>
+<ul>
+<li>1 普通命令</li>
+<li>5 文件&#x2F;约定</li>
+<li>8 管理命令</li>
+</ul>
+</li>
+<li><p>help<code>和</code>help -d<code>可得知一个命令是否是可执行程序。</code>shell<code>内置命令或者别名，使用</code>type command<code>，例如 </code>fg<code>, </code>bg<code>, </code>jobs&#96;等。</p>
+</li>
+<li><p><code>curl cheat.sh/command</code>会给出如何使用shell命令常用例子的表单。</p>
+</li>
+</ul>
+<p>重定向</p>
+<ul>
+<li><code>&gt;</code>: 覆盖输出</li>
+<li><code>&lt;</code>: 输入</li>
+<li><code>|</code>: 管道</li>
+<li><code>&gt;&gt;</code>: 末尾添加</li>
+</ul>
+<p>一些标点符号</p>
+<ul>
+<li><code>*</code>：通配符</li>
+<li><code>?</code>：单个字符匹配符号<br>  区别：<ul>
+<li><code>&quot;</code>：双引号</li>
+<li><code>&#39;</code>：单引号</li>
+</ul>
+</li>
+</ul>
+<p>任务管理</p>
+<ul>
+<li><code>&amp;</code></li>
+<li>ctrl-z</li>
+<li>ctrl-c</li>
+<li><code>jobs</code></li>
+<li><code>fg</code></li>
+<li><code>bg</code></li>
+<li><code>kill</code></li>
+</ul>
+<p>ssh</p>
+<ul>
+<li><code>ssh-agent</code></li>
+<li><code>ssh-add</code></li>
+</ul>
+<p>基本文件管理</p>
+<ul>
+<li><code>ls -l</code>, <code>ls</code></li>
+<li><code>less</code>, <code>less +F</code></li>
+<li><code>head</code></li>
+<li><code>tail</code>, <code>tail -f</code></li>
+<li><code>ln -s</code></li>
+<li><code>chown</code></li>
+<li><code>chomd</code></li>
+<li><code>du</code>, <code>du -sh *</code>, 磁盘使用情况</li>
+<li><code>df</code>， <code>mount</code>， <code>fdisk</code>, <code>mkfs</code>, <code>lsblk</code>,用于文件系统管理，inode相关，<code>ls -i</code>，<code>df -i</code>。</li>
+<li><code>ip</code>, <code>ifconfig</code>, <code>dig</code>, <code>traceroute</code>, <code>route</code>, 网络管理</li>
+<li><code>git</code>,版本控制系统</li>
+<li><code>grep</code>，<code>egrep</code>，以及它们的<code>-i</code>, <code>-o</code>, <code>-v</code>, <code>-A</code>, <code>-B</code>, <code>-c</code>选项。</li>
+<li><code>apt-get</code>, <code>yum</code>, <code>dnf</code>, <code>pacman</code>，各个linux发行版的包管理工具，<code>pip</code>，<code>Python</code>包管理命令</li>
+</ul>
+<h2 id="日常使用"><a href="#日常使用" class="headerlink" title="日常使用"></a>日常使用</h2><ul>
+<li>在<code>bash</code>中使用<strong>Tab</strong>进行命令行参数的补全或列出所有可供使用的命令。使用<strong>ctrl-r</strong>进行搜索历史命令，搜索期间使用该按键组合进行循环搜索，直到找到匹配的命令行，按下<strong>Enter</strong>键，或使用键盘上右箭头按键将命令行放入<br>  当前行来进行编辑。</li>
+<li>在<code>bash</code>中，<strong>ctrl-w</strong>组合删除最后一个单词，<strong>ctrl-u</strong>删除从光标开始处到当前行开头。逐个单词移动使用<strong>alt-b</strong> 和 <strong>alt-f</strong>。<strong>ctrl-e</strong>移动光标到行尾。<strong>ctrl-k</strong>删除从光标到行为的内容，**ctrl-l(L)<strong>进行清屏，<code>man readline</code>查看所有<code>bash</code>的所有的默认绑定按键。例如</strong>alt-.<strong>查找命令行的最后一个的参数，</strong>alt-****展开和通配符匹配的所有可能。</li>
+<li><code>set -o vi</code>使用vi风格的按键绑定, <code>set -o emacs</code>重置为原来的按键绑定。</li>
+<li>在设置编辑器之后（例如，<code>export EDITOR=vim</code>），对于编辑长的命令，<strong>ctrl-x</strong> <strong>ctrl-e</strong>打开文本编辑器用来编辑当前多行命令。如果绑定了<code>vi</code>风格的按键，则使用<code>escape-v</code>按键组合。。</li>
+<li>查看最近的命令<code>history</code>。<code>!n</code>再次执行该行命令(n为行号)，<code>!$</code>最后一条命令的最后一个参数，<code>!!</code>执行最后一条命令。<code>man history</code>查看”HISTORY EXPANSION”。然而总是经常使用<strong>ctrl-r</strong> 和 **alt-.**来代替这些操作。</li>
+<li>使用<code>cd</code>切换到home目录。访问相对于使用<code>~</code>前缀（<code>~/.bashrc</code>）的home目录下的文件。在<code>sh</code>脚本中，使用<code>$HOME</code>引用home目录。</li>
+<li>使用<code>cd -</code>切换之前的目录。</li>
+<li>使用<strong>alt-#</strong> 或 <strong>ctrl-a, #, Enter</strong>在命令的开头添加注释，将正输入或要执行的命令注释掉。</li>
+<li>使用<code>xargs</code>或 （<code>parallel</code>）。功能非常的强大。它可以控制每行执行项数（-L），<code>-I&#123;&#125;</code>也很实用。举些例子：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">find /usr/lib/python3/ -name <span class="string">&quot;*.py&quot;</span> | xargs grep <span class="string">&quot;codecs&quot;</span>  <span class="comment"># 查询包含codecs的相关文件</span></span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> hosts | xargs -I&#123;&#125; ssh root@&#123;&#125; hostname</span></span><br></pre></td></tr></table></figure></li>
+<li><code>pstreee -p</code> 显示进程树。</li>
+<li><code>pgrep</code>和<code>pkill</code>根据名字查找进程或给进程发信号（-f 很实用）。</li>
+<li>给进程发各种信号。例如，<code>kill -STOP pid</code>，<code>man 7 signal</code>查看完整的信号参数。</li>
+<li>使用<code>nohup</code>或<code>disown</code>使程序不停地在后台运行。</li>
+<li>使用<code>netstat -lntp</code> 或 <code>ss -plat</code> 或 <code>lsof -iTCP -sTCP:LISTEN -P -n</code>（同样适用于macOS） 检查哪些进程正在监听端口（<code>-t</code>用于TCP，<code>-u</code>用于UDP）。</li>
+<li>使用<code>lsof</code> 和 <code>fuser</code>查看打开的套接字和文件。</li>
+<li>使用<code>uptime</code> 和 <code>w</code> 查看系统已经运行多长时间。</li>
+<li>使用<code>alias</code>给经常使用的的命令创建快捷方式。例如，<code>alias ll=ls -latr</code> 创建新的别名<code>ll</code>。</li>
+<li>将常用的别名，shell设置以及函数放到<code>~/.bashrc</code>中，并且<a target="_blank" rel="noopener" href="http://superuser.com/a/183980/7106">登录shell自动导入它</a>。这样在所有的的shell会话中都能够使得这些设置能够生效。</li>
+<li>将登录的时候需要执行的环境变量和命令放置在<code>~/.bash_profile</code>中。需要将从图形环境登录和<code>cron</code>任务启动的shell的配置进行单独配置。</li>
+<li>在许多计算机之间使用Git同步配置文件（例如，<code>。bashrc</code> 和 <code>.bash_profile</code>）.</li>
+<li>变量名和文件名包含空白字符的时候，需要特别注意。使用<code>-0</code> 或 <code>-print0</code>选项输出空字符来分隔文件名字。例如，<code>locate -0 pattern | xargs -0 ls -al</code> 或 <code>find / -0 print0 -type d | xargs -0 ls -al</code>。为了在循环中迭代文件名包含空格的文件，使用<code>IFS=$&#39;\n&#39;</code>设置IFS为换行。</li>
+<li>Bash脚本中，使用<code>set -x</code>（或 <code>set -v</code>，它可以记录原来的输入，包含了不能扩展开的变量和注释）进行调试输出。最好设置<code>set -e</code>在错误时终止执行（非0退出代码）。<code>set -u</code>检测未设置的变量。<code>set -o pipefail</code> 在管道中产生错误是终止执行。在联系紧密的脚本中，一旦遇到EXIT 或者 ERR时，使用<code>trap</code>。在脚本中发生错误时，进行检测并终止执行和打印信息。  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> -euo pipefail</span><br><span class="line"><span class="built_in">trap</span> <span class="string">&quot;echo &#x27;error: Script failed: see failed command above&#x27;&quot;</span> ERR</span><br></pre></td></tr></table></figure></li>
+<li>bash脚本中，子shells（使用括号编写的）方便组织命令。普遍的例子就是临时切换到不同的工作目录，例如:  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在当前目录工作</span></span><br><span class="line">(cd /some/other/dir &amp;&amp; other command)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">继续在原来的目录</span></span><br></pre></td></tr></table></figure></li>
+<li><code>$&#123;variable:?error message&#125;</code>用于检测变量的存在，例如，脚本中的单个参数，可以这样子写<code>input_file=$&#123;1:?usage: $0 input_file&#125;</code>。设置一个变量的默认值<code>$&#123;name:-default&#125;</code>。给上一个例子添加额外(可选的)的参数，可以这样子<code>output_file=$&#123;2:-logfile&#125;</code>。如果省略<code>$2</code>并且是空的，那么output_file将设置为<code>logfile</code>。算术运算：<code>i=$(( (i + 1) % 5 ))</code>。序列：{1..10}。字符串裁剪：<code>$&#123;var%后缀&#125;</code> 和 <code>$&#123;var#前缀&#125;</code>，例如，<code>var=bar.pdf</code>, <code>echo $&#123;bar%.pdf&#125;.txt</code>则输出<code>foo.txt</code>。</li>
+<li>花括号展开<code>&#123;</code>…<code>&#125;</code>可以减少重新输入相似的文本并且自动进行组合。比如，<code>mv foo.&#123;txt.pdf&#125; some-dir</code>（移动这两个文件），<code>cp somefile&#123;,.bak&#125;</code>（展开成<code>cp somefile somefile.bak</code>）或 <code>mkdir -p test-&#123;a,b,c&#125;/subtest-&#123;1,2,3&#125;</code>(展开所有可能的组合并且创建目录树)，花括号优先于比其他展开而展开。</li>
+<li>展开顺序：花括号;波浪号展开，参数和变量展开，算术运算展开，和命令替换(从左到右进行);单词分割;以及文件名展开。（例如，像这样子<code>&#123;1..20&#125;</code>的一个区间不能用这样子的变量<code>$&#123;$a..$b&#125;</code>来表达。使用<code>seq</code> 或 一个<code>for</code>循环来代替，例如，<code>seq $a $b</code> 或 <code>for((i=a; i&lt;=b; i++)); ...; done</code>）</li>
+<li>一行命令的输出可以通过使用<code>&lt;(some command)</code>（目前已知的进程替换）将其像文件一样来对待。例如，对比本地的<code>/etc/hosts</code>和远程服务器上面的那个文件：  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">diff /etc/hosts &lt; (ssh somehost <span class="built_in">cat</span> /etc/hosts)</span></span><br></pre></td></tr></table></figure>
+  -编写脚本时，可将所有的代码放入花括号内。如果缺少右花括号，由于语法错误，脚本将不能被执行。当脚本从网页上下载东西的时候，这样子就会很有用，这样子可以阻止脚本只下载一部分。  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      # 需要放进来的代码</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>“here doccument” 允许<a target="_blank" rel="noopener" href="https://www.tldp.org/LDP/abs/html/here-docs.html">重定向多行输入</a>，就像来自一个文件一样。  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cat</span> &lt;&lt; <span class="string">EOF</span></span></span><br><span class="line">input</span><br><span class="line">on multiple lines</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure></li>
+<li>使用<code>some-command &gt; logfile 2&gt;&amp;1</code> 或 <code>some-commmand &amp;&gt; logfile</code>将在Bash中的标准输出和标准错误重定向到相同文件中。经常为了保证命令不退出打开的文件到标准输入，在你登录的终端中尝试使用它，增加<code>&lt;/dev/null</code>也是一个很好的实践。</li>
+<li>使用<code>man ascii</code> 查看ASCII表，里面包含十六进制和十进制的数值。可通过<code>man unicode</code>，<code>man utf-8</code> 和 <code>man latin1</code>来了解通用编码信息。</li>
+<li>使用<code>screen</code> 或<code>tmux</code> 来提供多窗口，尤其在远程ssh会话中，它可以分离和重新连接会话。<code>byobu</code>可以通过提供更多的信息和更简易的管理功能来增强<code>screen</code> 或<code>tmux</code>。<code>dtach</code>是只用于会话持久的另一个更轻量的工具。</li>
+<li>在ssh中，知道使用<code>-L</code> 或 <code>-D</code>（偶尔<code>-R</code>）来建立隧道，例如，通过隧道访问来自远程服务器的网页。</li>
+<li>优化ssh连接的配置。例如，<code>~/.ssh/config</code>这个文件包含了避免在某些网络环境中断开连接的设置，使用压缩（这在低带宽链接中使用scp时非常有用）和 使用本地控制文件提供多信道给相同的服务器：  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TCPKeepAlive=yes</span><br><span class="line">ServerAliveInterval=15</span><br><span class="line">ServerAliveCountMax=6</span><br><span class="line">Compression=yes</span><br><span class="line">ControlMaster auto</span><br><span class="line">ControlPath /tmp/%r@%h:%p</span><br><span class="line">ControlPersist yes</span><br></pre></td></tr></table></figure></li>
+<li>应该考虑打开跟ssh安全相关的其他选项，例如，每个子网或主机或在可信任的网络中：<code>StrictHoskKeyChecking=no</code>, <code>ForwardAgent=yes</code>。</li>
+<li>将使用UDP协议的<a target="_blank" rel="noopener" href="https://mosh.mit.edu/"><code>mosh</code></a>作为ssh的另一种选择，它避免的掉链接和增加了通信过程中的便利（需要服务端配置）。</li>
+<li>获取一个文件权限的八进制形式，在系统配置的时候很有帮助，但是在<code>ls</code>中并不可用并且，比如：  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stat -c &#x27;%A %a %n&#x27; /etc/timezone</span><br></pre></td></tr></table></figure></li>
+<li>交互式选择来自另一个命令输出的值，使用<a target="_blank" rel="noopener" href="https://github.com/mooz/percol"><code>percol</code></a> 或 <a target="_blank" rel="noopener" href="https://github.com/junegunn/fzf"><code>fzf</code></a>。</li>
+<li>使用<code>fpp</code>（<a target="_blank" rel="noopener" href="https://github.com/facebook/PathPicker">PathPicker</a>）与基于其他命令(<code>git</code>)输出的文件进行交互。</li>
+<li><code>python -m SimpleHTTPServer 7777</code> (端口是 7777 并且是Python 2) 和 <code>python -m http.server 7777</code>（端口 7777 并且是Python 3）列出当前目录（和子目录）中的所有文件的简易web服务器，用于提供给网络上的任何人。</li>
+<li>使用<code>sudo</code>以其他用户运行命令。默认的用户是root；用<code>-u</code> 选项指定用户。用<code>-i</code>登录该用户（会被询问登录密码）。</li>
+<li>使用<code>su username</code> 或 <code>su - username</code>切换shell到另外一个用户。后面有<code>-</code>表示获取一个环境，就好像另一个用户刚刚登录过。省略username将默认为root。切换过程中，将要求输入切换到该用户的密码。</li>
+<li>命令行的<a target="_blank" rel="noopener" href="https://wiki.debian.org/CommonErrorMessages/ArgumentListTooLong">128K 限制</a>。当时用通配符匹配大量文件的时候，“Argument list too long” 错误是普遍存在的。（此时应该考虑使用<code>find</code> 或 <code>xargs</code>来提供帮助。）</li>
+<li>简单的简单计算器（当然得访问Python），使用<code>python</code>计时器。也可以用使用<code>bc</code>来替换。例如，使用Python：  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">&gt;</span><span class="language-bash">&gt;&gt; 2 + 3</span></span><br><span class="line">5</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="处理文件与数据"><a href="#处理文件与数据" class="headerlink" title="处理文件与数据"></a>处理文件与数据</h1><ul>
+<li><code>find . -iname &quot;*something*&quot;</code> 在当前目录查找文件。<code>locate something</code> 更具名字在任何地方查找文件（但是要记得的是<code>updatedb</code>可能没有对最见创建的文件建立索引）。</li>
+<li>搜索源文件或者数据文件，比<code>grep -r</code> 更高级或更快的搜索工具，按旧到新进行排序<a target="_blank" rel="noopener" href="https://github.com/beyondgrep/ack2"><code>ack</code></a>，<a target="_blank" rel="noopener" href="https://github.com/ggreer/the_silver_searcher"><code>ag</code></a>(“the silver searcher”)，和 <a target="_blank" rel="noopener" href="https://github.com/BurntSushi/ripgrep"><code>rg</code></a>(ripgrep)。</li>
+<li><code>lynx -dump</code> 将HTML转换成text。</li>
+<li>Markdown，HTML，和各种各样的文档转换，尝试使用<a target="_blank" rel="noopener" href="http://pandoc.org/"><code>pandoc</code></a>。<code>pandoc READ.md --from markdown -- to docx -temp.docx</code>将Markdown文档转换成word文档。</li>
+<li><code>xmlstarlet时代旧了些，但还是能很好处理xml的软件。</code></li>
+<li>JSON文件，使用<a target="_blank" rel="noopener" href="http://stedolan.github.io/jq/"><code>jq</code></a>, <a target="_blank" rel="noopener" href="https://github.com/simeji/jid"><code>jid</code></a> 和 <a target="_blank" rel="noopener" href="https://github.com/fiatjaf/jiq"><code>jiq</code></a>可用与交互式的使用。</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/0k/shyaml"><code>shyaml</code></a>处理YAML。</li>
+<li>对于Excel 或 CSV 文件，<a href=""><code>csvkit</code></a>提供了<code>in2csv</code>， <code>csvcut</code>，<code>csvjoin</code>，<code>csvgrep</code>等等。</li>
+<li>对于Amazon S3，<a target="_blank" rel="noopener" href="https://github.com/s3tools/s3cmd"><code>secmd</code></a>具有便捷型并且<code>s4cmd</code>更快。亚马逊的<a target="_blank" rel="noopener" href="https://github.com/aws/aws-cli"><code>aws</code></a>和优化过的<a target="_blank" rel="noopener" href="https://github.com/donnemartin/saws"><code>saws</code></a>是用于处理其他与AWS相关连的任务必不可少的工具。</li>
+<li>知道<code>sort</code> 和 <code>uniq</code>，包括uniq的<code>-u</code> 和 <code>-d</code>选项。还有<code>comm</code>。</li>
+<li>知道使用<code>cut</code>，<code>paste</code>和<code>join</code>来操作文本文件。大多数都知道<code>cut</code>但却不知<code>join</code>。</li>
+<li>知道<code>wc</code>计算行数，字符数（<code>-l</code>），单词书（<code>-w</code>），字节数（<code>-c</code>)。</li>
+<li><code>tee</code>将标准输入输出到文件和标准输出中，如<code>ls -al | tee file.txt</code>。</li>
+<li><a target="_blank" rel="noopener" href="https://www.gnu.org/software/datamash/"><code>datamash</code></a>可用于更复杂的计算，包括分组，翻转字段，以及统计计算。</li>
+<li>  知道语言本地化以微妙的方式影响者命令行的结果，其中包括了排序顺序和性能。大多数Linux按转都会设置<code>LANG</code>或者其他语言本地化变量来本地化设置，比如美国英文。但是要知道如果更改语言本地化排序结果将会发生改变。并且知道i18n惯例使得排序或者其他命令运行速度慢许多倍。在某种情况下（比如下面的设置操作或唯一化操作）你可以完全安全地忽略掉慢速的i18n惯例并且使用传统的按照字节进行排序，终端中输入<code>export   LC_ALL=C</code>。</li>
+<li>在调用命令时通过使用前缀环境变量的方式设置指定命令的环境，比如，<code>TZ=Pacific/fiji date</code>。</li>
+<li>知道<code>awk</code> 和 <code>sed</code> 基本的简单数据的更改。  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep -ir &quot;nginx&quot; | awk &#x27;&#123;print $2&#125;&#x27; # 打印出所有的nginx进程号</span><br></pre></td></tr></table></figure></li>
+<li>在一个或多个文件中，原地替换所有重复的字符串：  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -pi.bak -e &#x27;s/old/new/g&#x27; file*.txt</span><br></pre></td></tr></table></figure></li>
+<li>使用<a target="_blank" rel="noopener" href="https://github.com/jlevy/repren"><code>repren</code></a>重命名多个文件或搜索和在文件中替换。（在一些情况下<code>rename</code>也可以提供多重命名，但是得注意并不是所有的Linux发行版都提供同样的功能。）  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">全部重命名文件名，目录以及文件内容 foo 重命名为 bar：</span></span><br><span class="line">repren --full --preserve-case --from foo --to bar .</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从备份文件还原回来</span></span><br><span class="line">repren --renames --from &#x27;(.*)\.bak&#x27; --to &#x27;\1&#x27; *.bak</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">和上面一样，使用重命名，如果可用的话：</span></span><br><span class="line">rename &#x27;s/\.bak$//&#x27; *.bak</span><br></pre></td></tr></table></figure></li>
+<li>正如man page所言，<code>rsync</code>很快并且是非常优秀的多文件拷贝工具。因可以在机器之间进行同步而得名但也可用于本地同步。当有安全限制的时候，使用<code>rsync</code>而不是<code>scp</code>，它支持恢复传输而不需要重新开始。也是删除大量文件<a target="_blank" rel="noopener" href="https://web.archive.org/web/20130929001850/http://linuxnote.net/jianingy/en/linux/a-fast-way-to-remove-huge-number-of-files.html">最快的方式</a>：  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir empty &amp;&amp; rsync -r --delete empty/ some-dir &amp;&amp; rmdir some-dir</span><br></pre></td></tr></table></figure></li>
+<li>显示文件处理的进度，可用<code>pv</code>，<code>pycp</code>，<code>progress</code>，<code>rsync --progress</code>，或使用<code>dd status=progross</code>进行块级别的复制。</li>
+<li>使用<code>shuf</code>打乱或随机选择来自文件的内容行。</li>
+<li>知道<code>sorg</code>选选项。对于数字，使用<code>-n</code>，或 <code>-h</code> 来处理成人类可读的数字（比如，<code>du -h</code>）。知道<code>-t</code> 和 <code>-k</code>。特别注意只通过第一个字段进行排序时，使用的<code>-k1,1</code>；<code>-k1</code>的意思是根据正行进行排序。稳定排序(<code>sort -s</code>)可能有用处。例如，根据第二个字段进行排序，然后根据字段1，可以这样子写<code>sort -k1,1 | sort -k2,2</code>。</li>
+<li>如果需要在bash的命令行中输入制表符（例如，<code>sort</code>的<code>-t</code>参数），可以这么输入**ctrl-v [Tab]**或者写入<code>$&#39;\t&#39;</code>（后面的更好一些就好像复制&#x2F;粘贴一样）。</li>
+<li>给源文件进行打补丁标准的工具是<code>diff</code> 和 <code>patch</code>。<code>diffstat</code>是一个diff的汇总统计工具，<code>sdiff</code>并排进行比较。注意<code>diff -r</code>用户整个目录。<code>diff -r tree1 tree2 | diffstat</code> 汇总变化。使用<code>vimdiff</code>来比较文件并进行编辑。 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo -e &#x27;halo\nhello&#x27; &gt; file1</span><br><span class="line">echo -e &#x27;halo&#x27; &gt; file2</span><br><span class="line">diff file1 file2 &gt; diff_fil1_file2</span><br><span class="line">patch file1 file2</span><br><span class="line">diffstat diff_file1_file2</span><br><span class="line">sdiff file1 file2</span><br></pre></td></tr></table></figure></li>
+<li>二进制文件，<code>hd</code>，<code>hexdump</code>，<code>xxd</code>用来简单导出十六进制，<code>bvi</code>，<code>hexedit</code>，<code>biew</code>用于二进制编辑。</li>
+<li><code>strings</code>（加上<code>grep</code>，等等）可用于找到二进制文件中的文本位。</li>
+<li>比较二进制（增量压缩），使用<code>xdelta3</code>。</li>
+<li>使用<code>iconv</code>转换文本编码。或更高级的使用，可以选择<code>uconv</code>。它支持一些高级的Unicode。例如：  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">显示十六进制编码哦人字符的实际名字（对于调试能够起到帮助）：</span></span><br><span class="line">uconv -f utf-8 -t utf-8 -x &#x27;::Any-Hex;&#x27; &lt; input.txt</span><br><span class="line">uconv -f utf-8 -t utf-8 -x &#x27;::Any-name;&#x27; &lt; input.txt</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">转换成小写并且一处所有的发音（通过扩大和丢弃）：</span></span><br><span class="line">uconv -f utf-8 -t utf-8 -x &#x27;::Any-Lower; ::Any-NFD; [:Nonspacing Mark:] &gt;; ::Any-nFC;&#x27; &lt; input.txt &gt; output.txt</span><br></pre></td></tr></table></figure></li>
+<li>进行文件进行分割成小部分，使用<code>split</code>（根据大小）和 <code>csplit</code>（根据一种模式）。</li>
+<li>日期与时间：按照<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a>获取当前日期和时间的，可以这样子<code>date -u +&quot;%Y-%m-%dT%H:%M:%SZ&quot;</code>（其他选项是<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/7216358/date-command-on-os-x-doesnt-have-iso-8601-i-option">有</a><a target="_blank" rel="noopener" href="https://unix.stackexchange.com/questions/164826/date-command-iso-8601-option">问题</a>的）。使用<code>dateutils</code>的<code>dateadd</code>，<code>datediff</code>，<code>strptime</code>等等来操作日期和时间表达式。</li>
+<li>使用<code>zless</code>，<code>zmore</code>，<code>zcat</code> 和 <code>zgrep</code>来操作压缩的文件。</li>
+<li>通过<code>chatrr</code>设置文件的属性并且提供更低级的选择给文件权限。例如，阻止文件的误删除：<code>sudo chattr -i /path/to/file/or/directory</code>。</li>
+<li>使用<code>getacl</code> 和 <code>setfacl</code> 来保存和恢复文件权限。例如:  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">getfacl -R /some/path &gt; permissions.txt</span><br><span class="line">setfacl --restore=permissions.txt</span><br></pre></td></tr></table></figure></li>
+<li><code>truncate</code>（创建<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Sparse_file">稀疏文件</a>）,<code>fallocate</code>（ext4, xfs, btrfs 和 ocfs2 文件系统），<code>xfs_mkfile</code>（几乎任何文件系统，存在于xfsprogs包中），<code>mkfile</code>（在类似于Solaris，Mac OS的Unix-like系统中）。</li>
+</ul>
+<h1 id="系统调试"><a href="#系统调试" class="headerlink" title="系统调试"></a>系统调试</h1><ul>
+<li>网页调试，<code>curl</code> 和 <code>curl -I</code>很便捷，或与之相匹配的<code>wget</code>，或者更加新颖的<a target="_blank" rel="noopener" href="https://github.com/jkbrzt/httpie"><code>httpie</code></a>。</li>
+<li>获取当前cpu&#x2F;disk状态，经典的工具是<code>top</code>（或者更好<code>htop</code>），<code>iostat</code>，和 <code>iotop</code>。使用<code>iostat -mxz 15</code>获取基本的CPU和详细化的每个分区的磁盘状态和性能观察。</li>
+<li>网络连接详细信息，使用<code>netstat</code> 和 <code>ss</code></li>
+<li>快速预览系统现在运行的情况，<code>dstat</code>能够提供很大的帮助。更为详细的系统运行情况，使用<a target="_blank" rel="noopener" href="https://github.com/nicolargo/glances"><code>glances</code></a>。</li>
+<li>获取内存状态，运行并理解<code>free</code> 和 <code>vmstat</code> 的输出。注意这个“cached”的值是被Linux内核像文件缓存一样占有的内存数量，因此这个有效的内存计数是“free”对应的值。</li>
+<li>Java系统调试是一个不同的，但关于Oracle和其他Java虚拟机的一些简单的技巧是你可以跑<code>kill -3 &lt;pid&gt;</code>并且一个完整的栈跟踪和堆概况（包含分代垃圾回收细节，这些细节非常有用）将会导出到标准错误（stderr）&#x2F;日志（logs）。JDK的<code>jps</code>，<code>jstat</code>，<code>jstack</code>，<code>jmap</code>都能够提供帮助。<a target="_blank" rel="noopener" href="https://github.com/aragozin/jvm-tools">JSK 工具集</a>更高级。</li>
+<li>使用<a target="_blank" rel="noopener" href="http://www.bitwizard.nl/mtr/"><code>mtr</code></a>作为更好的路由追踪工具，可以识别出网络问题。</li>
+<li>查找磁盘满了的原因，比起像<code>du -sh *</code>这样的常用的命令，<code>ncdu</code>能够节省很多时间。</li>
+<li>查看那个socket或进程占用带宽，使用[]<code>iftop</code>](<a target="_blank" rel="noopener" href="http://www.ex-parrot.com/~pdw/iftop/">http://www.ex-parrot.com/~pdw/iftop/</a>) 和 <a target="_blank" rel="noopener" href="https://github.com/raboof/nethogs"><code>nethogs</code></a>。</li>
+<li><code>ab</code>(与Apache一起的)工具对于web服务器性能压力测试非常有帮助。更高级的负载测试，可尝试使用<code>siege</code>。</li>
+<li>更多严重的网络调试，使用<code>wireshark</code>，<code>tshark</code>，或 <code>ngrep</code>。</li>
+<li>知道<code>strace</code> 和 <code>ltrace</code>。如果一个程序执行失败，挂起，崩溃并且不知道原因，或者想知道程序的性能，可以使用它们来提供帮助。注意测试选项（<code>-c</code>），并且能够分离一个运行中的进程（<code>-p</code>）。使用追踪子选项（<code>-f</code>）避免丢失重要的调用。</li>
+<li>使用<code>ldd</code>检查共享库等等——但<a target="_blank" rel="noopener" href="http://www.catonmat.net/blog/ldd-arbitrary-code-execution/">不能用来跑未被信任的文件</a>。</li>
+<li>知道如何使用<code>gdb</code>连接一个进程并且获取它的栈跟踪。</li>
+<li>使用<code>/proc</code>，当调试线上问题的时候，它可以无与伦比的帮助。例如：<code>/proc/cpuinfo</code>，<code>/proc/meminfo</code>，<code>/proc/cmdline</code>，<code>/proc/xxx/exe</code>，<code>/proc/xxx/fd/</code>，<code>/proc/xxx/smaps</code>（xxx是进程id或pid）。</li>
+<li>当调试过去发生的错误的时候，<a href=""><code>sar</code></a>可以提供很有用的帮助。它能展示关于CPU，内存，网络等等的历史数据。</li>
+<li>更深层次的系统性能分析，查看<code>stap</code>（SystemTap），<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Perf_%28Linux%29"><code>perf</code></a> 和 <a target="_blank" rel="noopener" href="https://github.com/draios/sysdig"><code>sysdig</code></a>。</li>
+<li>检查操作系统相关信息，使用<code>uname</code> 或 <code>uname -a</code>（通常是Unix&#x2F;内核信息）或者 <code>lsb_release -a</code>（Linux发行版信息）。</li>
+<li>无论什么时候，发生什么奇怪的事情时（可能是硬件或驱动的问题），使用<code>dmesg</code>。</li>
+<li>如果删除了一个文件并且没有释放由<code>du</code>报告的预期磁盘空间，检查这个文件是否正在被一个进程使用：<code>lsof | grep deleted | grep &quot;filename-of-my-big-file&quot;</code></li>
+</ul>
+<h1 id="一行命令"><a href="#一行命令" class="headerlink" title="一行命令"></a>一行命令</h1><ul>
+<li>通过<code>sort</code>&#x2F;<code>uniq</code>求集合的交集，并集和文本的不同之处。假设<code>a</code>，<code>b</code>是唯一的文本文件。在大小随意的文件上面都可以很快的完成，文件大小可以达到百万字节以上。（排序不受内存限制，尽管可以使用<code>-T</code>选项，如果<code>/tmp</code>在很小的根分区下面。）注意<code>LC_ALL</code>和<code>sort</code>的<code>-u</code>选项（下面将进行说明）  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sort a b | uniq &gt; c  # c 是a，的并集</span><br><span class="line">sort a b | uniq -d c  # c 是a，b的交集</span><br><span class="line">sort a b b | uniq -u &gt; c # c 是a-b的差集</span><br></pre></td></tr></table></figure></li>
+<li>优雅地打印出JSON文件，规范化它们的语法，然后用颜色和分区显示结果:  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">diff &lt; (jq --sort-keys . &lt; file1.json) &lt; (jq --sort-keys . &lt; file2.json) | colordiff | less -R</span><br></pre></td></tr></table></figure></li>
+<li><code>grep . *</code> 快速测试当前目录下的所有文件内容（所以每一行与文件名进行匹配），或者<code>head -100 *</code>（输出中带有文件名的标题）。在比如<code>/sys</code>，<code>/proc</code>，<code>/etc</code>那些充满配置设置文件的所有目录中，使用上这些会非常有帮助。</li>
+<li>对文本文件中第三列的所有数字进行求和（比起使用Python，这个要快上三倍并且才三分之一的代码）：  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk &#x27;&#123;x += $3&#125;&#x27; END &#123; print x &#125;&#x27; | myfile</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A5%E5%B8%B8%E4%BD%BF%E7%94%A8"><span class="toc-number">1.</span> <span class="toc-text">日常使用</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E4%B8%8E%E6%95%B0%E6%8D%AE"><span class="toc-number"></span> <span class="toc-text">处理文件与数据</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E8%AF%95"><span class="toc-number"></span> <span class="toc-text">系统调试</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="toc-number"></span> <span class="toc-text">一行命令</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/bash-notes/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/bash-notes/&text=the art of command line 笔记整理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/bash-notes/&title=the art of command line 笔记整理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/bash-notes/&is_video=false&description=the art of command line 笔记整理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=the art of command line 笔记整理&body=Check out this article: https://www.cthee.cyou/bash-notes/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/bash-notes/&title=the art of command line 笔记整理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/bash-notes/&title=the art of command line 笔记整理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/bash-notes/&title=the art of command line 笔记整理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/bash-notes/&title=the art of command line 笔记整理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/bash-notes/&name=the art of command line 笔记整理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="不可变列表–tuple   methods list tuple     s.__add__(s2) 1 0 return s + s2   s.__iadd__(s2) 1 0 return s +&#x3D; s2   s.append(e) 1 0 append one element after last   s.clear() 1 0 delete all items   s.__con">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fluent_Python - Py元组不仅仅是列表(二)">
+<meta property="og:url" content="https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="不可变列表–tuple   methods list tuple     s.__add__(s2) 1 0 return s + s2   s.__iadd__(s2) 1 0 return s +&#x3D; s2   s.append(e) 1 0 append one element after last   s.clear() 1 0 delete all items   s.__con">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-08-21T03:16:08.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.201Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Fluent_Python - Py元组不仅仅是列表(二)</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/what-is-the-difference-between-shallowcopy-and-deepcopy/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%B8%80/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&text=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&title=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&is_video=false&description=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Fluent_Python - Py元组不仅仅是列表(二)&body=Check out this article: https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&title=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&title=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&title=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&title=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&name=Fluent_Python - Py元组不仅仅是列表(二)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%88%97%E8%A1%A8%E2%80%93tuple"><span class="toc-number">1.</span> <span class="toc-text">不可变列表–tuple</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Fluent_Python - Py元组不仅仅是列表(二)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-08-21T03:16:08.000Z" itemprop="datePublished">2017-08-21</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Python/" rel="tag">Python</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="不可变列表–tuple"><a href="#不可变列表–tuple" class="headerlink" title="不可变列表–tuple"></a>不可变列表–tuple</h3><table>
+<thead>
+<tr>
+<th align="left">methods</th>
+<th align="center">list</th>
+<th align="center">tuple</th>
+<th align="right"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>s.__add__(s2)</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">return s + s2</td>
+</tr>
+<tr>
+<td align="left"><code>s.__iadd__(s2)</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">return s +&#x3D; s2</td>
+</tr>
+<tr>
+<td align="left"><code>s.append(e)</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">append one element after last</td>
+</tr>
+<tr>
+<td align="left"><code>s.clear()</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">delete all items</td>
+</tr>
+<tr>
+<td align="left"><code>s.__contain__(e)</code></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="right">e in s</td>
+</tr>
+<tr>
+<td align="left"><code>s.copy()</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">shallow copy of the list</td>
+</tr>
+<tr>
+<td align="left"><code>s.count(e)</code></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="right">count occurences of an element</td>
+</tr>
+<tr>
+<td align="left"><code>s.__delitem__(p)</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">remove item at position</td>
+</tr>
+<tr>
+<td align="left"><code>s.extend(it)</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">append items from iterable it</td>
+</tr>
+<tr>
+<td align="left"><code>s.__getitem__(p)</code></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="right">s[p] - get item from iterable it</td>
+</tr>
+<tr>
+<td align="left"><code>s.__getnewargs__()</code></td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="right">support for optimized serialization with pickle</td>
+</tr>
+<tr>
+<td align="left"><code>s.index(e)</code></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="right">find position of first occurrence of e</td>
+</tr>
+<tr>
+<td align="left"><code>s.insert(p, e)</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">insert element e before the item at position p</td>
+</tr>
+<tr>
+<td align="left"><code>s.__iter__()</code></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="right">get iterator</td>
+</tr>
+<tr>
+<td align="left"><code>s.__len__()</code></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="right">len(s) - number of items</td>
+</tr>
+<tr>
+<td align="left"><code>s.__mul__(n)</code></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="right">return s * n</td>
+</tr>
+<tr>
+<td align="left"><code>s.__imul__(n)</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">return s *&#x3D; n</td>
+</tr>
+<tr>
+<td align="left"><code>s.__rmul__(n)</code></td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="right">n * s - reversed repeated concatenation</td>
+</tr>
+<tr>
+<td align="left"><code>s.pop(&lt;p&gt;)</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">remove and return last item or item at aptional position p</td>
+</tr>
+<tr>
+<td align="left"><code>s.remove(e)</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">remove first occurrence of element e by value</td>
+</tr>
+<tr>
+<td align="left"><code>s.reverse()</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">reverse the order of the items in-place, return None</td>
+</tr>
+<tr>
+<td align="left"><code>s.__reversed__()</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">get iterator to scan items from last to first</td>
+</tr>
+<tr>
+<td align="left"><code>s.__setitem__(p, 3)</code></td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">s[p] &#x3D; e - put e in position p, overwriting item</td>
+</tr>
+<tr>
+<td align="left">s.sort(<key>, <reverse>)</td>
+<td align="center">1</td>
+<td align="center">0</td>
+<td align="right">sort items in place with optional keyword arguments key and reverse</td>
+</tr>
+</tbody></table>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%88%97%E8%A1%A8%E2%80%93tuple"><span class="toc-number">1.</span> <span class="toc-text">不可变列表–tuple</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&text=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&title=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&is_video=false&description=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Fluent_Python - Py元组不仅仅是列表(二)&body=Check out this article: https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&title=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&title=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&title=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&title=Fluent_Python - Py元组不仅仅是列表(二)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Fluent-Python-Py%E5%85%83%E7%BB%84%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%88%97%E8%A1%A8-%E4%BA%8C/&name=Fluent_Python - Py元组不仅仅是列表(二)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="计算机系统漫游计算机系统是由硬件和系统软件组成的，它们共同工作来运行应用程序。  信息就是位 + 上下文hello 程序的生命周期是从一个源程序（或者说源文件）开始的，即程序员通过编辑器创建并保存的文本文件，文件名 hello.c。源程序实际上是一个由值 0 和 1 组成的位（又称比特）序列，8 个位组成的一个组，称之为字节。每个字节表示程序中的某些文本字符。只有 ASCII 字符构成的文件称为文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="csapp阅读笔记——计算机系统漫游">
+<meta property="og:url" content="https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="计算机系统漫游计算机系统是由硬件和系统软件组成的，它们共同工作来运行应用程序。  信息就是位 + 上下文hello 程序的生命周期是从一个源程序（或者说源文件）开始的，即程序员通过编辑器创建并保存的文本文件，文件名 hello.c。源程序实际上是一个由值 0 和 1 组成的位（又称比特）序列，8 个位组成的一个组，称之为字节。每个字节表示程序中的某些文本字符。只有 ASCII 字符构成的文件称为文">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.cthee.cyou/2e501a1eebe44afa.png">
+<meta property="og:image" content="https://i.cthee.cyou/c30693fca1994049.png">
+<meta property="og:image" content="https://i.cthee.cyou/d246b3ca236a4e25.png">
+<meta property="og:image" content="https://i.cthee.cyou/19eb1fc16f884f2d.png">
+<meta property="og:image" content="https://i.cthee.cyou/f4ec18a9d70e4133.svg">
+<meta property="og:image" content="https://i.cthee.cyou/da08e95947d2461b.png">
+<meta property="og:image" content="https://i.cthee.cyou/b7736672b9e14b96.png">
+<meta property="og:image" content="https://i.cthee.cyou/36ce1861ef1b4c38.png">
+<meta property="og:image" content="https://i.cthee.cyou/aba4b8df31de4413.png">
+<meta property="og:image" content="https://i.cthee.cyou/9812ee33dcfc4593.png">
+<meta property="og:image" content="https://i.cthee.cyou/d72a17d58a814e44.png">
+<meta property="og:image" content="https://i.cthee.cyou/bfbbae7afb6340ee.png">
+<meta property="og:image" content="https://i.cthee.cyou/4d4d0387f5a24730.png">
+<meta property="og:image" content="https://i.cthee.cyou/92e8393943f8487b.png">
+<meta property="og:image" content="https://i.cthee.cyou/92e8393943f8487b.png">
+<meta property="og:image" content="https://i.cthee.cyou/e8a78e144cc547a8.png">
+<meta property="og:image" content="https://i.cthee.cyou/4c06b9acc501409f.png">
+<meta property="og:image" content="https://i.cthee.cyou/af5db97cb6594354.svg">
+<meta property="og:image" content="https://i.cthee.cyou/fd4b61fe3bde4849.png">
+<meta property="article:published_time" content="2020-04-14T10:21:24.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.205Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="csapp">
+<meta property="article:tag" content="深入理解计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.cthee.cyou/2e501a1eebe44afa.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>csapp阅读笔记——计算机系统漫游</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/k8s-learning-day-one/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/Encryption-Tracking-Privacy/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&text=csapp阅读笔记——计算机系统漫游"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&title=csapp阅读笔记——计算机系统漫游"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&is_video=false&description=csapp阅读笔记——计算机系统漫游"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=csapp阅读笔记——计算机系统漫游&body=Check out this article: https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&title=csapp阅读笔记——计算机系统漫游"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&title=csapp阅读笔记——计算机系统漫游"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&title=csapp阅读笔记——计算机系统漫游"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&title=csapp阅读笔记——计算机系统漫游"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&name=csapp阅读笔记——计算机系统漫游&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8"><span class="toc-number">1.</span> <span class="toc-text">计算机系统漫游</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E5%B0%B1%E6%98%AF%E4%BD%8D-%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">1.1.</span> <span class="toc-text">信息就是位 + 上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%A2%AB%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E7%BF%BB%E8%AF%91%E6%88%90%E4%B8%8D%E5%90%8C%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">程序被其他程序翻译成不同的格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E6%98%AF%E5%A4%A7%E6%9C%89%E7%9B%8A%E5%A4%84%E7%9A%84"><span class="toc-number">1.3.</span> <span class="toc-text">了解编译系统如何工作是大有益处的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E8%AF%BB%E5%B9%B6%E8%A7%A3%E9%87%8A%E5%82%A8%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.</span> <span class="toc-text">处理器读并解释储存在内存中的指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90"><span class="toc-number">1.4.1.</span> <span class="toc-text">系统的硬件组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C-hello-%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.4.2.</span> <span class="toc-text">运行 hello 程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%8A%E8%AF%89%E7%BC%93%E5%AD%98%E8%87%B3%E5%85%B3%E9%87%8D%E8%A6%81"><span class="toc-number">1.5.</span> <span class="toc-text">告诉缓存至关重要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87%E5%BD%A2%E6%88%90%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-number">1.6.</span> <span class="toc-text">存储设备形成层次结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E7%A1%AC%E4%BB%B6"><span class="toc-number">1.7.</span> <span class="toc-text">操作系统管理硬件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.7.1.</span> <span class="toc-text">进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.7.2.</span> <span class="toc-text">线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">1.7.3.</span> <span class="toc-text">虚拟内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6"><span class="toc-number">1.7.4.</span> <span class="toc-text">文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E4%B9%8B%E9%97%B4%E5%88%A9%E7%94%A8%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1"><span class="toc-number">1.8.</span> <span class="toc-text">系统之间利用网络通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E4%B8%BB%E9%A2%98"><span class="toc-number">1.9.</span> <span class="toc-text">重要主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Amdahl-%E5%AE%9A%E5%BE%8B"><span class="toc-number">1.9.1.</span> <span class="toc-text">Amdahl 定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C"><span class="toc-number">1.9.2.</span> <span class="toc-text">并发和并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%8A%BD%E8%B1%A1%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">1.9.3.</span> <span class="toc-text">计算系统中抽象的重要性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A6%81%E7%82%B9%E6%80%BB%E7%BB%93"><span class="toc-number">1.10.</span> <span class="toc-text">要点总结</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        csapp阅读笔记——计算机系统漫游
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2020-04-14T10:21:24.000Z" itemprop="datePublished">2020-04-14</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/csapp/" rel="tag">csapp</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>, <a class="tag-link-link" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/" rel="tag">深入理解计算机系统</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="计算机系统漫游"><a href="#计算机系统漫游" class="headerlink" title="计算机系统漫游"></a>计算机系统漫游</h1><p>计算机系统是由硬件和系统软件组成的，它们共同工作来运行应用程序。</p>
+<p><img src="https://i.cthee.cyou/2e501a1eebe44afa.png" alt="https://i.cthee.cyou/2e501a1eebe44afa.png"></p>
+<h2 id="信息就是位-上下文"><a href="#信息就是位-上下文" class="headerlink" title="信息就是位 + 上下文"></a>信息就是位 + 上下文</h2><p>hello 程序的生命周期是从一个源程序（或者说源文件）开始的，即程序员通过编辑器创建并保存的文本文件，文件名 hello.c。源程序实际上是一个由值 0 和 1 组成的位（又称比特）序列，8 个位组成的一个组，称之为<strong>字节</strong>。每个字节表示程序中的某些文本字符。只有 ASCII 字符构成的文件称为<strong>文本文件</strong>，所有其他文件都称为*<em>二进制文件</em>。</p>
+<p><img src="https://i.cthee.cyou/c30693fca1994049.png" alt="https://i.cthee.cyou/c30693fca1994049.png"></p>
+<p>hello.c 程序是以字节序列的方式储存在文件中的。hello.c 的表示方法说明了一个基本思想：系统中的所有信息————包括磁盘文件、内存中的程序、内存中存放的用户数据以及网络上传送的数据，都是由一串比特表示的。</p>
+<p>区分不同数据对象的唯一方法是我们读到这些数据对象时的上下文。</p>
+<h2 id="程序被其他程序翻译成不同的格式"><a href="#程序被其他程序翻译成不同的格式" class="headerlink" title="程序被其他程序翻译成不同的格式"></a>程序被其他程序翻译成不同的格式</h2><p>hello 程序的生命周期是从一个高级 C 语言程序开始，因为这种方式能够被人读懂。但为了在系统能够运行 hello.c 程序，需要将这一我们可读的，对于计算机来说是高级语言的程序转换为机器能够理解的低级机器语言指令。然后将这些指令按照一种称为*<em>可执行目标程序</em>的格式打好包，并以二进制磁盘文件的形式保存起来。目标程序也称为<em>可执行目标文件</em>。</p>
+<p>在 Unix 上，由<strong>编译器驱动程序</strong>完成源文件到目标文件转化过程：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o hello hello.c</span><br></pre></td></tr></table></figure>
+
+<p>这个转换过程可分为四个阶段，执行这些阶段的程序构成了一个<strong>编译系统</strong>：</p>
+<ol>
+<li><em>预处理器</em></li>
+<li><em>编译器</em></li>
+<li><em>汇编器</em></li>
+<li><em>链接器</em></li>
+</ol>
+<p><img src="https://i.cthee.cyou/d246b3ca236a4e25.png" alt="https://i.cthee.cyou/d246b3ca236a4e25.png"></p>
+<ul>
+<li><p>预处理器。该处理器（cpp）根据 # 开头字符的命令修改原始 C 程序。比如 hello.c 中的 <code>#include &lt;stdio.h&gt;</code>命令告诉预处理器读取系统文件 <code>stdio.h</code>的内容，并插入到 hello.c 文本文件中。通常是的到一个以.i为文件扩展名的另一个 C 程序。</p>
+</li>
+<li><p>编译器。编译器（ccl）将预处理器生成的文本文件 hello.i 翻译成包含一个汇编语言程序的文本文件 hello.s。该程序包含函数 main 的定义：</p>
+</li>
+</ul>
+<p><img src="https://i.cthee.cyou/19eb1fc16f884f2d.png" alt="https://i.cthee.cyou/19eb1fc16f884f2d.png"></p>
+<ul>
+<li>汇编阶段。汇编器（as）将包含汇编语言程序的 hello.s 翻译成机器语言指令，将这些命令打包成一个称为<strong>可重定位目标程序</strong>的格式，并保存在目标文件 hello.o 中。此时，hello.o 是一个二进制文件，其包含的 17 个字节是函数 main 的指令编码。</li>
+<li>链接阶段。hello 程序调用 printf 函数，它是每个 C 编译器都提供的标准 C 库中的一个函数。链接器负责将存在于预编译好的 printf.o文件中 中的 printf 函数，以某种方式合并到 hello.o 中来。最后得到一个可被加载到内存中由系统执行的可执行目标文件（或简称为可执行文件）。</li>
+</ul>
+<h2 id="了解编译系统如何工作是大有益处的"><a href="#了解编译系统如何工作是大有益处的" class="headerlink" title="了解编译系统如何工作是大有益处的"></a>了解编译系统如何工作是大有益处的</h2><ul>
+<li>优化程序性能。比如一个函数的调用开销有多大？指针引用比数组索引更有效吗？为什么将循环球和的结果放到本地变量中，会比将其放到一个通过引用传递过来的参数中，运行其快很多呢？</li>
+<li>理解链接时出现的错误。比如链接器报告说它无法解析一个引用，这是什么意思？静态变量和全局变量的区别是什么？在不同的 C 文件中定义了名字相同的两个全局变量会发生什么？静态库和动态库的区别是什么？更为严重的是，为什么有些链接错误直到运行时才会出现？</li>
+<li>避免安全漏洞。缓冲区溢出错误是造成大多数网络和 Internet 服务器安全漏洞的主要原因。学习安全变成的第一步就是理解数据和控制信息存储在程序栈上的方式会引起的后果。学习到汇编语言的时候，将会描述栈原理和缓冲区溢出错误。</li>
+</ul>
+<h2 id="处理器读并解释储存在内存中的指令"><a href="#处理器读并解释储存在内存中的指令" class="headerlink" title="处理器读并解释储存在内存中的指令"></a>处理器读并解释储存在内存中的指令</h2><p>在此之前，hello.c 已经被编译系统编译出了可以被载入内存运行的可执行目标文件 hello，并被存储在磁盘上。此时，我们想在 Unix 系统上执行目标程序，需要将文件输入到称为 shell 的应用程序中：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./hello</span><br><span class="line">hello, world</span><br></pre></td></tr></table></figure>
+
+<p>那么什么是 shell 呢？这个英语单词在中文中的意思是壳，贝壳。我们知道贝壳的壳很硬，这么硬有部分原因肯定是想保护内部柔软的核心的。我们知识迁移到计算机操作系统中，计算机操作系统主要由两部分组成：操作系统和 shell 组成。我们这里讲的是Unix系统。那么shell 它是一个命令行解释器，同时也是起到保护计算机操作系统内核的作用。它输出一个提示符，等待输入一个命令行，然后执行用户输入的这个命令。</p>
+<p><img src="https://i.cthee.cyou/f4ec18a9d70e4133.svg" alt="https://i.cthee.cyou/f4ec18a9d70e4133.svg"></p>
+<h3 id="系统的硬件组成"><a href="#系统的硬件组成" class="headerlink" title="系统的硬件组成"></a>系统的硬件组成</h3><ol>
+<li><p>总线</p>
+<p> 贯穿整个系统的一组电子管道，称作总线，它携带信息字节并负责在各个部件间传递。通常总线被设计成传送定长的字节块，也就是字（word）。字中的字节数（即字长）是一个基本的系统参数，各个系统中都不尽相同。有的是 4 个字节，有的是 8 个字节。</p>
+</li>
+<li><p>I&#x2F;O设备</p>
+<p> I&#x2F;O(输入&#x2F;输出)设备是系统与外部世界的联系通道。这里的实例系统包括四个I&#x2F;O设备：作为用户输入的鼠标和键盘，作为用户输出的显示器，以及用于长期存储数据和程序的磁盘驱动器（即磁盘）。每个 I&#x2F;O 设备通过一个<em>控制器</em>或<em>适配器</em>与 I&#x2F;O 总线相连。控制器和适配器之间的区别主要在于他们的封装方式。<strong>控制器</strong>是 I&#x2F;O 设备本身或者系统的主印制电路板（即主板）上的芯片组。适配器则是一块插在主板插槽上的卡。但他们的功能都是在 I&#x2F;O 总线和 I&#x2F;O 设备之间传递信息。</p>
+<p> <img src="https://i.cthee.cyou/da08e95947d2461b.png" alt="https://i.cthee.cyou/da08e95947d2461b.png"></p>
+</li>
+<li><p>主存</p>
+<p> <em>主存</em>是一个临时存储设备，在处理器执行程序时，用来存放程序和程序处理的数据。从物理上来说，主存是一组<em>动态随机存取存储器</em>（DRAM）芯片组成。而从逻辑上来说，存储器是一个线性的字节数组，每个自己都有其唯一的地址（数组索引），这些地址是从零开始的。</p>
+</li>
+<li><p>处理器</p>
+<p> <em>中央处理单元（CPU）</em>，简称（<em>处理器</em>），是解释（或执行）存储在主存中指令的引擎。处理器的核心是一个大小为一个字的存储设备（或<em>寄存器</em>），称为<em>程序计数器</em>(PC)。在任何时刻，PC 都指向主存中的某条机器语言指令（即含有该条指令的地址）。</p>
+<p> 处理器执行指令的顺序是由<strong>指令级架构</strong>决定。处理器从程序计数器指向的内存处读取指令，解释指令中的位，执行该指令指示的简单操作，然后更新PC，使其指向下一条指令，而这条指令并不一定和内存中刚刚执行的指令相邻。</p>
+<p> 这样简单的操作围绕着主存、<strong>寄存器文件</strong>（register file）和算术&#x2F;逻辑单元（ALU）进行。寄存器文件是一个小的存储设备，由一些单个字长的寄存器组成，每个寄存器都有唯一的名字。ALU 计算新的数据和地址。</p>
+<p> CPU 在指令的要求下可能会执行这些操作：</p>
+<ul>
+<li>加载： 从内存复制一个字节或者一个字到寄存器，以覆盖寄存器原来的内容</li>
+<li>存储：从寄存器复制一个字节或者一个字到贮存的某个位置，以覆盖这个位置上原来的内容。</li>
+<li>操作：把两个寄存器的内容复制到 ALU，ALU 对这两个字做算术运算，并将结果存放到一个寄存器中，以覆盖该寄存器中原来的内容。</li>
+<li>跳转：从指令本身中抽取一个字，并将这个字复制到程序计数器（PC）中，以覆盖原来的值。</li>
+</ul>
+</li>
+</ol>
+<p>将处理器的指令集架构和处理器的<strong>微体系架构</strong>区分开：指令架构描述的是每条机器代码指令的效果；而微体系架构描述的是处理器实际上是如何实现的。</p>
+<h3 id="运行-hello-程序"><a href="#运行-hello-程序" class="headerlink" title="运行 hello 程序"></a>运行 hello 程序</h3><p>初始时，shell 程序执行它的指令，等待输入一个命令。当输入字符串“.&#x2F;hello”之后，shell 程序将字符逐一读入寄存器，将其放到内存中。</p>
+<p><img src="https://i.cthee.cyou/b7736672b9e14b96.png" alt="https://i.cthee.cyou/b7736672b9e14b96.png"></p>
+<p>当敲下键盘键盘上的回车键时，shell 程序就知道已经输入完命令。shell 程序执行一系列指令来加载可执行的 hello 文件，将 hello 目标文件中的代码和数据从磁盘复制到主存。其中也包括最后要显示的“hello, world\n”。</p>
+<p>利用直接存储器存取（DMA）技术，数据可以不通过处理器而直接从磁盘到达内存。</p>
+<p><img src="https://i.cthee.cyou/36ce1861ef1b4c38.png" alt="https://i.cthee.cyou/36ce1861ef1b4c38.png"></p>
+<p>在目标文件 hello 程序中的代码被加载到主存以后，处理器处理则开始执行 hello 程序的 main 函数中的机器语言指令。这些指令将字符串“hello, world\n”数据复制到寄存器，再从寄存器复制到显示设备上，并最终显示出来。</p>
+<p><img src="https://i.cthee.cyou/aba4b8df31de4413.png" alt="https://i.cthee.cyou/aba4b8df31de4413.png"></p>
+<h2 id="告诉缓存至关重要"><a href="#告诉缓存至关重要" class="headerlink" title="告诉缓存至关重要"></a>告诉缓存至关重要</h2><p>从上面执行 hello 程序的指令中可以看出，数据在被显示出来之前，一直处于从某个存储器复制到另外一个存储器的过程中。从程序员的角度来看，这些复制就是开销，减慢了程序“真正”的工作。因此系统设计者的一个主要目标就是使这些复制的操作尽可能快地完成。</p>
+<p>根据机械原理，较大的存储设备要比较小的存储设备运行得慢，而快速设备的造价高于同类的低速设备。</p>
+<p>处理器从寄存器文件中读取数据要比从主存中读取几乎要快 100 倍。加快处理器的运行速度比加快主存的运行速度要容易和便宜得多。</p>
+<p>为了解决处理器和主存之间的这种差距，系统设计者采用了更小更快的存储设备，称为<em>高速缓存存储器</em>（cache memory，简称为 cache 或高速缓存），作为暂时集结区域，用来存放处理器近期可能会使用的信息。位于处理器芯片上的 L1 高速缓存的容量可以达到数万字节，其访问速度接近于访问寄存器的速度。而 L2 高速缓存器容量可达到数十万到数百万字节，它通过一条特殊的总线连接到处理器。L1 和 L2 高速缓存使用一种叫做 <strong>静态随机访问存储器</strong>（SRAM）的硬件技术来实现。比较新的处理器要还有 L3 高速缓存。系统可以获得一个很大的存储器，同时访问速度也很快，原因是利用了告诉<strong>缓存的局部性</strong>原理。</p>
+<p><img src="https://i.cthee.cyou/9812ee33dcfc4593.png" alt="https://i.cthee.cyou/9812ee33dcfc4593.png"></p>
+<h2 id="存储设备形成层次结构"><a href="#存储设备形成层次结构" class="headerlink" title="存储设备形成层次结构"></a>存储设备形成层次结构</h2><p><img src="https://i.cthee.cyou/d72a17d58a814e44.png" alt="https://i.cthee.cyou/d72a17d58a814e44.png"></p>
+<p>存储器层次结构的主要思想是上一层的存储器作为低一层存储器的高速缓存。因此，从层次结构的上方到下方，每一层都是下一层的高速缓存。分布式文件系统的网络系统中，本地磁盘就是存储在其他系统中磁盘上的数据的高速缓存。</p>
+<h2 id="操作系统管理硬件"><a href="#操作系统管理硬件" class="headerlink" title="操作系统管理硬件"></a>操作系统管理硬件</h2><p>hello 程序依靠操作系统提供的服务来访问键盘，磁盘或主存。应用程序尝试对硬件的操作都必须通过操作系统。</p>
+<p><img src="https://i.cthee.cyou/bfbbae7afb6340ee.png" alt="https://i.cthee.cyou/bfbbae7afb6340ee.png"></p>
+<p>操作系统有两个基本功能：</p>
+<ol>
+<li>防止硬件被失控的应用程序滥用</li>
+<li>向应用程序提供简单一致的机制来控制复杂而又通常大不相同的低级硬件设备。操作系统通过几个基本的抽象概念（<strong>进程</strong>、<strong>虚拟内存</strong>、<strong>文件</strong>）来实现这两个功能。</li>
+</ol>
+<p><img src="https://i.cthee.cyou/4d4d0387f5a24730.png" alt="https://i.cthee.cyou/4d4d0387f5a24730.png"></p>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p><strong>进程</strong>是操作系统对一个正在运行的程序的一种抽象。在一个系统上可以同时晕新多个进程，而每个进程都好像在独占使用硬件。<strong>并发运行</strong>，则是说一个进程的指令和另一个进程的指令是交错执行的。在大多数系统中，需要运行的进程数是多余可以运行它们的 CPU 个数的。无论单核还是多核系统中，一个 CPU 看上去都像是在并发地执行多个进程，这是通过处理器在进程见切换来实现的。操作系统实现这种交错执行的机制称为<strong>上下文</strong>切换。</p>
+<p>操作系统保持跟踪进程运行所需的所有状态信息。这种状态，也就是上下文，包括许多信息，比如 PC 和寄存器文件的当前值，以及主存的内容。在任一时刻，单处理器系统都只能执行一个今晨个的代码。当操作系统决定把控制权从当前进程转移到某个新进程是，就会进行上下文切换，即保存当前进程的上下文、恢复新进程的上下文，然后将控制权传递到新进程。新进程从上次停止的地方开始。</p>
+<p><img src="https://i.cthee.cyou/92e8393943f8487b.png" alt="https://i.cthee.cyou/92e8393943f8487b.png"></p>
+<p>当我们通过 shell 程序运行 hello 程序时，这里就产生了俩个并发进程。最开始，只有 shell 进程在运行，即等待命令行上的输入。当我们让它运行hello 程序时，shell 通过调用一个专门的函数，即系统调用，来执行我们的请求，系统调用会将控制权传递给操作系统。</p>
+<p>从一个进程到另一个进程的切换是有关操作系统内核（kernel）管理的。内核是操作系统代码常驻主存的部分。内核不是一个独立的进程。相反，它是系统管理全部进程所有代码和数据结构的集合。</p>
+<p><img src="https://i.cthee.cyou/92e8393943f8487b.png" alt="https://i.cthee.cyou/92e8393943f8487b.png"></p>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>在现代系统中，一个进程实际上可以由多个称为线程的执行单元组成，每个县城都运行在进程的上下文中，并共享同样的代码和全局数据。由于网络服务器中对并行处理的需求，线程成为越来越重要的编程模型，因为多线程之间比多进程之间更容易共享数据，也因为县城一般来说都比进程更高效。</p>
+<h3 id="虚拟内存"><a href="#虚拟内存" class="headerlink" title="虚拟内存"></a>虚拟内存</h3><p><strong>虚拟内存</strong>是一个抽象概念，它为每个进程提供了一个假象，及每个进程都在独占地使用贮存。每个进程看到的内存都是一致的，称为<strong>虚拟地址空间</strong>。Linux 进程的虚拟地址空间（其他 Unix 系统的设计也与此类似）。在 Linux 中，地址空间最上面的区域是保留给操作系统中的代码和数据的。地址空间的底部区域存放用户进程定义的代码和数据。</p>
+<p><img src="https://i.cthee.cyou/e8a78e144cc547a8.png" alt="https://i.cthee.cyou/e8a78e144cc547a8.png"></p>
+<p>每个进程看到的虚拟地址空间由大量准确定义的区构成，每个区都有专门的功能。这里先简单了解每个区。从最低的地址开始，逐步向上介绍。</p>
+<ul>
+<li>程序代码和数据。对所有的进程来说，代码是从同一固定地址开始，紧接着的是和 C 全局变量相对应的数据位置。代码和数据区是直接按照可执行目标文件的内容初始化的。</li>
+<li>堆。代码和数据区后紧随着的是运行时<strong>堆</strong>。代码和数据区在进程一开始运行时就被指定了大小，与此不同，当调用像 malloc 和 free 这样的 C 标准库函数时，堆可以在运行时动态地扩展和收缩。</li>
+<li>共享库。大约在地址空间的中间部分是一块用来存放像 C 标准库和数学库这样的共享库的代码和数据的区域。</li>
+<li>栈。位于用户虚拟地址空间顶部的是用户栈，编译器用它来实现函数调用。和堆一样，用户栈在程序执行期间可以动态地扩展和收缩。特别地，每次调用一个函数时，栈都会增长；从一个函数返回时，栈就会收缩。</li>
+<li>内核虚拟地址。地址空间顶部的区域是为内核保留的。不允许应用程序读写这个区域的内容或者直接调用内核代码定义的函数。而是必须通过调用内核来执行这些操作。</li>
+</ul>
+<p>虚拟内存的运作需要硬件和操作系统软件之间精密复杂的交互，包括对处理器生成的每个地址的硬件翻译。进本思想是把一个进程虚拟内存的内容存储在磁盘上，然后用主存作为磁盘的告诉缓存。</p>
+<h3 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h3><p>文件就是字节序列，仅此而已。系统中的所有输入输出都是通过使用一小组称为 Unix I&#x2F;O 的系统函数调用读写文件来实现。文件这个简单而精致的概念是非常强大的，因为它向应用程序提供了一个统一的视图，来看代系统中可能含有的所有各式各样的 I&#x2F;O 设备。</p>
+<h2 id="系统之间利用网络通信"><a href="#系统之间利用网络通信" class="headerlink" title="系统之间利用网络通信"></a>系统之间利用网络通信</h2><p>现代系统经常通过网络和其他系统连接到一起。从一个单独的系统来看，网络可视为一个 I&#x2F;O 设备。</p>
+<p><img src="https://i.cthee.cyou/4c06b9acc501409f.png" alt="https://i.cthee.cyou/4c06b9acc501409f.png"></p>
+<h2 id="重要主题"><a href="#重要主题" class="headerlink" title="重要主题"></a>重要主题</h2><p>系统是硬件和系统软件互相交织的集合体，它们共同协作以达到运行应用程序的最终目的。</p>
+<h3 id="Amdahl-定律"><a href="#Amdahl-定律" class="headerlink" title="Amdahl 定律"></a>Amdahl 定律</h3><p>这一定律是一个叫 Gene Amdahl 的人的观察得出。定律的主要思想是，当我们对系统的某个部分加速是，其对系统整体性能的影响取决与该部分的重要性和加速程度。假设系统执行某个应用程序使用时间 T<sub>old</sub>。若系统某部分所需执行时间与这个时间的比例为 α，而后来部分性能提升的比例为 k。即该部分系统初始所需时间为 αT<sub>old</sub>，现在执行初始时间是(αT<sub>old</sub>)&#x2F;k。因此，新的总执行时间应该为 T<sub>new</sub> &#x3D; (1-α)T<sub>old</sub> + (αT<sub>old</sub>)&#x2F;k。</p>
+<p><img src="https://i.cthee.cyou/af5db97cb6594354.svg" alt="https://i.cthee.cyou/af5db97cb6594354.svg"></p>
+<p>由此可以计算出加速比 S &#x3D; T<sub>old</sub>&#x2F;T<sub>new</sub> 为 S &#x3D; 1 &#x2F; ((1 - α) + (α&#x2F;k))</p>
+<p>Amdahl 定律一个有趣的特殊情况是当 k 趋向于 <strong>∞</strong> 时，意味着我们可以取系统的某一部分将其加速到一个点，这个点上，这部分话费的时间可以忽略不计。此时，我们的到 S<sub><strong>∞</strong></sub> &#x3D; 1 &#x2F; (1 - α)。</p>
+<h3 id="并发和并行"><a href="#并发和并行" class="headerlink" title="并发和并行"></a>并发和并行</h3><p><strong>并发</strong>指的是一个通用的概念，指一个同时具有多个活动的系统；<strong>并行</strong>指的是用并发来使一个系统运行得更快。并行可以在在计算机系统的多个抽象层次上运用。按照系统层次结构中由高到低顺序重点强调三个层次。</p>
+<ol>
+<li><p>线程级并发</p>
+<p> 使用线程，能够在一个进程中执行多个控制流。早期的并发执行只是通过模拟出来的，通过是一台计算机在它正在执行的进程见快速切换来实现的。这种并发形式允许多个用户同时与系统交互。例如，在一个窗口中开启 Web 浏览器，在另一个窗口运行文字处理器，同时有播放自己想听的音乐。单处理器系统是一个由单操作系统内核控制的，通过多任务切换来进行处理任务的单处理器组成的系统。多处理器系统是一个由单操作系统内核控制的多处理器组成的系统。</p>
+<p> <img src="https://i.cthee.cyou/fd4b61fe3bde4849.png" alt="https://i.cthee.cyou/fd4b61fe3bde4849.png"></p>
+<p> 多核处理器是将多个 CPU(称为“核”)集成到一个集成芯片上。到 2020年4月为止，笔者已知的 CPU 核心数最高是 <code>AMD Ryzen™ Threadripper™ 3990X Processor</code> 的 64 核，Intel 的核心数最高是 <code>Intel® Core™ i9-10980XE Extreme Edition Processor</code> 的 18 核。</p>
+<p> 超线程，又可称为同时多线程（simutaneous multi-threading），是一项允许一个 CPU 执行多个控制流的技术。涉及到 CPU 某些硬件有多个备份，比如程序计数器（PC）和寄存器文件，而其他的硬件部分只有一份，比如执行浮点算数运算的单元。</p>
+<p> 使用多处理器，可以从两方面提高系统性能：</p>
+<ul>
+<li>减少了在执行多个任务时模拟并发的需要。</li>
+<li>可以使用应用程序运行更快，但程序必须使用多线程方式来书写，这些线程可以并行地高效执行。</li>
+</ul>
+</li>
+<li><p>指令级并行</p>
+<p> 在较低的抽象层次上，现代处理器可以同时执行多条指令的属性称为<strong>指令级并行</strong>。使用<strong>流水线</strong>（pipelining）来同时处理多条指令。在流水线中，将执行一条指令所需要的活动划分成不同的步骤，将处理器的硬件组织成一系列的阶段，每个阶段执行一个步骤。这些阶段可以并行地操作，用来处理不同指令的不同部分。</p>
+<p> 如果处理器可以达到比一个周期一条指令更快的执行速率，则称之为<strong>超标量</strong>（super-scalar）处理器。</p>
+</li>
+<li><p>单指令、多数据并行</p>
+<p> 在最低层次上，许多现代处理器拥有特殊的硬件，允许一条指令产生多个可以并发执行的操作，这种方式称为单指令、多数据，即 SIMD （Single-Instruction, Multiple-Data）并行。例如具有并行地对 8 对单精度浮点数（C 数据类型 float）做加法的指令的最新几代的 Intel 和 AMD 处理器。</p>
+<p> 提供 SIMD 指令多是为了提高处理影像，声音和视频数据应用的执行速度。</p>
+</li>
+</ol>
+<h3 id="计算系统中抽象的重要性"><a href="#计算系统中抽象的重要性" class="headerlink" title="计算系统中抽象的重要性"></a>计算系统中抽象的重要性</h3><p><strong>抽象</strong>的使用是计算机科学中最重要的概念之一。比如，为一组函数规定一个简单的应用程序接口（API）就是一个很好的编程习惯，程序员无须了解它内部的工作便可以使用这些代码。</p>
+<p>在处理器里，<strong>指令集架构</strong>提供了对实际处理器硬件的抽象。</p>
+<p>操作系统中的三种抽象：</p>
+<ul>
+<li>文件对 I&#x2F;O 设备的抽象</li>
+<li>虚拟内存对程序存储器的抽象</li>
+<li>进程对一个正在运行的程序的抽象</li>
+</ul>
+<p>虚拟机是对整个计算机进行抽象，包括了操作系统、处理器以及程序。</p>
+<h2 id="要点总结"><a href="#要点总结" class="headerlink" title="要点总结"></a>要点总结</h2><ul>
+<li>存储设备划分层次结构——从顶部到底部：CPU 寄存器，多层硬件高速缓存存储器，DRAM 主存和磁盘存储器，层次结构中的高层的存储设备作为低层设备的缓存。</li>
+<li>操作系统的三抽象：文件、虚拟内存以及进程分别对 I&#x2F;O 设备，主存和磁盘，处理器、主存和 I&#x2F;O设备进行抽象。</li>
+<li>虚拟机是对包括操作系统、处理器以及程序的整个计算机进行抽象。</li>
+<li>并发是一个通用概念，指的是一个同时具有多个任务的系统。</li>
+<li>并行用并发来使一个系统运行得更快。也就是说并发是实现并行的一种手段。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8"><span class="toc-number">1.</span> <span class="toc-text">计算机系统漫游</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E5%B0%B1%E6%98%AF%E4%BD%8D-%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-number">1.1.</span> <span class="toc-text">信息就是位 + 上下文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%A2%AB%E5%85%B6%E4%BB%96%E7%A8%8B%E5%BA%8F%E7%BF%BB%E8%AF%91%E6%88%90%E4%B8%8D%E5%90%8C%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.2.</span> <span class="toc-text">程序被其他程序翻译成不同的格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3%E7%BC%96%E8%AF%91%E7%B3%BB%E7%BB%9F%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E6%98%AF%E5%A4%A7%E6%9C%89%E7%9B%8A%E5%A4%84%E7%9A%84"><span class="toc-number">1.3.</span> <span class="toc-text">了解编译系统如何工作是大有益处的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E8%AF%BB%E5%B9%B6%E8%A7%A3%E9%87%8A%E5%82%A8%E5%AD%98%E5%9C%A8%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="toc-number">1.4.</span> <span class="toc-text">处理器读并解释储存在内存中的指令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%A1%AC%E4%BB%B6%E7%BB%84%E6%88%90"><span class="toc-number">1.4.1.</span> <span class="toc-text">系统的硬件组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C-hello-%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.4.2.</span> <span class="toc-text">运行 hello 程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%8A%E8%AF%89%E7%BC%93%E5%AD%98%E8%87%B3%E5%85%B3%E9%87%8D%E8%A6%81"><span class="toc-number">1.5.</span> <span class="toc-text">告诉缓存至关重要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87%E5%BD%A2%E6%88%90%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-number">1.6.</span> <span class="toc-text">存储设备形成层次结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86%E7%A1%AC%E4%BB%B6"><span class="toc-number">1.7.</span> <span class="toc-text">操作系统管理硬件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.7.1.</span> <span class="toc-text">进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.7.2.</span> <span class="toc-text">线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">1.7.3.</span> <span class="toc-text">虚拟内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6"><span class="toc-number">1.7.4.</span> <span class="toc-text">文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E4%B9%8B%E9%97%B4%E5%88%A9%E7%94%A8%E7%BD%91%E7%BB%9C%E9%80%9A%E4%BF%A1"><span class="toc-number">1.8.</span> <span class="toc-text">系统之间利用网络通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E4%B8%BB%E9%A2%98"><span class="toc-number">1.9.</span> <span class="toc-text">重要主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Amdahl-%E5%AE%9A%E5%BE%8B"><span class="toc-number">1.9.1.</span> <span class="toc-text">Amdahl 定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E5%92%8C%E5%B9%B6%E8%A1%8C"><span class="toc-number">1.9.2.</span> <span class="toc-text">并发和并行</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E7%B3%BB%E7%BB%9F%E4%B8%AD%E6%8A%BD%E8%B1%A1%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-number">1.9.3.</span> <span class="toc-text">计算系统中抽象的重要性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A6%81%E7%82%B9%E6%80%BB%E7%BB%93"><span class="toc-number">1.10.</span> <span class="toc-text">要点总结</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&text=csapp阅读笔记——计算机系统漫游"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&title=csapp阅读笔记——计算机系统漫游"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&is_video=false&description=csapp阅读笔记——计算机系统漫游"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=csapp阅读笔记——计算机系统漫游&body=Check out this article: https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&title=csapp阅读笔记——计算机系统漫游"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&title=csapp阅读笔记——计算机系统漫游"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&title=csapp阅读笔记——计算机系统漫游"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&title=csapp阅读笔记——计算机系统漫游"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/csapp%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8/&name=csapp阅读笔记——计算机系统漫游&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

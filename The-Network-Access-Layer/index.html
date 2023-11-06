@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Network Access layer在TCPIP协议栈中栈底，是服务以及提供和管理访问网络硬件访问规范的集合。 Protocols and Hardware负责工作：  与计算机的网络适配器配合 使用恰当的访问方法约定协调数据传输 将数据转换成一种会被转移成可通过传输媒介的电流或模拟信号的格式。 检查收到的数据中的错误 往发送出去的数据添加错误检查，为的是接收计算机能够检查数据中错误。  与操">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Network Access Layer">
+<meta property="og:url" content="https://www.cthee.cyou/The-Network-Access-Layer/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="Network Access layer在TCPIP协议栈中栈底，是服务以及提供和管理访问网络硬件访问规范的集合。 Protocols and Hardware负责工作：  与计算机的网络适配器配合 使用恰当的访问方法约定协调数据传输 将数据转换成一种会被转移成可通过传输媒介的电流或模拟信号的格式。 检查收到的数据中的错误 往发送出去的数据添加错误检查，为的是接收计算机能够检查数据中错误。  与操">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.cthee.cyou/ebdf33f8dafd4b61.svg">
+<meta property="og:image" content="https://i.cthee.cyou/c524f9e0b45b40a5.svg">
+<meta property="og:image" content="https://i.cthee.cyou/29b71871313549f8.svg">
+<meta property="og:image" content="https://i.cthee.cyou/cf164facc2ba49f4.svg">
+<meta property="og:image" content="https://i.cthee.cyou/c73d911f32a848c4.svg">
+<meta property="article:published_time" content="2019-08-02T07:43:10.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.205Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="TCPIP">
+<meta property="article:tag" content="Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.cthee.cyou/ebdf33f8dafd4b61.svg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>The Network Access Layer</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/The-Internet-Layer/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/How-TCP-IP-works/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/The-Network-Access-Layer/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/The-Network-Access-Layer/&text=The Network Access Layer"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/The-Network-Access-Layer/&title=The Network Access Layer"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/The-Network-Access-Layer/&is_video=false&description=The Network Access Layer"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=The Network Access Layer&body=Check out this article: https://www.cthee.cyou/The-Network-Access-Layer/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/The-Network-Access-Layer/&title=The Network Access Layer"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/The-Network-Access-Layer/&title=The Network Access Layer"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/The-Network-Access-Layer/&title=The Network Access Layer"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/The-Network-Access-Layer/&title=The Network Access Layer"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/The-Network-Access-Layer/&name=The Network Access Layer&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Protocols-and-Hardware"><span class="toc-number">1.</span> <span class="toc-text">Protocols and Hardware</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Network-Access-Layer-and-the-OSI-Model"><span class="toc-number">2.</span> <span class="toc-text">The Network Access Layer and the OSI Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Architecture"><span class="toc-number">3.</span> <span class="toc-text">Network Architecture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Physical-Addressing"><span class="toc-number">4.</span> <span class="toc-text">Physical Addressing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ethernet"><span class="toc-number">5.</span> <span class="toc-text">Ethernet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Anatomy-of-an-ethernet-Frame"><span class="toc-number">6.</span> <span class="toc-text">Anatomy of an ethernet Frame</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%A6%82%E6%8B%AC"><span class="toc-number">7.</span> <span class="toc-text">小小的概括</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        The Network Access Layer
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-08-02T07:43:10.000Z" itemprop="datePublished">2019-08-02</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Networks/" rel="tag">Networks</a>, <a class="tag-link-link" href="/tags/TCPIP/" rel="tag">TCPIP</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Network Access layer在TCPIP协议栈中栈底，是服务以及提供和管理访问网络硬件访问规范的集合。</p>
+<h2 id="Protocols-and-Hardware"><a href="#Protocols-and-Hardware" class="headerlink" title="Protocols and Hardware"></a>Protocols and Hardware</h2><p>负责工作：</p>
+<ul>
+<li>与计算机的网络适配器配合</li>
+<li>使用恰当的访问方法约定协调数据传输</li>
+<li>将数据转换成一种会被转移成可通过传输媒介的电流或模拟信号的格式。</li>
+<li>检查收到的数据中的错误</li>
+<li>往发送出去的数据添加错误检查，为的是接收计算机能够检查数据中错误。</li>
+</ul>
+<p>与操作系统和协议软件的关键底层耦合的网络适配器管理了大部分的委托给Network Access layer的任务。</p>
+<h2 id="The-Network-Access-Layer-and-the-OSI-Model"><a href="#The-Network-Access-Layer-and-the-OSI-Model" class="headerlink" title="The Network Access Layer and the OSI Model"></a>The Network Access Layer and the OSI Model</h2><p>TCPIP 的Network Access layer 大体上与 OSI的<strong>Physical</strong>以及<strong>Data Link layers</strong>相关联。</p>
+<p><img src="https://i.cthee.cyou/ebdf33f8dafd4b61.svg" alt="ebdf33f8dafd4b61.svg"></p>
+<p>Data Link 功能划分成两部分：</p>
+<ul>
+<li><p>Media Access Control (MAC): 给网络适配器提供一个接口。48位的称为MAC地址的物理硬件地址存在的地方。</p>
+</li>
+<li><p>Logical Link Control (LLC): 执行往子网分发的数据帧的错误检查并且管理子网通信设备间的连接。</p>
+</li>
+</ul>
+<h2 id="Network-Architecture"><a href="#Network-Architecture" class="headerlink" title="Network Architecture"></a>Network Architecture</h2><p>网络架构是为了物理网络而设计的并且是在那个物理网络上定义的通信规范集合。其规范需要考虑如下情况：</p>
+<ul>
+<li>Access method: 定义计算机如何共享传输媒介的规则集合。为了避免数据冲突，计算机必须在传输数据的时候遵循这些规则。</li>
+<li>Data frame format: Internet layer的数据报使用预先定义的格式进行封装。被包含在头部中的数据必须提供必要的信息来<br>传递在物理网络的上数据。</li>
+<li>Cabling type: 用于网络的线缆类型对于其他的设计因素也有影响，比如适配器传输比特流（电信号）的导电性。</li>
+<li>Cabling rules: 传输的协议，线缆类型，以及导电性会影响电缆的最大和最小长度以及线缆连接器的规格。</li>
+</ul>
+<p>Network Access layer的架构：</p>
+<ul>
+<li>IEEE802.3 (ethernet): 以太网。使用线缆作为基础的网路。</li>
+<li>IEEE802.11 (wireless networking): 无线局域网技术。</li>
+<li>IEEE802.16 (WiMAX): 用于长距离传输的移动无线连接技术。</li>
+<li>Point-to-Point Protocol (PPP): 用于通过电话线连接的调制解调器（modem）的协议。</li>
+</ul>
+<p>TCPIP也支持其他网络架构。由于Network Access layer封装了传输媒介的细节，协议栈的上层能够独立于硬件而运行。</p>
+<p><img src="https://i.cthee.cyou/c524f9e0b45b40a5.svg" alt="c524f9e0b45b40a5.svg"></p>
+<h2 id="Physical-Addressing"><a href="#Physical-Addressing" class="headerlink" title="Physical Addressing"></a>Physical Addressing</h2><p><strong>physical address</strong>总是被称为<strong>Media Access Control(MAC) sublayer</strong>。通过LAN发送的数据报必须使用这个physical address 来识别数据源以及目的适配器。以太网中，physical address 的长度是48比特位的，并且不是很容易记得住。<br>TCPIP使用Address Resolution Protocol(ARP) 和 Reverse ARP(RARP) 来将IP Address 关联到本地网络的上的网络适配器的physical address。</p>
+<h2 id="Ethernet"><a href="#Ethernet" class="headerlink" title="Ethernet"></a>Ethernet</h2><p>在一个经典的以太网网络中，所有的电脑共享共同的传输媒介。以太网使用一个成为 **carrier sense multiple access with collision detection（CSMA&#x2F;CD）的接入方法来决定一台计算机什么时候可以通过传输媒介自由的传输数据。使用CSMA&#x2F;CD，所有的电脑监视传输媒介并且等待直到在传输之前线路可用。当两台计算机同时传输数据，此时就会发生冲突，其中的两台电脑就得将发送数据的过程停下来，等上一个随机时间间隔后，再次尝试传输。</p>
+<p>在现代互联网上，通过设备例如交换机来管理流量，从而减少冲突的发生，从而使得以太网能够更高效地运行。<br>早期以太网系统经常使用连续的共轴线缆作为传输媒介，但是目前最普遍的场景是所有计算机连接到一个单独的网络设备。</p>
+<p>以太网能够使用各种媒介。传统的基于集线器的10BASE-T以太网最开始被用于10Mbps的基础带宽速度上。如今100Mbps相对普遍，另外，1000Mbps（gigabit）也是可用了。</p>
+<p>共轴线缆图例：<br><img src="https://i.cthee.cyou/29b71871313549f8.svg" alt="29b71871313549f8.svg"></p>
+<p>使用网络设备图例：<br><img src="https://i.cthee.cyou/cf164facc2ba49f4.svg" alt="cf164facc2ba49f4.svg"></p>
+<h2 id="Anatomy-of-an-ethernet-Frame"><a href="#Anatomy-of-an-ethernet-Frame" class="headerlink" title="Anatomy of an ethernet Frame"></a>Anatomy of an ethernet Frame</h2><p>Network Access layer 接受来自Internet Layer的数据报并转换成与物理网络规范一致的形式：</p>
+<p><img src="https://i.cthee.cyou/c73d911f32a848c4.svg" alt="c73d911f32a848c4.svg"></p>
+<p>数据转换步骤：</p>
+<ol>
+<li><p>如有必要，将Internet layer的数据分割成可以放在在太网帧的数据字段中发送出去的更小的块。以太网帧的总共大小<br>在64 bytes 到 1518 bytes，不包含preamble。（一些系统支持更大的可达到9000bytes的帧大小。<br>这是所谓的jumpbo frames 提高了效率，但是引入了一些兼容性问题并且不是普遍地被支持）</p>
+</li>
+<li><p>打包数据块成帧。每一帧除了包含数据还有以太网需要处理帧时的网络适配器的其他信息。<br> 一个IEEE 802.3以太网帧包含数据如下：</p>
+<ul>
+<li>Preamble: 用来标记帧开始的比特序列（8字节，最后的一帧是一字节的起始帧分割符）。</li>
+<li>Recipient Address: 接收这个帧的网络适配器的6-byte (48-bit) 的physical address。</li>
+<li>Source Address: 发送帧的网络适配器的的6-byte (48-bit) 的physical address。</li>
+<li>Optional VLan tag: 在802.1q标准中描述的可选的16-bit字段，被设计用来允许多个虚拟LANs通过相同的交换机进行操作。</li>
+<li>Length: 2-byte（16-bit）用于描述数据字段大小的2-byte（16-bit）</li>
+<li>Data: 与帧一起被发送的数据。</li>
+<li>Frame Check Sequence (FCS): 帧的4-byte（32-bit）的摘要值。<strong>FCS</strong>是验证数据传输的普遍方法。发送的计算机计算<br> 帧的**cyclical redundancy check (CRC)**值并且在帧中编码CRC值。接收这个帧的电脑重新计算这个帧的CRC，并且检查FCS字段是否匹配。如果不匹配，那么在传输的过程中，一些数据丢失了或发生了更改，这种情况下，更高层的协议可能请求重新传输。</li>
+</ul>
+<p> 出来的帧的总和等于 8 + 6 + 6 + 2 + 4 + (bytes of data) + 2(Vlan tag)</p>
+</li>
+<li><p>传递帧到与OSI的Physical layer相关的更底层的部分，该部分将帧变成比特流并且通过传输媒介发送出去。</p>
+</li>
+</ol>
+<h2 id="小小的概括"><a href="#小小的概括" class="headerlink" title="小小的概括"></a>小小的概括</h2><ul>
+<li>Network Access layer 含有服务以及管理访问物理网络过程的规范。</li>
+<li>CRC是有发送帧的计算机进行计算帧而得出，在帧中编码该CRC值。接受帧的计算机重新计算帧的CRC，然后检查帧中的FCS字段是否匹配。</li>
+<li>以太网的物理地址是6-byte（48-bit）的长度。</li>
+<li>ARP使用Logical address来解析出physical address。</li>
+<li>MAC layer 提供接口给网络适配器。Logical Link Control layer 提供帧的错误检查以及管理子网上网络结点之间连接。</li>
+</ul>
+<p><a href="/How-TCP-IP-works">上一篇</a></p>
+<p><a href="The-Internet-Layer">下一篇</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Protocols-and-Hardware"><span class="toc-number">1.</span> <span class="toc-text">Protocols and Hardware</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Network-Access-Layer-and-the-OSI-Model"><span class="toc-number">2.</span> <span class="toc-text">The Network Access Layer and the OSI Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Architecture"><span class="toc-number">3.</span> <span class="toc-text">Network Architecture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Physical-Addressing"><span class="toc-number">4.</span> <span class="toc-text">Physical Addressing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ethernet"><span class="toc-number">5.</span> <span class="toc-text">Ethernet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Anatomy-of-an-ethernet-Frame"><span class="toc-number">6.</span> <span class="toc-text">Anatomy of an ethernet Frame</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%A6%82%E6%8B%AC"><span class="toc-number">7.</span> <span class="toc-text">小小的概括</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/The-Network-Access-Layer/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/The-Network-Access-Layer/&text=The Network Access Layer"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/The-Network-Access-Layer/&title=The Network Access Layer"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/The-Network-Access-Layer/&is_video=false&description=The Network Access Layer"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=The Network Access Layer&body=Check out this article: https://www.cthee.cyou/The-Network-Access-Layer/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/The-Network-Access-Layer/&title=The Network Access Layer"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/The-Network-Access-Layer/&title=The Network Access Layer"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/The-Network-Access-Layer/&title=The Network Access Layer"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/The-Network-Access-Layer/&title=The Network Access Layer"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/The-Network-Access-Layer/&name=The Network Access Layer&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

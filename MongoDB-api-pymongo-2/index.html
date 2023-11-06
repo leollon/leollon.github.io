@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Use sort(), skip(), limit() 方法。只有当遍历查询结果的时候，正是查询的开始。sort先运行，然后skip，最后是limit。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB-api-pymongo(2)">
+<meta property="og:url" content="https://www.cthee.cyou/MongoDB-api-pymongo-2/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="Use sort(), skip(), limit() 方法。只有当遍历查询结果的时候，正是查询的开始。sort先运行，然后skip，最后是limit。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2017-09-22T03:48:17.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.201Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="MongoDB">
+<meta property="article:tag" content="pymongo">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>MongoDB-api-pymongo(2)</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/MongoDB-Performance/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/Python-bits-of-knowledge/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/MongoDB-api-pymongo-2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&text=MongoDB-api-pymongo(2)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&title=MongoDB-api-pymongo(2)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&is_video=false&description=MongoDB-api-pymongo(2)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MongoDB-api-pymongo(2)&body=Check out this article: https://www.cthee.cyou/MongoDB-api-pymongo-2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&title=MongoDB-api-pymongo(2)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&title=MongoDB-api-pymongo(2)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&title=MongoDB-api-pymongo(2)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&title=MongoDB-api-pymongo(2)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&name=MongoDB-api-pymongo(2)&description=&lt;h2 id=&#34;Use-sort-skip-limit-方法。&#34;&gt;&lt;a href=&#34;#Use-sort-skip-limit-方法。&#34; class=&#34;headerlink&#34; title=&#34;Use sort(), skip(), limit() 方法。&#34;&gt;&lt;/a&gt;Use sort(), skip(), limit() 方法。&lt;/h2&gt;&lt;p&gt;只有当遍历查询结果的时候，正是查询的开始。sort先运行，然后skip，最后是limit。&lt;/p&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-sort-skip-limit-%E6%96%B9%E6%B3%95%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">Use sort(), skip(), limit() 方法。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#insert-document"><span class="toc-number">2.</span> <span class="toc-text">insert document</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#update-a-document"><span class="toc-number">3.</span> <span class="toc-text">update a document</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#upsert"><span class="toc-number">3.1.</span> <span class="toc-text">upsert</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#delete-document"><span class="toc-number">4.</span> <span class="toc-text">delete document</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MongoDB-api-pymongo(2)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-09-22T03:48:17.000Z" itemprop="datePublished">2017-09-22</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/MongoDB/" rel="tag">MongoDB</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>, <a class="tag-link-link" href="/tags/pymongo/" rel="tag">pymongo</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Use-sort-skip-limit-方法。"><a href="#Use-sort-skip-limit-方法。" class="headerlink" title="Use sort(), skip(), limit() 方法。"></a>Use sort(), skip(), limit() 方法。</h2><p>只有当遍历查询结果的时候，正是查询的开始。sort先运行，然后skip，最后是limit。</p>
+<span id="more"></span>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pymongo</span><br><span class="line"></span><br><span class="line">connection = pymongo.MongoClient(<span class="string">&#x27;mongodb://localhost&#x27;</span>)</span><br><span class="line"></span><br><span class="line">db = connection.school</span><br><span class="line">scores = db.scores</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">find</span>():</span><br><span class="line">  query = &#123;&#125;</span><br><span class="line">  <span class="keyword">try</span>:</span><br><span class="line">      cursor = scores.find(query).skip(<span class="number">4</span>)</span><br><span class="line">      cursor.limit(<span class="number">1</span>)</span><br><span class="line"><span class="comment">#     cursor.sort(&#x27;student_id&#x27;, pymongo.ASCENDING).skip(4).limit(1)</span></span><br><span class="line">      cursor.sort([(<span class="string">&#x27;student_id&#x27;</span>, pymongo.ASCENDING),</span><br><span class="line">                   (<span class="string">&#x27;score&#x27;</span>, pymongo.DES CENDING)])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">      <span class="built_in">print</span> <span class="string">&quot;Unexpected error:&quot;</span>, <span class="built_in">type</span>(e), e</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> doc <span class="keyword">in</span> cursor:</span><br><span class="line">      <span class="built_in">print</span> doc</span><br></pre></td></tr></table></figure>
+
+<p>skip(n): 从当前位置跳过三个文档，取第n+1个文档。<br>JSON会获取键值对的顺序。sort函数使用tuple进行多个字段排序，tuple是有顺序的，而python的dict的键值对没有顺序。<br>pymongo.ASCENDING 升序排序<br>pymongo.DESCENDING 降序排序</p>
+<h2 id="insert-document"><a href="#insert-document" class="headerlink" title="insert document"></a>insert document</h2><ul>
+<li><p>insert_one</p>
+<blockquote>
+<p>only insert a document at a times</p>
+</blockquote>
+</li>
+<li><p>insert_many</p>
+<blockquote>
+<p>insert many document at a times in order</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.COLLECTION_NAME.insert_many([document1, document2], ordered=<span class="literal">True</span>) <span class="comment"># if no specified, ordered is default</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="update-a-document"><a href="#update-a-document" class="headerlink" title="update a document"></a>update a document</h2><ul>
+<li><p>update_one</p>
+<blockquote>
+<p>update a document at a times</p>
+</blockquote>
+</li>
+<li><p>update_many</p>
+<blockquote>
+<p>update many documents at a times</p>
+</blockquote>
+</li>
+</ul>
+<p>底层都是调用_update()函数，只不过update_many多了一个multi&#x3D;True参数</p>
+<h3 id="upsert"><a href="#upsert" class="headerlink" title="upsert"></a>upsert</h3><blockquote>
+<p>default value is False, if specified True, match filter, then update document, or insert a new document</p>
+</blockquote>
+   <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.COLLECTION_NAME.update_one(&#123;<span class="built_in">filter</span>&#125;, &#123;<span class="string">&#x27;$set&#x27;</span>: &#123;<span class="string">&#x27;key&#x27;</span>: value&#125;&#125;&#125;&#125;, upsert=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>如果在使用replace_one(replaceOne)的时候，同时还设置upsert参数为true，并且filter还使用了_id,则当不存在该_id的文档时，插入新文档时，同时使用这个_id为这个新文档的_id.</p>
+<h2 id="delete-document"><a href="#delete-document" class="headerlink" title="delete document"></a>delete document</h2><ul>
+<li>delete_one</li>
+<li>delete_many</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-sort-skip-limit-%E6%96%B9%E6%B3%95%E3%80%82"><span class="toc-number">1.</span> <span class="toc-text">Use sort(), skip(), limit() 方法。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#insert-document"><span class="toc-number">2.</span> <span class="toc-text">insert document</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#update-a-document"><span class="toc-number">3.</span> <span class="toc-text">update a document</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#upsert"><span class="toc-number">3.1.</span> <span class="toc-text">upsert</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#delete-document"><span class="toc-number">4.</span> <span class="toc-text">delete document</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/MongoDB-api-pymongo-2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&text=MongoDB-api-pymongo(2)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&title=MongoDB-api-pymongo(2)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&is_video=false&description=MongoDB-api-pymongo(2)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MongoDB-api-pymongo(2)&body=Check out this article: https://www.cthee.cyou/MongoDB-api-pymongo-2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&title=MongoDB-api-pymongo(2)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&title=MongoDB-api-pymongo(2)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&title=MongoDB-api-pymongo(2)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&title=MongoDB-api-pymongo(2)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/MongoDB-api-pymongo-2/&name=MongoDB-api-pymongo(2)&description=&lt;h2 id=&#34;Use-sort-skip-limit-方法。&#34;&gt;&lt;a href=&#34;#Use-sort-skip-limit-方法。&#34; class=&#34;headerlink&#34; title=&#34;Use sort(), skip(), limit() 方法。&#34;&gt;&lt;/a&gt;Use sort(), skip(), limit() 方法。&lt;/h2&gt;&lt;p&gt;只有当遍历查询结果的时候，正是查询的开始。sort先运行，然后skip，最后是limit。&lt;/p&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

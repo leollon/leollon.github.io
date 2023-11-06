@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="vfs_cache_pressure 这个参数用于控制内核回收缓存目录和索引节点对象的频率。 它的默认值是100，相对于页缓存和交换缓存回收，内核将尝试以一种相对快的频率试图回收目录条目(dentries)和inode。降低vfs_cache_pressure使得内核更偏向于保存目录条目(dentry)和inode。当vfs_cache_pressure为0的时候，由于内存压力的原因，系统内核将不">
+<meta property="og:type" content="article">
+<meta property="og:title" content="log-about-linux-kernel-s-sysctl">
+<meta property="og:url" content="https://www.cthee.cyou/log-about-linux-kernel-sysctl/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="vfs_cache_pressure 这个参数用于控制内核回收缓存目录和索引节点对象的频率。 它的默认值是100，相对于页缓存和交换缓存回收，内核将尝试以一种相对快的频率试图回收目录条目(dentries)和inode。降低vfs_cache_pressure使得内核更偏向于保存目录条目(dentry)和inode。当vfs_cache_pressure为0的时候，由于内存压力的原因，系统内核将不">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-12-04T08:45:57.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.205Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="系统性能调优">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>log-about-linux-kernel-s-sysctl</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/%E7%8E%AF%E5%BD%A2%E7%BC%93%E5%86%B2%E5%8C%BA-ring-buffer/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/write_selection_sort_in_hand_or_on_whiteboard/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/log-about-linux-kernel-sysctl/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&text=log-about-linux-kernel-s-sysctl"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&title=log-about-linux-kernel-s-sysctl"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&is_video=false&description=log-about-linux-kernel-s-sysctl"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=log-about-linux-kernel-s-sysctl&body=Check out this article: https://www.cthee.cyou/log-about-linux-kernel-sysctl/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&title=log-about-linux-kernel-s-sysctl"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&title=log-about-linux-kernel-s-sysctl"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&title=log-about-linux-kernel-s-sysctl"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&title=log-about-linux-kernel-s-sysctl"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&name=log-about-linux-kernel-s-sysctl&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vfs-cache-pressure"><span class="toc-number">1.</span> <span class="toc-text">vfs_cache_pressure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#swappiness"><span class="toc-number">2.</span> <span class="toc-text">swappiness</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">总结：</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        log-about-linux-kernel-s-sysctl
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2018-12-04T08:45:57.000Z" itemprop="datePublished">2018-12-04</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Linux/" rel="tag">Linux</a>, <a class="tag-link-link" href="/tags/%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98/" rel="tag">系统性能调优</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="vfs-cache-pressure"><a href="#vfs-cache-pressure" class="headerlink" title="vfs_cache_pressure"></a>vfs_cache_pressure</h2><hr>
+<p>这个参数用于控制内核回收缓存目录和索引节点对象的频率。</p>
+<p>它的默认值是100，相对于页缓存和交换缓存回收，内核将尝试以一种相对快的频率试图回收目录条目(dentries)和inode。降低<code>vfs_cache_pressure</code>使得内核更偏向于保存目录条目(dentry)和inode。当<code>vfs_cache_pressure</code>为0的时候，由于内存压力的原因，系统内核将不回收目录数据结构和索引信息节点，这很容易就导致内存不足的情况。提高<code>vfs_cache_pressure</code>到100以上，将会导致内核提高回收目录条目(dentry)和inode的频率，这可能对系统性能产生负面的影响。回收代码需要耗费多种锁去查找可释放的目录条目(dentry)和inode对象。如果<code>vfs_cache_pressure</code>&#x3D;1000，这将会查找比现有的可释放对象多十倍。</p>
+<h2 id="swappiness"><a href="#swappiness" class="headerlink" title="swappiness"></a>swappiness</h2><hr>
+<p>它是一个百分比数值，这个内核参数用来控制内核交换内存页的数量。数值越高，交换的数量就越多。<br>数值越低，会减少交换的数量。等于0的时候，等于告诉内核直到自由的文件备份页的数量少于某一数值的时候，才开始使用交换分区。它的默认的值是60。</p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ul>
+<li><p>虚拟文件缓存系统(vfs)，影响交换区的性能，百分比越高，将会提高内存回收频率。数值越低，说明内存回收频率越低，不需要频繁查询内存，寻找自由的目录数据结构和索引节点对象，系统性能相对要好，但是有可能会导致内存不足的情况发生。</p>
+</li>
+<li><p>交换分区，控制系统内核如何使用交换分区，百分比越低，则系统内核更多的使用内存，使用交换分区的数量就会比较少，反之，则内核使用交换分区相对更多。可以说，交换区位于内存和磁盘中间一层，起到暂存区的作用，当内存不够用的时候，内存中的数据可以暂时放置到这个交换分区中。</p>
+</li>
+</ul>
+<p>References:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Swap#VFS_cache_pressure">https://wiki.archlinux.org/index.php/Swap#VFS_cache_pressure</a></li>
+<li><a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Swap#Swappiness">https://wiki.archlinux.org/index.php/Swap#Swappiness</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/Documentation/sysctl/vm.txt">https://www.kernel.org/doc/Documentation/sysctl/vm.txt</a></li>
+<li><a target="_blank" rel="noopener" href="https://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.memory.html#cha.tuning.memory.vm.reclaim">https://doc.opensuse.org/documentation/leap/tuning/html/book.sle.tuning/cha.tuning.memory.html#cha.tuning.memory.vm.reclaim</a></li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#vfs-cache-pressure"><span class="toc-number">1.</span> <span class="toc-text">vfs_cache_pressure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#swappiness"><span class="toc-number">2.</span> <span class="toc-text">swappiness</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">总结：</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/log-about-linux-kernel-sysctl/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&text=log-about-linux-kernel-s-sysctl"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&title=log-about-linux-kernel-s-sysctl"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&is_video=false&description=log-about-linux-kernel-s-sysctl"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=log-about-linux-kernel-s-sysctl&body=Check out this article: https://www.cthee.cyou/log-about-linux-kernel-sysctl/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&title=log-about-linux-kernel-s-sysctl"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&title=log-about-linux-kernel-s-sysctl"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&title=log-about-linux-kernel-s-sysctl"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&title=log-about-linux-kernel-s-sysctl"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/log-about-linux-kernel-sysctl/&name=log-about-linux-kernel-s-sysctl&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

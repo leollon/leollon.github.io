@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="阅读完本文之后，将可以：  标识并且描述常见的TCPIP连接工具 使用连接工具排查问题 解释SSH和Telnet的目的 描述一些常见的网络管理协议  连接问题具有代表性的前四个网络连接问题变化：  协议功能障碍或配置错误：协议软件不工作或（无论什么原因）未正确配置地运行在网络上。 线路问题：网线未插入或不正常工作。集线器，路由器或交换机未正常工作。 错误的名字解析：域名系统（DNS）或NetBIO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Classic Tools">
+<meta property="og:url" content="https://www.cthee.cyou/Classic-Tools/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="阅读完本文之后，将可以：  标识并且描述常见的TCPIP连接工具 使用连接工具排查问题 解释SSH和Telnet的目的 描述一些常见的网络管理协议  连接问题具有代表性的前四个网络连接问题变化：  协议功能障碍或配置错误：协议软件不工作或（无论什么原因）未正确配置地运行在网络上。 线路问题：网线未插入或不正常工作。集线器，路由器或交换机未正常工作。 错误的名字解析：域名系统（DNS）或NetBIO">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.cthee.cyou/7e3f5ca7c9b64dd6.png">
+<meta property="og:image" content="https://i.cthee.cyou/0b1132c475d849a9.svg">
+<meta property="og:image" content="https://i.cthee.cyou/ac16e131fdcb42c5.svg">
+<meta property="og:image" content="https://i.cthee.cyou/41aa727931764c37.svg">
+<meta property="og:image" content="https://i.cthee.cyou/04e38dabad224e5b.svg">
+<meta property="og:image" content="https://i.cthee.cyou/94cf26bf255f4925.svg">
+<meta property="og:image" content="https://i.cthee.cyou/e4dc8016a4bd4bce.svg">
+<meta property="article:published_time" content="2019-09-16T09:42:59.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.201Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="TCPIP">
+<meta property="article:tag" content="Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.cthee.cyou/7e3f5ca7c9b64dd6.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Classic Tools</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/Classic-Services/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/IPv6-Next-Generation/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Classic-Tools/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Classic-Tools/&text=Classic Tools"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Classic-Tools/&title=Classic Tools"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Classic-Tools/&is_video=false&description=Classic Tools"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Classic Tools&body=Check out this article: https://www.cthee.cyou/Classic-Tools/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Classic-Tools/&title=Classic Tools"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Classic-Tools/&title=Classic Tools"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Classic-Tools/&title=Classic Tools"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Classic-Tools/&title=Classic Tools"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Classic-Tools/&name=Classic Tools&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">连接问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protocol-Dysfunction-and-Misconfiguration"><span class="toc-number">2.</span> <span class="toc-text">Protocol Dysfunction and Misconfiguration</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ping"><span class="toc-number">2.1.</span> <span class="toc-text">Ping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configuration-Information-Utilities"><span class="toc-number">2.2.</span> <span class="toc-text">Configuration Information Utilities</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Address-Resolution-Protocol"><span class="toc-number">2.3.</span> <span class="toc-text">Address Resolution Protocol</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Line-Problems"><span class="toc-number">3.</span> <span class="toc-text">Line Problems</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Name-Resolution"><span class="toc-number">4.</span> <span class="toc-text">Name Resolution</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-Performance-Problems"><span class="toc-number">4.1.</span> <span class="toc-text">Network Performance Problems</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Traceroute"><span class="toc-number">4.1.1.</span> <span class="toc-text">Traceroute</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Route"><span class="toc-number">4.2.</span> <span class="toc-text">Route</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Netstat"><span class="toc-number">4.3.</span> <span class="toc-text">Netstat</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Telnet"><span class="toc-number">5.</span> <span class="toc-text">Telnet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Berkeley-Remote-Utilities"><span class="toc-number">6.</span> <span class="toc-text">Berkeley Remote Utilities</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Secure-Shell"><span class="toc-number">7.</span> <span class="toc-text">Secure Shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Management"><span class="toc-number">8.</span> <span class="toc-text">Network Management</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Simple-Network-Management-Protocol"><span class="toc-number">8.1.</span> <span class="toc-text">Simple Network Management Protocol</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-SNMP-Address-Space"><span class="toc-number">8.2.</span> <span class="toc-text">The SNMP Address Space</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SNMP-Commands"><span class="toc-number">8.3.</span> <span class="toc-text">SNMP Commands</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Remote-Monitoring"><span class="toc-number">8.4.</span> <span class="toc-text">Remote Monitoring</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Classic Tools
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-09-16T09:42:59.000Z" itemprop="datePublished">2019-09-16</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Networks/" rel="tag">Networks</a>, <a class="tag-link-link" href="/tags/TCPIP/" rel="tag">TCPIP</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>阅读完本文之后，将可以：</p>
+<ul>
+<li>标识并且描述常见的TCPIP连接工具</li>
+<li>使用连接工具排查问题</li>
+<li>解释SSH和Telnet的目的</li>
+<li>描述一些常见的网络管理协议</li>
+</ul>
+<h2 id="连接问题"><a href="#连接问题" class="headerlink" title="连接问题"></a>连接问题</h2><p>具有代表性的前四个网络连接问题变化：</p>
+<ul>
+<li>协议功能障碍或配置错误：协议软件不工作或（无论什么原因）未正确配置地运行在网络上。</li>
+<li>线路问题：网线未插入或不正常工作。集线器，路由器或交换机未正常工作。</li>
+<li>错误的名字解析：域名系统（DNS）或NetBIOS名字不能被解析。资源能够通过IP地址进行访问但是不能通过主机名或DNS名字（cthee.cyou）。</li>
+<li>流量过大（Excessive traffic）：网络是工作状态，但是工作很慢。</li>
+</ul>
+<p>下面分别讨论解决这些常见连接问题的工具及技术。</p>
+<h2 id="Protocol-Dysfunction-and-Misconfiguration"><a href="#Protocol-Dysfunction-and-Misconfiguration" class="headerlink" title="Protocol Dysfunction and Misconfiguration"></a>Protocol Dysfunction and Misconfiguration</h2><p>TCPIP协议组提供许多有用的工具帮助确定TCPIP是否功能正常并且正确配置，比如</p>
+<ul>
+<li><strong>ping</strong>：该工具是初始化一个简单的网络连接测试的诊断工具并且能够报告其他计算机或网络设备是否响应。</li>
+<li><strong>Configuration information utilities</strong>：每一个OS厂商提供某有种显示TCPIP配置信息的工具并且可以用于检查是否IP地址，子网掩码，DNS服务器和其他参数是否正确配置。</li>
+<li><strong>arp</strong>：这个工具可以用于查看并且配置地址解析协议（ARP）缓存表的内容，缓存表中将IP地址和物理（MAC）地址关联起来。</li>
+</ul>
+<h3 id="Ping"><a href="#Ping" class="headerlink" title="Ping"></a>Ping</h3><p><code>ping</code>工具能够初始化最小的网络连接测试。它发送一则消息给另外一台计算机，说”Are you there”并且等待其他计算机响应。</p>
+<p><code>ping</code>命令的基本形式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping IP_address  <span class="comment"># IP_address是想要连接的那台计算机的地址。</span></span><br></pre></td></tr></table></figure>
+
+<p>ping工具的命令行选项根据实现和系统不同而不同。<em>ping</em>工具使用互联网控制消息协议（<a href="The-Internet-Layer/#Internet-Control-Message-Protocol">ICMP</a>）<code>Echo Request</code>命令发送一则消息到接收计算机。如果接收计算机存在并且运行，它会使用<code>Echo Reply</code>消息进行响应。</p>
+<p>ping是一个最小的应用。它只需要TCPIP协议栈中的网络接入层，该层与OSI模型中的底部三层相关。ICMP是一个OSI的三层协议。可能问题发生在传输控制协议（TCP），用户数据报（UDP），或是更上层的应用层并且ping依然能够正常运行。</p>
+<p>Ping提供许多特别有用的选项用于网络问题排查。可以这么做有如下步骤：</p>
+<ul>
+<li>使用称为loopback地址（127.0.0.1）的特殊IP地址ping本地IP软件。如果命令<code>ping 127.0.0.1</code>成功，则TCPIP协议软件能够正常运行。</li>
+<li>ping自己的IP地址。如果能够ping通分配给网络适配器（网卡）的IP地址，就可以知道网卡已经正确配置并且正常地与TCPIP软件进行交互。</li>
+<li>通过主机名来ping。大部分系统允许使用一个主机名替换ping命令中的IP地址。如果能够通过IP地址ping通一台计算机，但是不能通过它的主机名ping同样的计算机，就可以知道问题是和名字解析有关系。</li>
+</ul>
+<p>在典型的网络问题排查场景中，一个网络管理员会执行如下<em>ping</em>命令：</p>
+<ol>
+<li>ping loopback地址（127.0.0.1）来验证TCPIP在本地计算机上能够正常工作。</li>
+<li>ping本地IP地址来验证网络适配器处于运行状态并且配置了本地IP地址。</li>
+<li>ping默认网关来验证计算机能够与本地子网通信并且验证网关的是处于运行状态的。</li>
+<li>ping在默认网关外的一个地址来验证网关能够成功地转发超出本地网络段的数据包。</li>
+<li>通过主机名ping本地主机和远程主机来验证名字解析功能是正常的。</li>
+</ol>
+<p>某些管理员更喜欢反方向按步骤执行这些ping命令。其目的都是一样的：隔离出通信失败的地方。所有的Unix和Linux系统，包括MacOS都含有<code>ping</code>命令，旧版本地Windows系统也使用ping。在Windows PowerShell环境中，<em>Test-NetConnection</em>命令等同于经典的ping。</p>
+<p>ping发送ICMP<em>Echo Requests</em>并输出响应，偶尔丢失的数据报不能将其考虑为网络连接失败，因为ICMP不保证传输的可靠性。然而，丢失的响应暗示网络过于拥挤。一些ping工具版本用毫秒来表示从发送<em>Echo Request</em>消息到<em>Echo Reply</em>消息返回所用的时间。响应时间短表示数据报不必要经过太多的路由器或慢速的网络。如果ping命令返回一个接近于0的Time To Live（TTL），可能表示连接靠近TTL的阈值并且一些数据报丢失了或重新发送了。</p>
+<h3 id="Configuration-Information-Utilities"><a href="#Configuration-Information-Utilities" class="headerlink" title="Configuration Information Utilities"></a>Configuration Information Utilities</h3><p>UNIX和Linux系统使用<code>ifconfig</code>命令来显示地址信息。如果一台计算机含有两个网卡，就会有两个IP地址。ifconfig命令显示和每个网卡相关连的地址信息。</p>
+<p>使用<code>ifconfig</code>显示IP地址信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig interface_name</span><br></pre></td></tr></table></figure>
+
+<p>interface_name是想要查看地址信息的网卡的名字。（在Unix和Linux中，每个网卡通过定义接口的配置文件分配一个名字并且通过那个名字进行引用。）例如，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig eth0  <span class="comment"># 显示eth0当前的IP地址和子网掩码等等</span></span><br></pre></td></tr></table></figure>
+
+<p>使用ifconfig给网卡配置IP地址，子网掩码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig eth0 &lt;IP_address&gt; netmask &lt;netmask&gt;</span><br></pre></td></tr></table></figure>
+
+<p><em>ifconfig up</em>和<em>ifconfig down</em>选项能够用于启用和停用网卡。例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ifconfig eth0 up</span><br><span class="line">ifconfig eth0 down</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>man ifconfig</code>查看更多的关于<code>ifconfig</code>更多可用选项。旧版本的Windows系统使用<code>ipconfig</code>。在PowerShell环境中，<code>Get-NetIPConfiguration</code>命令最接近等同于ipconfig。</p>
+<p>更新的并且更加通用的<code>ip</code>工具逐渐替换<code>ifconfig</code>成为Unix&#x2F;Linux系统上基本的TCPIP配置工具。</p>
+<h3 id="Address-Resolution-Protocol"><a href="#Address-Resolution-Protocol" class="headerlink" title="Address Resolution Protocol"></a>Address Resolution Protocol</h3><p>在TCPIP网络上每台主机维护一个ARP缓存表——一个用于关联IP地址到物理地址的表。使用<code>arp</code>命令查看本地计算机或另外一台计算机的ARP缓存表的内容。大部分情况下，协议软件负责更新ARP缓存表并且使用<code>arp</code>命令进行网络故障排障的情况很少。</p>
+<p>可以使用<code>arp</code>命令来手动设置想要的物理&#x2F;IP地址对。这个方法有助于减少网络上的流量（尽管在小型网络上没必要这么做）。ARP缓存表中的条目默认是动态变化的：条目自动添加到缓存中无论何时发送数据报并且一条当前条目不存在目的计算机的缓存表中。缓存条目一旦输入即开始过期。缓存条目可以通过执行另一台计算机或路由器的ping来添加。使用<code>arp</code>命令查看缓存条目：</p>
+<ul>
+<li><code>**arp -a**</code>：用于查看所有的ARP缓存条目</li>
+<li><code>**arp -g**</code>：用于查看所有的ARP缓存条目</li>
+<li><code>**arp -a &lt;IP_address&gt;**</code>：如果有多张网卡，可以通过使用<code>arp -a</code>加上网卡接口的IP地址来查看和这个接口关联的ARP缓存条目</li>
+<li><code>**arp -s**</code>：手动添加一个永久的静态条目到ARP缓存表中。此条目保持有效直到计算机重启并且如果使用手动配置物理地址时产生错误，条目将会被自动更新。例如，<code>arp -s 192.139。10.1 00-9f-ef-ac-23-79</code>。</li>
+<li><code>**arp -d &lt;IP_address&gt;**</code>：用来手动删除一条静态条目。例如，<code>arp -d 192.139.10.1</code>。</li>
+</ul>
+<h2 id="Line-Problems"><a href="#Line-Problems" class="headerlink" title="Line Problems"></a>Line Problems</h2><p>网络集线器或网线问题实际上不是TCPIP问题。但是依然可以使用TCPIP工具比如<code>ping</code>来诊断网络线路问题。通常情况下，如果网络过去都是能正常工作的并且突然停止工作，原因可能就是网路线路出故障了。大多数的网卡，集线器，交换机以及路由器都有暗示这个设备处于工作状态并且准备接收数据的显示灯。集线器，路由器或交换机的每个端口都有一个显示是否有活跃的网络连接通过这个端口处于运行状态的连接状态灯。</p>
+<p>可以使用<code>ping</code>来隔离网络线路问题。如果一台计算机能够ping通自己的地址但是不能ping网络上任何其他地址，问题的可能存在在连接计算机到本地子网中的网络线路中。</p>
+<h2 id="Name-Resolution"><a href="#Name-Resolution" class="headerlink" title="Name Resolution"></a>Name Resolution</h2><p>名字解析问题发生在当发送一则消息给一台主机时主机名不能够在网络上被解析出来。事实上，大多数常见名字解析问题的共性是源计算机能够通过IP地址到达目标计算机，但是不能通过主机名到达目标计算机。作为实际问题，在今天互联网上的资源是通过主机名进行读取的，并且第一次尝试连接一台主机可能是通过名字。如果尝试失败，可以通过<a href="#Ping">ping</a>的问题排查步骤来解决问题。如果仍然能够通过IP地址连接，那么可能问题出在了名字解析上面。</p>
+<p>一些名字解析问题常见的原因：</p>
+<ul>
+<li>hosts文件丢失或不正确</li>
+<li>名字服务器掉线或不可达</li>
+<li>在客户端配置中名字服务器没有被正确地引用</li>
+<li>尝试到达的主机在名字服务器中没有主机名条目</li>
+<li>在命令中使用的主机名是不正确的</li>
+</ul>
+<p>如果在一个使用名字解析的网络上正经历名字解析问题，通过ping名字服务器来确保它在线是一个很棒的做法。如果名字服务器在本地子网之外，通过ping网关来确保名字解析请求能够到达名字服务器。多次检查输入的名字确保它是资源的正确名字。如果这些方法都不能得出一个解决方案，则可能需要使用<code>nslookup</code>工具来查询关于指定主机名条目的名字服务器。<a href="/Name-Resolution/#Checking-Name-Resolution-with-NSLookup">nslookup</a>工具工作模式。PowerShell中等同于<code>nslookup</code>的工具是<code>Resolve-DNSName</code>。使用<code>hostanme</code>查看当前工作计算机的主机名。</p>
+<h3 id="Network-Performance-Problems"><a href="#Network-Performance-Problems" class="headerlink" title="Network Performance Problems"></a>Network Performance Problems</h3><p>因为TCPIP协议通常使用TTL设置限制网络上一个数据包的时间，网络性能低能够导致丢包并且因此丢失连接。即使为丢失连接，低效的网络性能可能是一个烦恼并且生产力下降的源头。造成糟糕的网络性能的通常原因是过多的流量。因为网络上有太多的计算机，所以可能网络中流量过于繁重，或者这个原因可能是一个有故障的设备比如一个网卡在网络上创建不必要的流量，在网络上又称为<strong>广播风暴（broadcast storm）</strong>。有时候，造成糟糕的网络的原因是一个宕机的路由器停止转发流量并在网络中某处产生了瓶颈。</p>
+<h4 id="Traceroute"><a href="#Traceroute" class="headerlink" title="Traceroute"></a>Traceroute</h4><p><code>traceroute</code>工具用于跟踪当数据报从本地计算机通过多个网关到达目的地要经过的路径。如果要使用域名系统（DNS），经常可以从响应中确定城市的名字，区域以及通用的运输人。<code>traceroute</code>工具利用ICMP协议来定位每个处在客户端计算机和目的计算机之间的路由器。TTL的值告知一个数据包经过的路由器后网关的数量。通过操作在发送出去的ICMP<em>Echo</em>信息中的TTL的值，<code>traceroute</code>能够找到路径上的每个路由器，如下：</p>
+<ol>
+<li>一个ICMP<em>Echo</em>消息被发往目的IP地址，TTL的值设置为1。第一个路由器从TTL值中减去1,这造成TTL的值为0.</li>
+<li>因为TTL值现在被设置为0,路由器知道不应该做转发数据报的任何尝试并且简单地丢掉它。数据报的TTL值已经过时。路由器发送一个<em>ICMP TIme Exceeded-TTL Expired In Transit</em>消息回给客户端计算机。</li>
+<li>运行<code>traceroute</code>命令的客户端计算机显示这个路由器的名字，然后发送出另外一个含有值为2的TTL的ICMP <em>Echo</em>消息。</li>
+<li>第一个路由器从TTL值中减去1,并且如果可以，则沿着路径转发数据报到它的下一跳（next hop）。当数据报到达第二个路由器时，TTL值又再次减1,导致TTL的值为0。</li>
+<li>第二个路由器，像第一部中一样，简单地丢弃数据包并使用和第一个路由器使用同样的方式返回一个ICMP消息给发送端。</li>
+<li>随着<code>traceroute</code>不断增加TTL的值并且路由器不断减小这个值直到数据报最终到达它的目的地，这个过程都在在持续地进行。</li>
+<li>当目的计算机接受ICMP<em>Echo</em>消息时，它发送会一个<em>ICMP Echo Reply</em>消息。</li>
+</ol>
+<p>除了定位数据报通过的每个路由器或网关，<code>traceroute</code>工具还记录到达买个路由器所用的round-trip时间（RTT）。根据实现方式的不同，&#96;traceroute可能实际上发送多于一个<em>Echo</em>消息到路由器，目的是为了能够更好地判断round-trip时间。</p>
+<p>不应该使用通过<code>traceroute</code>获得的round-trip时间值来明确地评判网络的性能。许多路由器会简单地给ICMP流量更低的优先权并消耗大量的处理时间来转发更多重要的数据报。</p>
+<p><code>traceroute</code>命令使用例子，命令后面跟IP地址，DNS名字或一个URL：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">traceroute 193.138.240.91  <span class="comment"># 跟IP地址</span></span><br><span class="line">traceroute cthee.cyou</span><br></pre></td></tr></table></figure>
+
+<p>旧版本的Window系统使用<code>tracert</code>命令作为等同于<code>traceroute</code>的命令工具。在Powershell系统上，<code>TraceRoute</code>是一个<code>Test-NetConnection</code>命令的选项：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test-NetConnection www.example.com -TraceRoute</span><br></pre></td></tr></table></figure>
+
+<h3 id="Route"><a href="#Route" class="headerlink" title="Route"></a>Route</h3><p>大多数路由器使用特殊的路由协议来交换路由信息并且动态地有周期地更新它们的路由表。在路由器和计算机上可以手动多次地添加路由条目到路由表中。</p>
+<p><code>route</code>命令在TCPIP网络中有许多用得到的地方。可以使用<code>route</code>来显示路由表中来自一台主机的数据包不能够被高效地路由的情况。如果<code>traceroute</code>命令显示出一个反常的或不高效的路径，可能需要<code>route</code>来确定为什么正在使用的那条路径并且可能得配置一条更高效的路由路径。</p>
+<p><code>route</code>命令也可以用于手动添加，删除并更改路由条中路由条目。Windows系统上route命令使用例子：</p>
+<ul>
+<li><code>route print</code>：显示路由表中的当前的路由条目。</li>
+</ul>
+<p><img src="https://i.cthee.cyou/7e3f5ca7c9b64dd6.png" alt="https://i.cthee.cyou/7e3f5ca7c9b64dd6.png"></p>
+<ul>
+<li><code>route add</code>添加一条新的路由条目到路由表中。例如，为了指定一个路由到目的网络202.34.17.0是5跳的距离并且首先传进一个带有在本地网络192.59.66.5上的一个IP地址的路由器并且子网掩码是255.255.255.224，输入如下命令：</li>
+</ul>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route add <span class="number">207</span>.<span class="number">34</span>.<span class="number">17</span>.<span class="number">0</span> mask <span class="number">255</span>.<span class="number">255</span>.<span class="number">255</span>.<span class="number">224</span> <span class="number">192</span>.<span class="number">59</span>.<span class="number">66</span>.<span class="number">5</span> metric <span class="number">5</span></span><br></pre></td></tr></table></figure>
+
+<p>手动添加的路由条目，在计算机或路由器重启之后会丢失。经常将一系列的<code>route add</code>命令放到一个开机启动脚本中，这样每次启动的时候，都能够使用这些路由。</p>
+<ul>
+<li><code>route change</code>：更改路由表中的条目。下面的例子是更改数据路由到一个有更多更直接的three-hop路径到目的地的不同的路由器：</li>
+</ul>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route change <span class="number">207</span>.<span class="number">34</span>.<span class="number">17</span>.<span class="number">0</span> mask <span class="number">255</span>.<span class="number">255</span>.<span class="number">255</span>.<span class="number">224</span> <span class="number">192</span>.<span class="number">59</span>.<span class="number">66</span>.<span class="number">7</span> metric <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>route delete</code>：从路由表中删除一个条目。</li>
+</ul>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route delete <span class="number">207</span>.<span class="number">34</span>.<span class="number">17</span>.<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Netstat"><a href="#Netstat" class="headerlink" title="Netstat"></a>Netstat</h3><p><code>netstat</code>工具显示和IP，TCP，UDP以及ICMP协议相关的统计数据。统计数据显示比如发送的数据报，接收的数据报以及各种各样可能已经发生的错误。</p>
+<p>计算机有时候会接收到的引发错误，丢弃或是失败的数据报。产生丢弃是因为数据报传输到了错误的位置。如果是一个路由器，当在路由的数据报中的TTL值到达0时，也会丢弃数据报。重组失败发生是在所有的分片数据基于接收的数据报中的TTL值一段时间内不能到达。</p>
+<p><code>netstat</code>命令选项描述：</p>
+<ul>
+<li><code>netstat -s</code>：用于分协议显示每个协议的统计数据。</li>
+<li><code>netstat -e</code>：用于显示关于以太网的统计数据。列出来的项目包括总共的字节，错误，丢弃数据，定向数据报的数量以及广播数量。这些统计数据都是发送和接收的数据报。</li>
+<li><code>netstat -r</code>：用于显示与<code>route print</code>命令相似的路由表信息。除了活跃的路由之外，还显示当前活跃的连接。</li>
+<li><code>netstat -a</code>：用于显示所有活跃连接，包括建立的连接和那些正在监听的连接请求。</li>
+<li><code>netstat -n</code>：显示所有的活跃的连接</li>
+<li><code>netstat -p TCP</code>：用于显示建立的TCP连接</li>
+<li><code>netstat -p UDP</code>：用于显示建立的UDP连接</li>
+</ul>
+<p><img src="https://i.cthee.cyou/0b1132c475d849a9.svg" alt="https://i.cthee.cyou/0b1132c475d849a9.svg"></p>
+<p>Windows PowerShell environments 使用等同于<code>netstat</code>的<code>Get-NetTCPConnection</code>命令。</p>
+<h2 id="Telnet"><a href="#Telnet" class="headerlink" title="Telnet"></a>Telnet</h2><p><strong>telnet</strong>是一系列提供terminal-like访问一台远程计算机的组件。他曾经是最常见的用于达到使用命令行访问一台远程计算机的方式。然而最近几年，更加安全的SSH协议成为终端访问的标准。</p>
+<p>Telnet会话需要一个充当远程终端的Telnet客户端和一个接收连接请求并且允许连接的Telnet服务器。</p>
+<p><img src="https://i.cthee.cyou/ac16e131fdcb42c5.svg" alt="https://i.cthee.cyou/ac16e131fdcb42c5.svg"></p>
+<p>Telnet也是一个协议——一个定义在Telnet服务器和客户端之间交互的规则系统。</p>
+<p>在Unix系统上，<code>telnet</code>命令像下面一样在命令提示符后面输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ telnet hostname  <span class="comment"># hostname是想要连接的计算机的名字。hostanme可以换成IP地址。启动telnet应用程序。</span></span><br></pre></td></tr></table></figure>
+
+<p>telnet也提供一些可以在Telnet会话中使用的特殊命令：</p>
+<ul>
+<li>close：用于关闭连接</li>
+<li>display： 用于显示连接设置，比如，终端模拟器的端口</li>
+<li>envriton：用于设置环境变量。由操作系统使用的环境变量来提供机器指定或用户指定的信息。</li>
+<li>logout：用于登出远程用户和关闭连接</li>
+<li>mode：用于在ACSII或二进制文件传输模式中进行切换。ASCII模式设计用于文本文件的高效传输。二进制模式用于其他的文件类型，比如可执行文件和图形图像。</li>
+<li>open：用于连接一台远程计算机</li>
+<li>quit：用于推出Telnet</li>
+<li>send：用于发送特殊的Telnet协议序列给远程计算机，比如一个终止序列，一个间断序列或一个文件结束（end-of-file）序列</li>
+<li>set：用于设置连接参数</li>
+<li>unset：用于复原连接参数</li>
+<li>?：用于打印帮助信息</li>
+</ul>
+<h2 id="Berkeley-Remote-Utilities"><a href="#Berkeley-Remote-Utilities" class="headerlink" title="Berkeley Remote Utilities"></a>Berkeley Remote Utilities</h2><p>Berkeley Software Distribution Unix实现，称作BSD Unix，是Unix发展过程中的主要步骤。BSD Unix的理念中的一个是设计用于提供远程访问的一小部分命令行工具。这些工具又称作Berkeley r*工具，因为每个工具的名字的开头都是表示remote的r。</p>
+<p>一些Berkeley r*工具：</p>
+<ul>
+<li>Rlogin：允许用户远程登录</li>
+<li>Rcp：提供远程文件传输</li>
+<li>Rsh：通过<code>rshd</code>守护程序执行一个远程命令</li>
+<li>Rexec：通过<code>rexecd</code>守护程序执行一个远程命令</li>
+<li>Ruptime：显示运行时的系统信息以及连接的用户数量</li>
+<li>Rwho：显示当前连接的用户的信息</li>
+</ul>
+<p>r*工具使用一个称为<strong>trusted access</strong>的概念。Trusted access允许一台计算机信任另外一台计算机的验证。如下图所示，如果计算机A将计算机B指定为一台信任的主机，那么登录到计算机B的用户可以使用r*工具在不提供密码的情况下访问计算机A。计算机A也可以指定特定的用户为信任的用户。被信任的主机和用户被标识在用户尝试访问的计算机上的&#x2F;etc&#x2F;hosts.equiv文件中。每个用户主目录中的rhosts文件也能够被用于授予访问到该用户帐号的权限。</p>
+<p><img src="https://i.cthee.cyou/41aa727931764c37.svg" alt="https://i.cthee.cyou/41aa727931764c37.svg"></p>
+<p>hosts.equiv和rhosts文件的脆弱性是r*工具不再被认为是安全的原因之一。</p>
+<h2 id="Secure-Shell"><a href="#Secure-Shell" class="headerlink" title="Secure Shell"></a>Secure Shell</h2><p>当今网络上，远程shell会话常常通过一套协议和在集中在**Secure Shell(SSH)*<em>集合下的工具来管理。SSH本质上等同于只是携带了公钥加密的Berkeley r</em>工具的实现。SSH集合中的主要部分：</p>
+<ul>
+<li>ssh：一个替代<code>rlogin</code>,<code>rsh</code>和<code>telnet</code>的远程shell程序</li>
+<li>scp：一个替代<code>Rcp</code>的文件传输工具</li>
+<li>sftp：一个替代FTP的文件传输工具</li>
+</ul>
+<p>最受欢迎的SSH实现是自由的OpenSSH项目，该项目在Unix，Linux，Windows以及Mac OS上都可用。OpenSSH含有一些用于管理密钥签名和加密的额外工具。使用Openssh并在提示符后面提供密码登录到一个远程系统之后，就可以像在本地命令shell一样操作。</p>
+<p>除了提供安全的远程shell连接，SSH也支持端口转发的形式，目的是其他不安全的应用程序能够通过SSH的加密连接安全地运行。<br>大部分的现代的操作系统都带SSH客户端程序，但是不能连接一个远程计算机除非SSH服务运行在远程系统上。</p>
+<h2 id="Network-Management"><a href="#Network-Management" class="headerlink" title="Network Management"></a>Network Management</h2><p>管理大量计算机的的IP专家需要效率更好的管理工具作为第二种选择。网络管理工具让用户配置，监控并且管理远程系统和来自单一接口的设备。这些工具不仅是等待用户查找出问题。运行在远程系统上的代理用户程序能够自动地发挥状态信息，以及如果硬盘空间，资源使用或网络性能超过与预先设置的阈值时，系统甚至会通过邮件或文本消息来警告用户。</p>
+<p>两个经常被许多网络管理工具使用的协议——简单网络管理协议（SNMP）和远程监控（RMON）协议。自从像SNMP这样子的工具发展以来，得到许多网络硬件和软件公司支持的DMTF已经推出了比如WBEM以及CIM等标准，这些标准给开发者和硬件厂商开发出与网络管理工具通信的驱动程序提供了更通用的方案。</p>
+<h3 id="Simple-Network-Management-Protocol"><a href="#Simple-Network-Management-Protocol" class="headerlink" title="Simple Network Management Protocol"></a>Simple Network Management Protocol</h3><p>SNMP是一个设计用于管理并且监控网络上的远程设备。SNMP支持一个让一个网络管理员管理从单个工作站到远程管理并监控计算机，路由器以及其他设备的系统。</p>
+<p>SNMP架构的主要部分：</p>
+<ul>
+<li>Network monitor：一个称为管理员或网络管理的控制台的管理控制台提供一个用于管理网络上的设备的中心位置。网络网络监视器尝试是一个安装了必要的SNMP管理软件的普通计算机。</li>
+<li>Nodes：网络上的设备</li>
+<li>Community：在常见的管理网络中的一组结点。</li>
+</ul>
+<p><img src="https://i.cthee.cyou/04e38dabad224e5b.svg" alt="https://i.cthee.cyou/04e38dabad224e5b.svg"></p>
+<p>协议给通信提供方案，但是实际的交互发生在运行在通信设备的上的应用程序。在SNMP例子中，一个称为代理的程序运行在远程结点上并且与运行在网络监视器上的管理软件进行通信。</p>
+<p><img src="https://i.cthee.cyou/94cf26bf255f4925.svg" alt="https://i.cthee.cyou/94cf26bf255f4925.svg"></p>
+<p>监视器和代理使用SNMP协议来通信。SNMP使用数据报（UDP）协议端口161和162。通过community name来提供安全，社区的名字又称为<strong>community string</strong>。（你得知道连接的community string）。在某些情况下，也可以配置代理只接收来自特定IP地址的数据。最新办的SNMP版本，SNMP v3，为系统提供了验证，隐私以及更好的完整的安全。</p>
+<p>SNMP定义大量的管理参数。网络监视器使用这个管理信息基础（MIB）来请求来自代理的信息并且更改配置设置。</p>
+<h3 id="The-SNMP-Address-Space"><a href="#The-SNMP-Address-Space" class="headerlink" title="The SNMP Address Space"></a>The SNMP Address Space</h3><p>SNMP进程都是在监视器和代理软件上运行的，它们能够交换关于在MIB中的特定的可寻址位置的信息。MIB允许监视器和代理准确并且无二异性的交换信息。监视器和代理需要相同的MIB结构，因为他们必须能够独一无二地识别一个特定单元的信息。</p>
+<p><img src="https://i.cthee.cyou/e4dc8016a4bd4bce.svg" alt="https://i.cthee.cyou/e4dc8016a4bd4bce.svg"></p>
+<p>MIB是一个含有每小块信息的一个唯一地址的层次地址空间。注意MIB地址不像网络地址一样，在地址中它们表示一个位置或实际的设备。MIB使用点状助记符号标识在MIB对象中的每个唯一的地址。</p>
+<p>大部分的在MIB中的可寻址的位置涉及到计数器（counter），该计算器明显是数字。例如ipForwarding，或计算接收到的进来的数据报数量的ipInReceives。</p>
+<p>MIB是有层次地安排进入一个地址空间的一个参数集合。层次性的地址结构确保了所有的SNMP设备以同样的方式查询特定的设置。这个方法还方便于去中心化。</p>
+<p>MIB信息可以存在任何多种形式：数字（numeric），文本（texual），IP地址等等。MIB结构是一个总是起始于根（root）并沿着层次结构向下处理直到能够唯一识别想读取设置的地址。例如为了处理<em>ipDefaultTTL</em>以及<em>ipInReceive</em>MIBs，SNMP监视器会发送如下MIB地址该SNMP代理：</p>
+<p><em>.iso.org.dod.internet.mgmt.mib.ip.ipDefaultTTL</em><br><em>.iso.org.dod.internet.mgmt.mib.ip.ipInReceives</em></p>
+<p>每一个MIB树中的位置也有一个同等的数字地址。可以通过一个字母数字字符串或它的数字地址查询到一个MIB。事实上，网络监视器向代理查询信息时使用的是数字的形式。</p>
+<p>.1.3.6.1.2.1.4.2<br>.1.3.6.1.2.1.4.3</p>
+<h3 id="SNMP-Commands"><a href="#SNMP-Commands" class="headerlink" title="SNMP Commands"></a>SNMP Commands</h3><p>网络监视代理软件能够响应三个命令：<em>get</em>，<em>getnext</em>和<em>set</em>。它们的命令功能：</p>
+<ul>
+<li>get：指导代理读取并从MIB中返回一个特定的信息单元。</li>
+<li>getnext：指导代理读取并且从MIB中返回下一个序号的信息单元。例如，可以用于读取一个有许多个值的表。</li>
+<li>set：指导代理设置可配置的参数或重设一个对象，比如一个网络接口或一个特定的计数器。</li>
+</ul>
+<p>SNMP软件实际上根据网络管理员的需求能够用多种不同的方式运行。不同类型的SNMP行为：</p>
+<ul>
+<li>网络监视器代理总是以查询&#x2F;响应的方式运行。它能够接收来自监视器的请求并且响应监视器的请求。代理收到<em>get</em>或<em>getnext</em>命令的两者中的一个并从一个可寻址的位置返回信息。</li>
+<li>尽管有第二种选择，代理经常配置为当发生异常事件时发送未经请求的信息给网络监视器。这些未经请求的消息又称为陷阱信息（trap messages）或陷阱（traps）。例如，SNMP代理软件总是运行在监控是否超过固定阈值的模式中。阈值可以使用<em>set</em>命令来设置确定。一个阈值被超过的事件中，代理捕获到该事件，然后构造并发送一个未经请求信息给网络网络监视器，标识事件发生的计算机的IP地址，还有被超过的哪个阈值。</li>
+<li>代理也能够接收来自监视器请求来执行确定的动作，比如重置一个路由器上的一个特定端口或设置使用在捕获事件中的阈值等级。再次强调，<em>set</em>命令用于设置可配置的参数或重置计数器或接口。</li>
+</ul>
+<p>在很多SNMP系统上，默认的社区名字是<em>public</em>。</p>
+<p>SNMP缺点：</p>
+<ul>
+<li>不能看到更低的协议层：SNMP处在UDP上面的应用层，所以不能看到发生在协议栈中更底层发生的事情，比如发生在网络接入层的事情。</li>
+<li>需要一个运行的（operational）协议栈：SNMP监视器和代理需要一个完全运行的协议栈来进行通信。如果有阻止这个栈正常运行的网络问题，SNMP不能协助排查这个问题。</li>
+<li>会产生大量的网络流量：SNMP使用的查询响应机制会引起大量的网络流量。尽管当繁盛重要时间时，才会发送未经请求的信息，但实际中网络监视器生成固定的数量的网络流量，因为它们向代理查询特定的信息。</li>
+<li>提供的数据太多以及信息量太少：在一个MIB中含有数以千记的地址位置，因此能够获取到很小部分的信息。然而，需要功能强大的管理控制台来分析这些细节并且能够提供关于发生在特定机器上的事情的有用的分析。</li>
+<li>提供一个计算机视角而不是网络：SNMP设计用于系统关于特定设备的信息。不能直接地看到发生在网络段上的事情。</li>
+</ul>
+<h3 id="Remote-Monitoring"><a href="#Remote-Monitoring" class="headerlink" title="Remote Monitoring"></a>Remote Monitoring</h3><p>RMON是MIB地址空间的一个扩展并且为了远程局域网络（LANs）的监控和维护而开发。不想SNMP，它提供从单台计算机获取来的信息，RMON直接从网络媒体获取数据并且因此提供关于LAN的整体的观察。</p>
+<p>RMON MIB在地址位置 .1.3.5.1.2.1.16处开始并且当前被分割成20个组，.1.3.6.1.2.1.16.1到.1.3.6.1.2.1.16.20。由IEFT开发的RMON使用来解决SNMP的缺点的和给在远程局域网络上的流量提供更广阔的可见性。</p>
+<p>RMON版本：</p>
+<ul>
+<li>RMON 1：RMON 1面向于监视以太局域网。所有在RMON 1中的组关注于监视OSI模型中的底下两层，即物理层和数据链路层（与TCPIP模型的网络接入层相对应）。</li>
+<li>RMON 2：RMON 2 提供RMON 1的功能并且也能够让用户监视OSI模型中的更上面的五层（与TCPIP中的网络层，传输层，应用层相对应）。</li>
+</ul>
+<p>RMON的目的是捕获网络流量数据。一个RMON代理（或者probe）监听一个网络段并且转发流量数据到一个RMON控制台。如果网络含有多个段，不同的代理监听每个段。RMON信息被手机在和不同类型的信息相关的统计数据组中。RMON 1组名字如下：</p>
+<ul>
+<li>以太网统计数据：这个统计数据组拥有以表的形式给每个和代理相连的网络段的统计信息。在这个组中的一些计数器跟踪数据包的数量，广播的数量，冲突的数量，过小以及超大的数据包的数量等等。</li>
+<li>以太网历史：以太网历史组拥有阶段性编辑以及为了将来的读取而存储的统计信息。</li>
+<li>历史控制：历史控制组含有管理数据样本的控制。</li>
+<li>警告：警告组联合事件组一起工作。警告组阶段性的检查来自监视器（probe）内部变量的统计样本并且将它们与设置阈值进行比较；如果超过了这些阈值，则生成能够用于通知网络管理员的事件。</li>
+<li>主机：主机组为网络段上的每个主机维护统计数据；通过检查数据报中的源以及目的物理地址来知道这些主机。</li>
+<li>前n组主机：主机前n组用于生成报告。该报告基于在特定分类中的前n台主机的统计数据而生成。例如网络管理员想要知道哪台主机出现在最多的数据报中，或哪台主机发送最大或最小的数据报。</li>
+<li>矩阵（matrix）：矩阵组为每个网络上被监视的数据报构造一个含有源物理地址和目的物理地址对的表。那些地址对定义了在两个地址间的通信。</li>
+<li>过滤器（filter）：过滤器组允许生成能够用于匹配，或过滤来自网络的数据报的二进制模式。</li>
+<li>包捕获（packet capture）：数据包捕获组允许捕获由过滤组选择数据报，以供以后网络管理员进行检索以及检查。</li>
+<li>时间（Event）：事件组与警告组联合工作，在一个被监视对象的阈值被超过时生成能够通知网络管理员的事件。</li>
+</ul>
+<h2 id="小小的总结"><a href="#小小的总结" class="headerlink" title="小小的总结"></a>小小的总结</h2><ul>
+<li>SNMP主要使用UDP端口161；端口162用于SNMP的陷阱（traps）。</li>
+<li>SNMP最初拥有监控网络设备。RMON直接总网络媒体捕获数据并且因此总是用于监控网络流量的更好的选择。</li>
+<li>用<code>arp</code>查看ARP缓存表。</li>
+<li><code>netstat -r</code>打印出路由表，等同于使用<code>route</code>命令。</li>
+<li><code>netstat -t</code>打印出通过TCP连接的主机。</li>
+</ul>
+<p><a href="/IPv6-Next-Generation/">上一篇</a><br><a href="/Classic-Services/">下一篇</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E9%97%AE%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">连接问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Protocol-Dysfunction-and-Misconfiguration"><span class="toc-number">2.</span> <span class="toc-text">Protocol Dysfunction and Misconfiguration</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Ping"><span class="toc-number">2.1.</span> <span class="toc-text">Ping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configuration-Information-Utilities"><span class="toc-number">2.2.</span> <span class="toc-text">Configuration Information Utilities</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Address-Resolution-Protocol"><span class="toc-number">2.3.</span> <span class="toc-text">Address Resolution Protocol</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Line-Problems"><span class="toc-number">3.</span> <span class="toc-text">Line Problems</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Name-Resolution"><span class="toc-number">4.</span> <span class="toc-text">Name Resolution</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Network-Performance-Problems"><span class="toc-number">4.1.</span> <span class="toc-text">Network Performance Problems</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Traceroute"><span class="toc-number">4.1.1.</span> <span class="toc-text">Traceroute</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Route"><span class="toc-number">4.2.</span> <span class="toc-text">Route</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Netstat"><span class="toc-number">4.3.</span> <span class="toc-text">Netstat</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Telnet"><span class="toc-number">5.</span> <span class="toc-text">Telnet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Berkeley-Remote-Utilities"><span class="toc-number">6.</span> <span class="toc-text">Berkeley Remote Utilities</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Secure-Shell"><span class="toc-number">7.</span> <span class="toc-text">Secure Shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Network-Management"><span class="toc-number">8.</span> <span class="toc-text">Network Management</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Simple-Network-Management-Protocol"><span class="toc-number">8.1.</span> <span class="toc-text">Simple Network Management Protocol</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-SNMP-Address-Space"><span class="toc-number">8.2.</span> <span class="toc-text">The SNMP Address Space</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SNMP-Commands"><span class="toc-number">8.3.</span> <span class="toc-text">SNMP Commands</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Remote-Monitoring"><span class="toc-number">8.4.</span> <span class="toc-text">Remote Monitoring</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Classic-Tools/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Classic-Tools/&text=Classic Tools"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Classic-Tools/&title=Classic Tools"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Classic-Tools/&is_video=false&description=Classic Tools"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Classic Tools&body=Check out this article: https://www.cthee.cyou/Classic-Tools/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Classic-Tools/&title=Classic Tools"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Classic-Tools/&title=Classic Tools"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Classic-Tools/&title=Classic Tools"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Classic-Tools/&title=Classic Tools"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Classic-Tools/&name=Classic Tools&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

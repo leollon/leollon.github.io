@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="本文目的：  描述IP转发以及它是如何工作的 分辨距离向量路由和链路状态路由 讨论核心，内部和外部路由的角色 描述公共内部路由RIP以及OSPF协议  Routing in TCPIP在最基本的性质中，一个路由器（router）是通过逻辑地址（logical address）转发流量的一个设备。一个经典的路由器使用Internet layer头部的IP地址信息工作在Internet layer（对">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Routing">
+<meta property="og:url" content="https://www.cthee.cyou/Routing/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="本文目的：  描述IP转发以及它是如何工作的 分辨距离向量路由和链路状态路由 讨论核心，内部和外部路由的角色 描述公共内部路由RIP以及OSPF协议  Routing in TCPIP在最基本的性质中，一个路由器（router）是通过逻辑地址（logical address）转发流量的一个设备。一个经典的路由器使用Internet layer头部的IP地址信息工作在Internet layer（对">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.cthee.cyou/e7dc4d3cf4c249b8.svg">
+<meta property="og:image" content="https://i.cthee.cyou/7be3ab7d8e30478d.svg">
+<meta property="og:image" content="https://i.cthee.cyou/a188425ba8714eed.svg">
+<meta property="og:image" content="https://i.cthee.cyou/dba2c75bdb7e4654.svg">
+<meta property="og:image" content="https://i.cthee.cyou/e092c3a432134421.svg">
+<meta property="og:image" content="https://i.cthee.cyou/037834ce7d2943e8.svg">
+<meta property="og:image" content="https://i.cthee.cyou/ac4b3279001f4b27.svg">
+<meta property="og:image" content="https://i.cthee.cyou/118546cf06904ea8.svg">
+<meta property="article:published_time" content="2019-08-15T04:37:59.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.201Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="TCPIP">
+<meta property="article:tag" content="Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.cthee.cyou/e7dc4d3cf4c249b8.svg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Routing</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/Getting-Connected/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/The-Application-Layer/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Routing/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Routing/&text=Routing"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Routing/&title=Routing"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Routing/&is_video=false&description=Routing"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Routing&body=Check out this article: https://www.cthee.cyou/Routing/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Routing/&title=Routing"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Routing/&title=Routing"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Routing/&title=Routing"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Routing/&title=Routing"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Routing/&name=Routing&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Routing-in-TCPIP"><span class="toc-number">1.</span> <span class="toc-text">Routing in TCPIP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-Is-a-Router"><span class="toc-number">1.1.</span> <span class="toc-text">What Is a Router</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Routing-process"><span class="toc-number">1.2.</span> <span class="toc-text">The Routing process</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%84%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1"><span class="toc-number">1.2.1.</span> <span class="toc-text">预配置路由</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Routing-Table-Concepts"><span class="toc-number">1.3.</span> <span class="toc-text">Routing Table Concepts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Look-at-IP-Forwarding"><span class="toc-number">1.4.</span> <span class="toc-text">A Look at IP Forwarding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Direct-Versus-Indirect-Routing"><span class="toc-number">1.5.</span> <span class="toc-text">Direct Versus Indirect Routing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Routing-Algorithms"><span class="toc-number">1.6.</span> <span class="toc-text">Dynamic Routing Algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Distance-Vector-Routing"><span class="toc-number">1.6.1.</span> <span class="toc-text">Distance-Vector Routing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Link-State-Routing"><span class="toc-number">1.6.2.</span> <span class="toc-text">Link-State Routing</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Routing-on-Complex-Networks"><span class="toc-number">2.</span> <span class="toc-text">Routing on Complex Networks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Examining-Interior-Routers"><span class="toc-number">2.1.</span> <span class="toc-text">Examining Interior Routers</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Routing-Information-Protocol"><span class="toc-number">2.1.1.</span> <span class="toc-text">Routing Information Protocol</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Open-Shortest-Path-First"><span class="toc-number">2.1.2.</span> <span class="toc-text">Open Shortest Path First</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exterior-Routers-BGP"><span class="toc-number">3.</span> <span class="toc-text">Exterior Routers: BGP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Public-and-Private-ASNs"><span class="toc-number">3.1.</span> <span class="toc-text">Public and Private ASNs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Classless-Routing"><span class="toc-number">4.</span> <span class="toc-text">Classless Routing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Higher-in-the-Stack"><span class="toc-number">5.</span> <span class="toc-text">Higher in the Stack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lower-in-the-Stack"><span class="toc-number">6.</span> <span class="toc-text">Lower in the Stack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">7.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Routing
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-08-15T04:37:59.000Z" itemprop="datePublished">2019-08-15</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Networks/" rel="tag">Networks</a>, <a class="tag-link-link" href="/tags/TCPIP/" rel="tag">TCPIP</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>本文目的：</p>
+<ul>
+<li>描述IP转发以及它是如何工作的</li>
+<li>分辨距离向量路由和链路状态路由</li>
+<li>讨论核心，内部和外部路由的角色</li>
+<li>描述公共内部路由RIP以及OSPF协议</li>
+</ul>
+<h2 id="Routing-in-TCPIP"><a href="#Routing-in-TCPIP" class="headerlink" title="Routing in TCPIP"></a>Routing in TCPIP</h2><p>在最基本的性质中，一个路由器（router）是通过逻辑地址（logical address）转发流量的一个设备。一个经典的路由器使用<br>Internet layer头部的IP地址信息工作在Internet layer（对应于OSI模型中的网络层（Network layer））。<br>因为OSI中网络层也称为第三层，因此有时候又称一个路由器为第三层设备。还有更高层的路由器（位于OSI模型中的4-7层）。</p>
+<p>路由器是任何大型TCPIP网络必需的部分。当路由器从一个网络传递数据到下一个网络时，路由器替换网络层（Network<br>Access layer）头部信息，所以路由器能够连接不相似的网络类型。许多路由器维护着基于距离，带宽以及时间考虑的最佳路径<br>的详细信息。</p>
+<h3 id="What-Is-a-Router"><a href="#What-Is-a-Router" class="headerlink" title="What Is a Router"></a>What Is a Router</h3><p>在最简单的形式（或至少在最基本形式中），一个路由器看起来就像是一台有两个网络适配器的计算机。早期的路由器确实是有两<br>个或更多网络适配器的计算机（称之为多重连接计算机）。理解路由的第一步是要记住IP地址是属于适配器而不是计算机。事实<br>上，两个适配器是有可能处在对应于完全不同物理网络的完全不同的IP子网上。</p>
+<p><img src="https://i.cthee.cyou/e7dc4d3cf4c249b8.svg" alt="e7dc4d3cf4c249b8.svg"></p>
+<p>复杂网络上的路由：</p>
+<p><img src="https://i.cthee.cyou/7be3ab7d8e30478d.svg" alt="7be3ab7d8e30478d.svg"></p>
+<h3 id="The-Routing-process"><a href="#The-Routing-process" class="headerlink" title="The Routing process"></a>The Routing process</h3><p>路由器职责的大致的描述：</p>
+<ol>
+<li>路由器从它连接的网络之一接收数据。</li>
+<li>路由器往协议栈向上传递数据到Internet layer。换句话说，路由器丢弃Network Access 层的头部信息并且重组（如果有必要）数据报。</li>
+<li>路由器检查IP头部中的目的地址。</li>
+<li>如果数据是要发往不同的网络，路由器查询路由表来决定往哪个地方发送数据。</li>
+<li>在路由器决定它的哪个适配器将接收数据之后，它将会向下传递数据通过适合的Network Access层软件通过适配器进行传输。</li>
+</ol>
+<p>事实上，路由表以及建立路由表的协议是路由器的明显特征。</p>
+<p>路由过程图示：</p>
+<p><img src="https://i.cthee.cyou/a188425ba8714eed.svg" alt="a188425ba8714eed.svg"></p>
+<p>根据获取路由表信息来源，两种主要类型路由的命名：</p>
+<ul>
+<li>静态路由：需要网络管理员手动输入路由信息</li>
+<li>动态路由：使用路由协议基于获取的路由信息动态建立路由表。</li>
+</ul>
+<p>静态路由局限性:</p>
+<ol>
+<li>不能很好地适配具有成百上千个路由的大型网络</li>
+<li>除了最简单的网络之外的所有网络，静态路由需要网络管理员不成比例的时间投入，网络管理员不仅仅是创建而且不断的更新路由表信息。</li>
+<li>静态路由不能很快地适应网络，例如，一个宕机的路由器。</li>
+</ol>
+<h4 id="预配置路由"><a href="#预配置路由" class="headerlink" title="预配置路由"></a>预配置路由</h4><p>预配置静态路由有时候用于网络问题排障。在其他情况下，管理员可能提供静态路径来充分利用快速的网络连接或平衡网络流量。</p>
+<h3 id="Routing-Table-Concepts"><a href="#Routing-Table-Concepts" class="headerlink" title="Routing Table Concepts"></a>Routing Table Concepts</h3><p>路由表的职责以及其他Internet layer的路由元素是为了传输数据到适当的本地网络。</p>
+<p>一张极其基本的路由表内容：</p>
+<p><img src="https://i.cthee.cyou/dba2c75bdb7e4654.svg" alt="dba2c75bdb7e4654.svg"></p>
+<p>路由表本质上是将目的网络IDs映射到下一跳的IP地址——数据报在去往目的网络的下一站。路由表在网络直接连接路由器本身和网<br>络通过其他路由器间接链接是有区别的。下一跳可能是目的网络（如果是直接连接）或前往目的网络的下一个下游路由器。<br>The Router Port与通过哪个路由器转发数据的路由器端口相关。路由表中的下一跳条目是理解动态路由的关键。复杂网路中，<br>可能存在多条到达目的网络的路径，路由器必须决定下一跳跟着这些路径中的一条。动态路由基于通过路由协议获取的信息做出决<br>策。</p>
+<h3 id="A-Look-at-IP-Forwarding"><a href="#A-Look-at-IP-Forwarding" class="headerlink" title="A Look at IP Forwarding"></a>A Look at IP Forwarding</h3><p>主机和路由器都有路由表，主机的路由表比路由器的路由表更简单，主机经常利用默认路由器或默认网关。默认网关是接收不能在<br>本地网络上进行传输的数据报的路由器。对于单台计算机，路由表可能只含有两行：一行本地网络的条目和用于不能在本地网络段进行传输的数据包的默认路由。如果网络IP地址不在本地网络段上，主机发送数据包给一个路由器。</p>
+<p><strong>IP forwarding</strong>过程实际上不是将路由器的地址放到IP header中。而是，主机向下传递数据报和路由器的IP地址到<br>Network Access层，Network Access层的协议软件使用一个分开的单独查询过程将数据报包装在一个帧中用于本地传输到路<br>由器。换句话说，一个转发的数据报的IP地址跟最终收到的数据的主机有关。转运数据报到本地网络上的路由器的帧的物理地址是<br>路由器本地适配器的物理地址。</p>
+<p>简要描述该过程：</p>
+<ol>
+<li>一台主机网要发送数据报。主机检查它的路由表。</li>
+<li>如果数据报不能在本地网络上被传输，主机从路由表中提取与目标地址相关联的路由器的IP地址。（万一主机在本地网络段上，这个路由器的IP地址很大可能是默认网关的地址。）然后使用ARP将路由器的IP地址解析为物理地址。</li>
+<li>发往远程主机的数据报与收到数据报的路由器的物理地址被传递给网络接入层（Network Access layer）。</li>
+<li>路由器的网络适配器收到帧，因为帧的目的物理地址与路由器的物理地址匹配。</li>
+<li>路由器拆开数据帧并且往上传到Internet layer。</li>
+<li>路由器检查数据包的IP地址。如果IP地址匹配路由器自己的IP地址，则数据的目的地址就是路由器本身，否则，路由器通过检<br>查自己的路由表来找到与数据帧目的地址相关联的路由，然后尝试转发数据帧。</li>
+<li>如果数据报不能被任何和路由器相连的网络段传输，路由器发送数据报到另外一个路由器，然后重复（回到步骤 1），直到最<br>后的路由器能够直接将数据报传输给目的主机。</li>
+</ol>
+<p><img src="https://i.cthee.cyou/e092c3a432134421.svg" alt="e092c3a432134421.svg"></p>
+<p>上述描述的步骤6是一个路由器的一个重要特征。一个设备想要像一个路由器一样工作，除了有两个网卡，还得这个设备有支持IP<br>转发的必需软件，否则数据不会从一个接口传递到另外一个接口。当一台计算机未被配置为IP路由时，它收到的数据报是发往不同<br>的计算机，数据报被简单地忽略掉。</p>
+<h3 id="Direct-Versus-Indirect-Routing"><a href="#Direct-Versus-Indirect-Routing" class="headerlink" title="Direct Versus Indirect Routing"></a>Direct Versus Indirect Routing</h3><p>如果一个路由器仅仅是连接两个子网，那这个路由器的路由表可能会很简单。该路由器将不会碰上IP地址不会和它的端口相关联的<br>情况，并且路由器是直接连接在所有的子网上。</p>
+<p><img src="https://i.cthee.cyou/037834ce7d2943e8.svg" alt="037834ce7d2943e8.svg"></p>
+<p>稍微更复杂的网络：</p>
+<p><img src="https://i.cthee.cyou/ac4b3279001f4b27.svg" alt="ac4b3279001f4b27.svg"></p>
+<p>有两种方式知道间接路由：从系统管理员或其他路由器。这两个选项各自与静态路由和动态路由相关。系统管理员直接输入网络路<br>由到路由表中，这是静态路由，或Router B告诉Router A相关的网段，这是动态路由。</p>
+<p>动态路由优点：</p>
+<ul>
+<li>不要人工干预</li>
+<li>响应网络中的变化，假设一个新的网段连接到Router B，Router B通知Router A这个网络变化。</li>
+</ul>
+<p>路由器使用静态和动态路由组合。系统管理员可能配置几条静态路径并且让其他被分配为动态的。静态路由有时候用于强制流量走<br>特定的路径。例如，系统管理员可能想配置路由，让流量走高带宽的连接。</p>
+<h3 id="Dynamic-Routing-Algorithms"><a href="#Dynamic-Routing-Algorithms" class="headerlink" title="Dynamic Routing Algorithms"></a>Dynamic Routing Algorithms</h3><p>路由器的行为完全依赖于路由表。很多路由协议围绕距离向量路由以及链路状态路由两种方法进行设计。后面，将进一步看到一对<br>使用这些方法设计的路由协议：路由信息协议（RIP，距离向量路由协议）以及开放最短路径优先（OSPF，链路状态路由协议）。</p>
+<h4 id="Distance-Vector-Routing"><a href="#Distance-Vector-Routing" class="headerlink" title="Distance-Vector Routing"></a>Distance-Vector Routing</h4><p>距离向量路由，又称Bellman-Ford routing是一个被许多路由协议使用的高效并且简单的路由方法。距离向量路由被设计用于<br>最小化路由器之间需要的通信和必须驻留在路由表中的数据量。<strong>距离向量路由的底层原理</strong>是，路由器没必要知道通往每个网络段的完整路径——它只需要知道在哪个方向发送一个数据报到下一个网络段（术语<em>向量</em>)。网络段之间的距离通过测量一个数据从一个网段到另外一个网段必须经过的路由器数量。路由器使用距离向量算法通过最小化数据报经过路由器的数量来优化路径。这个距离参数被称为<em>hop count</em>。</p>
+<p>距离向量路由工作步骤：</p>
+<ol>
+<li>当路由器A初始化时，它感知本身直接连接的网络段并且那些网段放置到它的路由表中。每一个直接连接的网段的hop count为0，因为数据报没必要通过任何路由器从这个路由器路由到这个网段。</li>
+<li>在周期性的间隔时间，路由器从每个邻居路由器收到一份报告。报告里面列出邻居路由器知道的任何网段以及到达那些网段hop count。</li>
+<li>当路由器A收到来自邻居路由器的报告，它将这些新的路由信息集成到它自己的路由表中：</li>
+</ol>
+<ul>
+<li>如果路由器B知道的一个网络段当前不在路由器A的路由表中，路由器A添加这个网络段到它自己的路由表中。新网段的路由是路<br>由器B，意味着如果路由器A收到一个发往新网段的数据报，则转发那个数据报到路由器B。不管路由器B列出来的hop count是什么，新网段的hop count在原来的基础上加1。</li>
+<li>如果路由器B列出的一个网段已经存在路由器A的路由表中，路由器A给从路由器B收到的hop count加1并且比较修改后的hopcount和存储在自己路由表上的值。如果通过B的路径比路由器A知道的路径更高效（更少的hops），路由器A修改它的路由表以将路由器B列为寻址到该段的数据报的路由。</li>
+<li>如果修订的通过路由器B（从B收到的hop count加1）到达该网段的路径的hop count大于路由器A中路由表当前的hop<br>count，则不使用通过B的路由。路由器A继续使用原来路由表中的路由。</li>
+</ul>
+<p>关于路由的信息缓慢地通过网络进行散播。假设网络没有发生变化，路由器最终将知道到达每个网段的最高效的路径。</p>
+<p>距离向量路由更新例子图示：</p>
+<p><img src="https://i.cthee.cyou/118546cf06904ea8.svg" alt="118546cf06904ea8.svg"></p>
+<h4 id="Link-State-Routing"><a href="#Link-State-Routing" class="headerlink" title="Link-State Routing"></a>Link-State Routing</h4><p>如果路径效率和数据报必须经过的路由器数量一致，距离向量路由是一个值得的方式。距离向量路由的缺点：相同的路由跳数<br>（hop count），路由通过低速连接的时间长于通过高速连接的时间。对于大型路由分组，不具有很好的伸缩性能。路由器维护的<br>路由表中的路由条目不仅仅是向量和hop-count（跳数）值。更重要的是，完整的距离以及路由跳数值必须通过路由器间进行传<br>输，即使大部分的信息不是必需的。相比于距离向量路由，链路状态路由现在是主要的选择。</p>
+<p><strong>链路状态路由的原理</strong>是每个路由器尝试建立自己内部的网络拓扑图。每个路由器周期性地给网络发送状态信息。状态信息列出<br>这个路由器直接连接的其他路由器以及连接（连接当前是否可用）状态。路由器使用从其他路由器收到的状态信息建立一个网络拓<br>扑图。</p>
+<p>链路状态协议的缺点：需要更多的处理时间。优点：由于不需要散播整张路由表，降低了带宽的消耗。也更容易通过网络跟踪问题，因为从一个路由器发送来的状态信息通过网络传输是不变的。（而距离向量的方法中，每次路由信息经过不同的路由器，路由跳数会增加）。</p>
+<h2 id="Routing-on-Complex-Networks"><a href="#Routing-on-Complex-Networks" class="headerlink" title="Routing on Complex Networks"></a>Routing on Complex Networks</h2><p>在引领互联网的ARPAnet系统中，一小部分的核心路由器用于作为互联网络的中心主干，连接配置好的以及自动管理的个别网络。核心路由其知道每个网络，尽管它们不知道每个子网。只要数据报能够找到到达核心路由的一条路径，它就能到达系统中的任意点。</p>
+<p>由独立管理的网络组成的互联网称为自制系统。大多数路由器的都处在下面的大致的类别。尽管一个路由器可能有多个职责，但是硬件，和也许更重要的是路由器使用的协议都会被调整为网络的职责。</p>
+<ul>
+<li>外部路由器：外部路由器在自治网络之间交流路由信息。它们维护关于它们自己以及邻居自治网络的路由信息。外部路由器传统意义上使用一种称之为外部网关（EGP(Exterior Gateway Protocol)）的协议。实际的EGP协议现在是过时了，现在作为外部路由器，使用更新的EGPs路由协议代替过时的EGP。Border Gateway Protocol（BGP）是现在更受欢迎使用的EGP。一个外部路由器经常也在它的资质系统中充当内部路由路由器。</li>
+<li>内部路由器：在自治区域内共享路由信息的路由器，称之为内部网关。这些路由器使用一类称为内部网管协议（IGPs）的路由协议。内部网关协议中包含有RIP以及OSPF。</li>
+</ul>
+<p>有外部路由器在内部组路由器之间传递路由信息的情况下，一个大型的自治系统可能由多个组的内部路由组成。</p>
+<h3 id="Examining-Interior-Routers"><a href="#Examining-Interior-Routers" class="headerlink" title="Examining Interior Routers"></a>Examining Interior Routers</h3><p>一个内部路由器应该完整的知道在它组内连接的任意网段的其他路由器，但是不需要完全知道在自治系统之外的网络。网络管理员<br>必须为网络的状况选择和网络硬件兼容的内部路由协议。如今的大多数路由器都支持多路由协议。</p>
+<h4 id="Routing-Information-Protocol"><a href="#Routing-Information-Protocol" class="headerlink" title="Routing Information Protocol"></a>Routing Information Protocol</h4><p><strong>RIP</strong> 是一个距离向量协议，它通过路由跳数(hop count)来决定到达目的地的最佳路由，查看<a href="./#Distance-Vector-Routing">距离向量路由</a>。<br>RIP II的出现清除了一些和RIP I相关联的问题。为IPv6网络开发的RIP II扩展称为RIPng。UNIX 以及 Linux上的RIP通过<code>Routed</code>守护程序来实现。<br>在RIP中，如果两条到相同的目的地的路径有同样的路由跳数，则重新获取已经在路由表中的路由。为了阻止发生过多的路由摆，<br>无论路由跳数什么时候相等，路由器不断改变路由表条目。</p>
+<p>RIP路由路由器每30秒广播更新消息，也可以请求立即更新。当网络比较平衡的时候，RIP的工作状态最佳。如果路由器的数量变<br>得非常庞大，由于路由表缓慢更新，将产生问题。因此RIP限制了从第一个路由器到目的地的路由跳数的最大值为15。这个阈值限<br>制了一个路由组的大小，但是如果路由器被层级式的布置，是有可能在15跳之内围绕成一个大的路由器组。虽然距离向量方法并会<br>特别提供连接速度以及物理网络类型的说明，但是RIP让网络管理员为无效的路径手动输入大的路由跳数来影响路由选择。思科网<br>络硬件厂商开发了私有的IGRP和EIGRP路由协议来作为RIP用于距离向量路由场景的第二种选择。</p>
+<h4 id="Open-Shortest-Path-First"><a href="#Open-Shortest-Path-First" class="headerlink" title="Open Shortest Path First"></a>Open Shortest Path First</h4><p><strong>OSPF</strong>是一个逐渐替代许多网络上RIP的更新的内部路由协议。OSPF是一个链路状态路由协议。每一个在OSPF路由器组中的路<br>由器被分配一个路由器ID。路由器ID是和路由器相关联的最高的数字IP地址。如果路由器使用的是一个loopbak接口，路由器ID<br>是最高的loopback地址。什么是<a href="/The-Internet-Layer/#Special-IP-Address">loopback 地址</a>。</p>
+<p>链路状态的路由器建立一张网络拓扑的内部图。其他路由器使用路由器ID识别拓扑图中的一个路由器。每个路由器组织网络成自己<br>是根结点的树状格式。这个网络树又称为最短路径树（SPT）。通过网络的路径与通过SPT的分支路径相关。路由器计算每个路由的<br>损耗。损耗测量包含路由跳数以及其他因素，比如连接的速度以及可靠性。</p>
+<h2 id="Exterior-Routers-BGP"><a href="#Exterior-Routers-BGP" class="headerlink" title="Exterior Routers: BGP"></a>Exterior Routers: BGP</h2><p>今天的互联网上用于外部路由器的最常见的协议是边界网关协议（BGP）。BGP已经度过了几个版本，当前的版本成为BGP 4，<br>可以在<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc4271">RFC</a>中看到相关的描述。</p>
+<p>事实上，通用的BGP也被用于内部路由器协议，在自治系统内帮助划分网络成更小的区域。在自治系统的边界使用BGP版本传递消息<br>给称为外部边界网关协议（eBGP）的其他自治系统。</p>
+<p>BGP极其健壮并且可扩展。如今的互联网不能够脱离BGP而存在，最近几年BPG呈现出指数级的增长并写现在有超过600,000条路由<br>表条目。</p>
+<p>IANA给每个自治系统分派一个唯一的称之为ASN的号。BGP使用这些ASNs来建立互联网以及通过自治系统将CIDR-based，无类IP<br>地址和路由关联起来的拓扑图。ASN提供了一种用于识别一个网络是独立于一个特定的IP地址或地址范围的方式。这种方式提供冗<br>余的路径给一个自治系统（与通过IP地址空间的单一路径相反）。ASN是不分层级的，BGP路由器必须知道或者有能力知道网络上<br>所有的其他BGP路由器。在自治系统内部使用的BGP被成为内部边界网关协议(iBGP)。</p>
+<h3 id="Public-and-Private-ASNs"><a href="#Public-and-Private-ASNs" class="headerlink" title="Public and Private ASNs"></a>Public and Private ASNs</h3><p>当iBGP在自治系统内被内部用来路由流量时，不需要由IANA分配的公共的ASNs。一个内部BGP路由器而是使用不会被转发超出自治系统的私有ASNs。</p>
+<p>BGP路由器通过可靠的TCP-based连接通信，通过网络传递关于地址范围以及建立描述路径的ASNs链的信息。BGP协议含有各种用于路径发现的功能，还有在多个路径选项之间选择最高效的路径的技术。</p>
+<h2 id="Classless-Routing"><a href="#Classless-Routing" class="headerlink" title="Classless Routing"></a>Classless Routing</h2><p>从<a href="/The-Internet-Layer">The Internet Layer</a>以及<a href="/Subnetting-and-CIDR/">Subnetting-and-CIDR</a>得知，TCPIP路由系统围绕一个刚开始依赖地址分类的网络ID的概念来设计的。地址类系统的局限性以及分配块地址给单一供应商时的<br>低效性。CIDR为地址分配以及路由决策提供了第二种方法。<br>如果路由协议支持，CIDR系统提供更高效路由。CIDR让路由器对待多个分类网络成单一的实体，从而减少了路由器之间必须传输<br>的必要信息。最近的协议，比如OSPF和BGP4支持无类地址。初始的RIP协议不支持CIDR，由后来的RIP II更新支持了。</p>
+<h2 id="Higher-in-the-Stack"><a href="#Higher-in-the-Stack" class="headerlink" title="Higher in the Stack"></a>Higher in the Stack</h2><p>几年前，硬件厂商开始注意到在协议栈的更高层级转发以及过滤流量的好处。从前面的六篇文章概括出来得知，协议栈的每一层提<br>供不同的服务以及在其头部编码不同的信息。能够访问协议栈中更高层协议的路由器有做出决策基础的额外信息。例如，基于源<br>以及目的端口，运行在传输层的路由器能够形成数据性质的推断。运行在应用层的路由器能够更完整知道发送数据的应用以及其所<br>使用的协议。</p>
+<p>能访问协议栈高层的协议的路由器有几个优点。更好的了解连接以及源应用程序能够提高的安全性。另一个重要的原因是<br>服务质量（QoS）。运行在应用层的路由器能够基于服务条件质量优先考虑某些数据包。IPv6协议系统提供其他用于处理QoS的方<br>法。</p>
+<h2 id="Lower-in-the-Stack"><a href="#Lower-in-the-Stack" class="headerlink" title="Lower in the Stack"></a>Lower in the Stack</h2><p>管理在OSI二层（从下往上数），即数据链路层的流量的设备在传统意义上称为交换机，而不是路由器。</p>
+<h2 id="小小的总结"><a href="#小小的总结" class="headerlink" title="小小的总结"></a>小小的总结</h2><ul>
+<li><a href="./#A-Look-at-IP-Forwarding">描述IP转发</a></li>
+<li><a href="./#Distance-Vector-Routing">距离向量路由</a></li>
+<li><a href="./#Link-State-Routing">链路状态路由</a></li>
+<li>一小部分的核心路由器具用于作为互联网络的中心主干，连接配置好的以及自动管理的个别网络。</li>
+<li>内部路由器用于在自治系统内共享路由信息。</li>
+<li>外部路由器用于交流自治系统之间的路由信息，维护自己以及邻居自治系统的路由信息。</li>
+<li><a href="./#Routing-Information-Protocol">RIP</a>是一个用于内部路由器的距离向量路由协议，通过采用路由跳数来决定到达目的地址的最佳路由，采用RIP的路由器每30秒广播更新消息，也可以请求立即更新。。</li>
+<li><a href="./#Open-Shortest-Path-First">OSPF</a>是一个用于内部路由器的链路状态路由协议，在OSPF路由组中的路由器获得一个和路由器相关联的最高的数字IP地址。</li>
+<li>[边界网关协议]](.&#x2F;#Exterior-Routers-BGP)是一个用于外部路由器的路由协议，但也可以用于自治系统内帮助划分网络成更小的区域。BGP使用ASNs来建立互联网以及通过自治系统将CIDR-based，无类IP地址和路由关联起来的拓扑图。</li>
+<li>IANA给每个自治系统分派一个唯一的称之为ASN的号。</li>
+<li>OSPF可以使用几个参数来衡量路由的效率，比如路由跳数，连接速度以及可靠性，而RIP只能使用路由跳数。</li>
+</ul>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Routing-in-TCPIP"><span class="toc-number">1.</span> <span class="toc-text">Routing in TCPIP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-Is-a-Router"><span class="toc-number">1.1.</span> <span class="toc-text">What Is a Router</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Routing-process"><span class="toc-number">1.2.</span> <span class="toc-text">The Routing process</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%84%E9%85%8D%E7%BD%AE%E8%B7%AF%E7%94%B1"><span class="toc-number">1.2.1.</span> <span class="toc-text">预配置路由</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Routing-Table-Concepts"><span class="toc-number">1.3.</span> <span class="toc-text">Routing Table Concepts</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#A-Look-at-IP-Forwarding"><span class="toc-number">1.4.</span> <span class="toc-text">A Look at IP Forwarding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Direct-Versus-Indirect-Routing"><span class="toc-number">1.5.</span> <span class="toc-text">Direct Versus Indirect Routing</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dynamic-Routing-Algorithms"><span class="toc-number">1.6.</span> <span class="toc-text">Dynamic Routing Algorithms</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Distance-Vector-Routing"><span class="toc-number">1.6.1.</span> <span class="toc-text">Distance-Vector Routing</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Link-State-Routing"><span class="toc-number">1.6.2.</span> <span class="toc-text">Link-State Routing</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Routing-on-Complex-Networks"><span class="toc-number">2.</span> <span class="toc-text">Routing on Complex Networks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Examining-Interior-Routers"><span class="toc-number">2.1.</span> <span class="toc-text">Examining Interior Routers</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Routing-Information-Protocol"><span class="toc-number">2.1.1.</span> <span class="toc-text">Routing Information Protocol</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Open-Shortest-Path-First"><span class="toc-number">2.1.2.</span> <span class="toc-text">Open Shortest Path First</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exterior-Routers-BGP"><span class="toc-number">3.</span> <span class="toc-text">Exterior Routers: BGP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Public-and-Private-ASNs"><span class="toc-number">3.1.</span> <span class="toc-text">Public and Private ASNs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Classless-Routing"><span class="toc-number">4.</span> <span class="toc-text">Classless Routing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Higher-in-the-Stack"><span class="toc-number">5.</span> <span class="toc-text">Higher in the Stack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lower-in-the-Stack"><span class="toc-number">6.</span> <span class="toc-text">Lower in the Stack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">7.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Routing/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Routing/&text=Routing"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Routing/&title=Routing"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Routing/&is_video=false&description=Routing"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Routing&body=Check out this article: https://www.cthee.cyou/Routing/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Routing/&title=Routing"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Routing/&title=Routing"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Routing/&title=Routing"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Routing/&title=Routing"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Routing/&name=Routing&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

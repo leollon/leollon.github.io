@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="参考了几篇博客，然后我就开始搭建了，最后我就总结一下自己在这过程中做了什么事情吧。 本教程的服务器使用Debian 8 64bit 的vultr vps，客户端使用Ubuntu 16.04 64bit进行动手实践。  https, http2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用hexo搭配git部署博客到vps上面">
+<meta property="og:url" content="https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="参考了几篇博客，然后我就开始搭建了，最后我就总结一下自己在这过程中做了什么事情吧。 本教程的服务器使用Debian 8 64bit 的vultr vps，客户端使用Ubuntu 16.04 64bit进行动手实践。  https, http2">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://wx4.sinaimg.cn/mw690/7372620bgy1fib2z2wgyxj20hv01q747.jpg">
+<meta property="og:image" content="https://wx1.sinaimg.cn/mw690/7372620bgy1fib2z66rwjj21200jzqdl.jpg">
+<meta property="article:published_time" content="2017-08-04T17:52:30.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.205Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="hexo">
+<meta property="article:tag" content="blog">
+<meta property="article:tag" content="git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wx4.sinaimg.cn/mw690/7372620bgy1fib2z2wgyxj20hv01q747.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>使用hexo搭配git部署博客到vps上面</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/%E5%85%B3%E4%BA%8Ev2ray%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E7%9A%84%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/hello-world/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&text=使用hexo搭配git部署博客到vps上面"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&title=使用hexo搭配git部署博客到vps上面"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&is_video=false&description=使用hexo搭配git部署博客到vps上面"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用hexo搭配git部署博客到vps上面&body=Check out this article: https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&title=使用hexo搭配git部署博客到vps上面"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&title=使用hexo搭配git部署博客到vps上面"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&title=使用hexo搭配git部署博客到vps上面"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&title=使用hexo搭配git部署博客到vps上面"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&name=使用hexo搭配git部署博客到vps上面&description=&lt;p&gt;参考了几篇博客，然后我就开始搭建了，最后我就总结一下自己在这过程中做了什么事情吧。&lt;/p&gt;
+&lt;p&gt;本教程的服务器使用Debian 8 64bit 的&lt;a href=&#34;http://www.vultr.com/?ref=7109674&#34;&gt;vultr vps&lt;/a&gt;，客户端使用Ubuntu 16.04 64bit进行动手实践。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;https, http2&lt;/p&gt;
+&lt;/blockquote&gt;"><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%AC%E5%9C%B0"><span class="toc-number">1.</span> <span class="toc-text">客户端(本地)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF-vps"><span class="toc-number">2.</span> <span class="toc-text">服务器端(vps)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%AC%E5%9C%B0-%E7%9A%84%E6%9C%80%E5%90%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">客户端(本地)的最后配置</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        使用hexo搭配git部署博客到vps上面
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2017-08-04T17:52:30.000Z" itemprop="datePublished">2017-08-05</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/blog/" rel="tag">blog</a>, <a class="tag-link-link" href="/tags/git/" rel="tag">git</a>, <a class="tag-link-link" href="/tags/hexo/" rel="tag">hexo</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>参考了几篇博客，然后我就开始搭建了，最后我就总结一下自己在这过程中做了什么事情吧。</p>
+<p>本教程的服务器使用Debian 8 64bit 的<a target="_blank" rel="noopener" href="http://www.vultr.com/?ref=7109674">vultr vps</a>，客户端使用Ubuntu 16.04 64bit进行动手实践。</p>
+<blockquote>
+<p>https, http2</p>
+</blockquote>
+<span id="more"></span>
+
+<p>开始之前搭建之前准备的东西：</p>
+<ol>
+<li>vps(Debian 8)</li>
+<li>Linux基本命令行的使用<blockquote>
+<p>man, useradd, passwd, usermod, mkdir, touch, cd, tar, xz, ln, vim</p>
+</blockquote>
+</li>
+<li>hexo-cli</li>
+<li>git</li>
+<li>node, npm</li>
+<li>xz-utlis</li>
+</ol>
+<h2 id="客户端-本地"><a href="#客户端-本地" class="headerlink" title="客户端(本地)"></a>客户端(本地)</h2><ol>
+<li><p>下载并安装node</p>
+   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install xz-utlis</span><br><span class="line">$ wget https://nodejs.org/dist/v6.11.2/node-v6.11.2-linux-x64.tar.xz</span><br><span class="line">$ xz -d node-v6.11.2-linux-x64.tar.xz</span><br><span class="line">$ tar -xvf node-v6.11.2-linux-x64.tar</span><br><span class="line">$ <span class="built_in">mv</span> node-v6.11.2-linux-x64 node_v6</span><br><span class="line">$ sudo <span class="built_in">mv</span> node_v6 /usr/bin/</span><br><span class="line">$ <span class="built_in">cd</span> /usr/bin/</span><br><span class="line">$ sudo <span class="built_in">ln</span> -s ./node_v6/bin/node ./bin/node</span><br><span class="line">$ sudo <span class="built_in">ln</span> -s ./node_v6/bin/npm ./npm</span><br></pre></td></tr></table></figure></li>
+<li><p>安装hexo</p>
+   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo npm instal -g hexo-cli</span><br></pre></td></tr></table></figure>
+<p>   这里我遇到一个坑要说明一下，就是装完之后，当我要执行命令行<code>hexo init &lt;folder&gt;</code>时候，居然<code>zsh: command not found: hexo</code>，然后我<code>which hexo</code>了一下，也没有，后来我<code>npm list</code>了一下，确实是有装上这个hexo-cli。这时候，我就想到在当前的<code>$PATh</code>里面没有<code>hexo</code>，所以此时就需要一个软链接到这个<code>hexo-cli</code>了：</p>
+   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> /usr/bin/</span><br><span class="line">$ sudo <span class="built_in">ln</span> -s /usr/bin/node_v6/lib/node_modules/hexo-cli/bin/hexo ./hexo</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>一些包的安装</p>
+</li>
+</ol>
+   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br><span class="line">$ npm install hexo-server</span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>好了，这时候，我们就可以开始写博客了，不过也还只是在本地跑给自己看的而已。   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init blog</span><br><span class="line">$ hexo new [layout] <span class="string">&quot;文件名&quot;</span>  <span class="comment"># 不指定layout，则根据theme使用默认的</span></span><br><span class="line">$ hexo new page about <span class="comment"># 解决浏览器访问出现 404 Not Found</span></span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+   这时候可以看到终端是这样子的效果：</li>
+</ol>
+<p>   <img src="https://wx4.sinaimg.cn/mw690/7372620bgy1fib2z2wgyxj20hv01q747.jpg" alt="hexo-server"></p>
+<p>   浏览器打开网站是这个样子的：</p>
+<p>   <img src="https://wx1.sinaimg.cn/mw690/7372620bgy1fib2z66rwjj21200jzqdl.jpg" alt="localhost"></p>
+<p>   解决浏览器出现 403 Forbidden:</p>
+   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page tags</span><br><span class="line">$ vim <span class="built_in">source</span>/tags/index.md</span><br></pre></td></tr></table></figure>
+
+<p>   在title的下一行加入下面内容：</p>
+   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type: &quot;tags&quot;</span><br></pre></td></tr></table></figure>
+
+<p>   解决浏览器访问出现 403 Forbidden</p>
+   <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new page categories</span><br><span class="line">$ vim <span class="built_in">source</span>/categories/index.md</span><br></pre></td></tr></table></figure>
+
+<p>   在title的下一行加入下面内容：<br>   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type: &quot;categories&quot;</span><br></pre></td></tr></table></figure></p>
+<h2 id="服务器端-vps"><a href="#服务器端-vps" class="headerlink" title="服务器端(vps)"></a>服务器端(vps)</h2><p>   使用root用户登录vps，并且使用的是密钥登录。具体怎么使用密钥登录系统，搜索引擎一搜出来一堆。</p>
+<p>   以下步骤，除需要之外，我都是在<strong>root</strong>用户下执行。所以要**谨慎使用<code>rm -rf</code>**等命令。</p>
+<ol>
+<li><p>git用户管理</p>
+<ol>
+<li>添加git用户<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ apt-get install sudo <span class="comment"># 有些服务器需要自己安装</span></span><br><span class="line">$ adduser git <span class="comment"># root用户登录服务器，增加git用户, 记住此时输入的密码</span></span><br><span class="line">$ passwd git  <span class="comment"># root用户登录服务器，设置git用户的密码</span></span><br><span class="line">$ usermod -aG sudo git <span class="comment"># 将git用户添加到sudo用户组</span></span><br></pre></td></tr></table></figure></li>
+<li>上传公钥到<code>/home/git/.ssh/authorized_keys</code>。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">mkdir</span> -p /home/git/.ssh/</span><br><span class="line">$ <span class="built_in">cp</span> ~/.ssh/authorized_keys /home/git/.ssh/</span><br><span class="line">$ <span class="built_in">chmod</span> 600 /home/git/.ssh/authorize_keys</span><br><span class="line">$ <span class="built_in">chmod</span> 700 /home/git/.ssh</span><br></pre></td></tr></table></figure>
+本地客户端用git用户ssh连接服务器测试一下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -p 22 git@45.23.32.89</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>创建博客的根目录，并将其归为git用户，以及git用户组所有</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">mkdir</span> -p /var/www/blog</span><br><span class="line">$ <span class="built_in">chown</span> git:git blog</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生成git裸仓库，并配置git hooks<br> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ su git</span><br><span class="line">$ <span class="built_in">cd</span> ~</span><br><span class="line">$ git init --bare blog.git</span><br><span class="line">$ vim blog.git/hooks/post-receive</span><br></pre></td></tr></table></figure></p>
+</li>
+</ol>
+<pre><code> 添加如下内容，并保存：
+
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">GIT_REPO=/home/git/blog.git <span class="comment">#git仓库</span></span><br><span class="line">TMP_GIT_CLONE=/tmp/blog</span><br><span class="line">PUBLIC_WWW=/var/www/blog <span class="comment">#网站目录</span></span><br><span class="line"><span class="built_in">rm</span> -rf <span class="variable">$&#123;TMP_GIT_CLONE&#125;</span></span><br><span class="line">git <span class="built_in">clone</span> <span class="variable">$GIT_REPO</span> <span class="variable">$TMP_GIT_CLONE</span></span><br><span class="line"><span class="built_in">rm</span> -rf <span class="variable">$&#123;PUBLIC_WWW&#125;</span>/*</span><br><span class="line"><span class="built_in">cp</span> -rf <span class="variable">$&#123;TMP_GIT_CLONE&#125;</span>/* <span class="variable">$&#123;PUBLIC_WWW&#125;</span></span><br><span class="line"></span><br><span class="line">git --work-tree=/var/www/blog --git-dir=/home/git/blog.git checkout -f</span><br></pre></td></tr></table></figure>
+
+然后更改这个文件的权限：
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ chomd +x blog.git/hooks/post-receive</span><br><span class="line">$ <span class="built_in">exit</span> <span class="comment"># 退出git用户</span></span><br></pre></td></tr></table></figure>
+</code></pre>
+<ol start="4">
+<li>安装nginx服务器，并且启动nginx</li>
+</ol>
+<pre><code> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ wget -q -O - https://nginx.org/keys/nginx_signing.key | apt-key add -</span><br><span class="line">$ apt-get update &amp;&amp; apt-get install -y nginx</span><br><span class="line">$ service nginx start</span><br></pre></td></tr></table></figure>
+
+ 浏览器输入服务器的ip地址进行访问，测试nginx是否已经运行：
+
+ ![nginx](https://wx1.sinaimg.cn/mw690/7372620bgy1fib2yz2ibxj20fv07faao.jpg)
+</code></pre>
+<ol start="5">
+<li>更改nginx配置</li>
+</ol>
+<pre><code> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">cp</span> /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf.bak</span><br><span class="line">$ vim /etc/nginx/conf.d/default.conf</span><br></pre></td></tr></table></figure>
+
+ 修改内容如下：
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name i.cthee.cyou;</span><br><span class="line"></span><br><span class="line">    access_log  /home/git/log/nginx/host.access.log  main;</span><br><span class="line">    error_log  /home/git/log/nginx/host.error.log  info;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /var/www/blog;  # 网站根目录</span><br><span class="line">        if (-f $request_filename) &#123;</span><br><span class="line">            rewrite ^/(.*)$ /$1 break;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location ~* ^.+\.(ico|git|jpg|jpeg|png)$ &#123;</span><br><span class="line">        root /var/www/blog;</span><br><span class="line">        access_log off;</span><br><span class="line">        expires 1d;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    location ~* ^.+\.(css|js|txt|xml)$ &#123;</span><br><span class="line">        root /var/www/blog;</span><br><span class="line">        access_log off;</span><br><span class="line">        expires 10m;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</code></pre>
+<h2 id="客户端-本地-的最后配置"><a href="#客户端-本地-的最后配置" class="headerlink" title="客户端(本地)的最后配置"></a>客户端(本地)的最后配置</h2><ol>
+<li>更改_config.yml, 自动部署到git服务器上面<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: git@&lt;server_ip&gt;:/home/git/blog.git</span><br><span class="line">  branch: master</span><br><span class="line">  message: Site updated:&#123;&#123; now(&#x27;YYYY-MM-DD HH:mm:ss&#x27;) &#125;&#125;</span><br></pre></td></tr></table></figure></li>
+<li>由于我更改了服务器的ssh端口，所以还需要配置一下ssh的端口。所以自动化部署的时候出现的错误描述：<blockquote>
+<p>Error: ssh: connect to host ×××.×××.×××.××× port ××××: Connection timed out<br>fatal: Could not read from remote repository.</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim ~/.ssh/config</span><br></pre></td></tr></table></figure></li>
+</ol>
+<pre><code> 将下面内容复制进去更改为服务器上面的配置并保存
+
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host &lt;server_ip&gt;</span><br><span class="line">HostName &lt;server_ip&gt;</span><br><span class="line">port &lt;server_port&gt;</span><br><span class="line">PreferredAuthentications publickey</span><br><span class="line">IdentityFile ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+</code></pre>
+<p><strong>参考过的文章：</strong></p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://wrleskovec.com/2016/03/18/hexo-nginx-setup/">开启https</a></li>
+<li><a target="_blank" rel="noopener" href="https://yq.aliyun.com/articles/7171">启用http2</a></li>
+<li><a target="_blank" rel="noopener" href="https://gist.github.com/xrstf/581981008b6be0d2224f">letsencrypt</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.embbnux.com/2015/12/29/letsencrypt_with_nginx_config_for_wordpress/">https</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.nginx.com/blog/free-certificates-lets-encrypt-and-nginx/">free-certificates-lets-encrypt-and-nginx</a></li>
+<li><a target="_blank" rel="noopener" href="http://tiktoking.github.io/2016/01/26/hexo/">http://tiktoking.github.io/2016/01/26/hexo/</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.peiyingchi.com/2017/03/20/deploy-hexo-blog-to-VPS/">Deploy Hexo Blog to VPS |部署Hexo博客到VPS</a></li>
+</ol>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%AC%E5%9C%B0"><span class="toc-number">1.</span> <span class="toc-text">客户端(本地)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF-vps"><span class="toc-number">2.</span> <span class="toc-text">服务器端(vps)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF-%E6%9C%AC%E5%9C%B0-%E7%9A%84%E6%9C%80%E5%90%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">客户端(本地)的最后配置</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&text=使用hexo搭配git部署博客到vps上面"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&title=使用hexo搭配git部署博客到vps上面"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&is_video=false&description=使用hexo搭配git部署博客到vps上面"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=使用hexo搭配git部署博客到vps上面&body=Check out this article: https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&title=使用hexo搭配git部署博客到vps上面"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&title=使用hexo搭配git部署博客到vps上面"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&title=使用hexo搭配git部署博客到vps上面"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&title=使用hexo搭配git部署博客到vps上面"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E9%85%8Dgit%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2%E5%88%B0vps%E4%B8%8A%E9%9D%A2/&name=使用hexo搭配git部署博客到vps上面&description=&lt;p&gt;参考了几篇博客，然后我就开始搭建了，最后我就总结一下自己在这过程中做了什么事情吧。&lt;/p&gt;
+&lt;p&gt;本教程的服务器使用Debian 8 64bit 的&lt;a href=&#34;http://www.vultr.com/?ref=7109674&#34;&gt;vultr vps&lt;/a&gt;，客户端使用Ubuntu 16.04 64bit进行动手实践。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;https, http2&lt;/p&gt;
+&lt;/blockquote&gt;"><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

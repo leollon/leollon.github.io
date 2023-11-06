@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="本文目的：  理解光缆宽带的基本知识 讨论DSL定义的特性 描述无线网络的拓扑以及比如WEP和WPA2的无线网络安全方案的要素和功能 描述计算机如何通过电话线拨号上网进行通信  这里引入一些其他可以在TCPIP网络中常见的连接设备，比如交换机，集线器以及网桥。 Cable Broadband一个典型的线缆调制解调器链接图示：  modem是modulator&#x2F;demodulator的缩写">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Getting Connected">
+<meta property="og:url" content="https://www.cthee.cyou/Getting-Connected/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="本文目的：  理解光缆宽带的基本知识 讨论DSL定义的特性 描述无线网络的拓扑以及比如WEP和WPA2的无线网络安全方案的要素和功能 描述计算机如何通过电话线拨号上网进行通信  这里引入一些其他可以在TCPIP网络中常见的连接设备，比如交换机，集线器以及网桥。 Cable Broadband一个典型的线缆调制解调器链接图示：  modem是modulator&#x2F;demodulator的缩写">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.cthee.cyou/b6aee1fb6923494c.svg">
+<meta property="og:image" content="https://i.cthee.cyou/769151e41b214515.svg">
+<meta property="og:image" content="https://i.cthee.cyou/b4b9276675534e3b.svg">
+<meta property="og:image" content="https://i.cthee.cyou/489b1c2f1eea41f1.svg">
+<meta property="og:image" content="https://i.cthee.cyou/ccb646f6530a4edb.svg">
+<meta property="og:image" content="https://i.cthee.cyou/878a9878e6014e7c.svg">
+<meta property="og:image" content="https://i.cthee.cyou/808959b6286540ac.svg">
+<meta property="og:image" content="https://i.cthee.cyou/e06f0810ddec4b44.svg">
+<meta property="og:image" content="https://i.cthee.cyou/f761c1aea1c04266.svg">
+<meta property="og:image" content="https://i.cthee.cyou/5a8301d4dce84f7a.svg">
+<meta property="og:image" content="https://i.cthee.cyou/974b94aa11324d90.svg">
+<meta property="og:image" content="https://i.cthee.cyou/d71676dfff9a4261.svg">
+<meta property="og:image" content="https://i.cthee.cyou/08790b9071514ee3.svg">
+<meta property="og:image" content="https://i.cthee.cyou/a4dd636674604251.svg">
+<meta property="og:image" content="https://i.cthee.cyou/d4f3f2f6bb0348b0.svg">
+<meta property="og:image" content="https://i.cthee.cyou/d4f3f2f6bb0348b0.svg">
+<meta property="og:image" content="https://i.cthee.cyou/79aaa77967a44019.svg">
+<meta property="og:image" content="https://i.cthee.cyou/3fec73782b8b4160.svg">
+<meta property="og:image" content="https://i.cthee.cyou/a606c7c371b644b8.svg">
+<meta property="article:published_time" content="2019-08-19T07:26:15.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.201Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="notes">
+<meta property="article:tag" content="TCPIP">
+<meta property="article:tag" content="Networks">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.cthee.cyou/b6aee1fb6923494c.svg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Getting Connected</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/Name-Resolution/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/Routing/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Getting-Connected/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Getting-Connected/&text=Getting Connected"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Getting-Connected/&title=Getting Connected"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Getting-Connected/&is_video=false&description=Getting Connected"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Getting Connected&body=Check out this article: https://www.cthee.cyou/Getting-Connected/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Getting-Connected/&title=Getting Connected"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Getting-Connected/&title=Getting Connected"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Getting-Connected/&title=Getting Connected"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Getting-Connected/&title=Getting Connected"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Getting-Connected/&name=Getting Connected&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cable-Broadband"><span class="toc-number">1.</span> <span class="toc-text">Cable Broadband</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Digital-Subscriber-Line"><span class="toc-number">2.</span> <span class="toc-text">Digital Subscriber Line</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide-Are-Networks"><span class="toc-number">3.</span> <span class="toc-text">Wide Are Networks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wireless-Networking"><span class="toc-number">4.</span> <span class="toc-text">Wireless Networking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#802-11-Networks"><span class="toc-number">4.1.</span> <span class="toc-text">802.11 Networks</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#802-11-Family"><span class="toc-number">4.1.1.</span> <span class="toc-text">802.11 Family</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Independent-and-Infrastructure-Networks"><span class="toc-number">4.1.2.</span> <span class="toc-text">Independent and Infrastructure Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Securiry"><span class="toc-number">4.1.3.</span> <span class="toc-text">Securiry</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mobile-IP"><span class="toc-number">4.2.</span> <span class="toc-text">Mobile IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bluetooth"><span class="toc-number">4.3.</span> <span class="toc-text">Bluetooth</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dial-Up-Networking"><span class="toc-number">5.</span> <span class="toc-text">Dial-Up Networking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PPP-Data"><span class="toc-number">5.1.</span> <span class="toc-text">PPP Data</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Packets"><span class="toc-number">5.1.1.</span> <span class="toc-text">Packets</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPP-Connections"><span class="toc-number">5.2.</span> <span class="toc-text">PPP Connections</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Connectivity-Devices"><span class="toc-number">6.</span> <span class="toc-text">Connectivity Devices</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bridges"><span class="toc-number">6.1.</span> <span class="toc-text">Bridges</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hubs"><span class="toc-number">6.2.</span> <span class="toc-text">Hubs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Switches"><span class="toc-number">6.3.</span> <span class="toc-text">Switches</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Switching-Versus-Routing"><span class="toc-number">7.</span> <span class="toc-text">Switching Versus Routing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Getting Connected
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-08-19T07:26:15.000Z" itemprop="datePublished">2019-08-19</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Networks/" rel="tag">Networks</a>, <a class="tag-link-link" href="/tags/TCPIP/" rel="tag">TCPIP</a>, <a class="tag-link-link" href="/tags/notes/" rel="tag">notes</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>本文目的：</p>
+<ul>
+<li>理解光缆宽带的基本知识</li>
+<li>讨论DSL定义的特性</li>
+<li>描述无线网络的拓扑以及比如WEP和WPA2的无线网络安全方案的要素和功能</li>
+<li>描述计算机如何通过电话线拨号上网进行通信</li>
+</ul>
+<p>这里引入一些其他可以在TCPIP网络中常见的连接设备，比如交换机，集线器以及网桥。</p>
+<h2 id="Cable-Broadband"><a href="#Cable-Broadband" class="headerlink" title="Cable Broadband"></a>Cable Broadband</h2><p>一个典型的线缆调制解调器链接图示：</p>
+<p><img src="https://i.cthee.cyou/b6aee1fb6923494c.svg" alt="b6aee1fb6923494c.svg"></p>
+<p><em>modem</em>是modulator&#x2F;demodulator的缩写。一个像电话调制解调器的线缆调制解调器，调制数字网络传输成为模拟形式并且从模拟形式到有效地通过线缆连接传递数据。<br><strong>线缆调制解调器终端系统（CMTS）</strong>接收来自线缆调制解调器的信号并且将其转回在线缆提供商的网络接口处的数字形式。反过来，提供商从上游互联网服务提供商（ISP）租用带宽，并且提供商网络上的路由器连接用户和余下的网络。提供商可能也提供其他的支持服务，比如动态主机配置协议（DHCP）被用来给网络上的用户分配一个动态的IP地址。线缆调制解调器实际上不是一个路由器，而更像是一个网桥。线缆调制解调器通过网络接入层的媒体接入控制（MAC）地址来过滤流量。**Data Over Cable Service Interface Spedification(DOCSIS)是用于线缆调制解调器的网络的标准。</p>
+<h2 id="Digital-Subscriber-Line"><a href="#Digital-Subscriber-Line" class="headerlink" title="Digital Subscriber Line"></a>Digital Subscriber Line</h2><p>其他用于家庭宽带传输媒介的候选是电话网络。Digital Subscriber Line的缩写就是DSL。事实上，在电话网络中使用的双绞线比起用于语音通话时具有更多的容量。DSL收发器充当从本地网络到电话网络的接口，它运行在不与线上语音通话干扰的频率中。DSL网络需要一个在电话线另一端接收信号以及通过提供商的网络和互联网交互的设备。称为数据用户线访问复用器（DSLAM）的设备用作DSL连接的另一端。不想线缆网络，被网络段上的用户共享传输媒介。没DSL顾客从收发器到DSLAM都有专线，这意味着随着流量的增加，线路的性能很少受影响以至于降低。</p>
+<p><img src="https://i.cthee.cyou/769151e41b214515.svg" alt="769151e41b214515.svg"></p>
+<p>还有几种DSL版本，例如ADSL（asyncchronous DSL, 最受小办公室以及家庭欢迎），HDSL(high bit-rate DSL)，VDSL（very high bit-rate DSL），SDSL（symmetric DSL，它的上行和下行的带宽相等）以及IDSL（ISDN over DSL）。<br>一些DSL设备将交换机和路由器集成在一起。其他设备充当网桥（与线缆调制解调器相似），在网络接入层通过MAC地址过滤流量。DSL设备经常使用Point-to-Point协议，封闭，比如PPP。所谓的通过以太网协议（PPPoE）的PPP是DSL最受欢迎选项。</p>
+<h2 id="Wide-Are-Networks"><a href="#Wide-Are-Networks" class="headerlink" title="Wide Are Networks"></a>Wide Are Networks</h2><p>WAN技术提供快速，高带宽网络覆盖长距离。尽管WAN性能不能和LAN的性能一样快速，但是比起通过开放的互联网使用标准的网络技术连接远程网络要更快并更安全。WAN风格的连接提出一种用于互联网访问高容量团体网络的方式。</p>
+<p>许多WAN选项中的一小部分：</p>
+<ul>
+<li>帧中继（Frame relay）</li>
+<li>集成服务数字网络（ISDN)</li>
+<li>高层级的数据链路控制（HDLC）</li>
+<li>异步传输模式（ATM）</li>
+</ul>
+<p>WAN协议几乎总是聚焦在OSI模型上，因此要记住的是Network Access layer等同于OSI的Physical and Data Link layers，也叫一层和二层。</p>
+<p>一个典型的WAN场景：</p>
+<p><img src="https://i.cthee.cyou/b4b9276675534e3b.svg" alt="b4b9276675534e3b.svg"></p>
+<p>供应商保证特定带宽以及从分界点开始的服务等级。</p>
+<h2 id="Wireless-Networking"><a href="#Wireless-Networking" class="headerlink" title="Wireless Networking"></a>Wireless Networking</h2><h3 id="802-11-Networks"><a href="#802-11-Networks" class="headerlink" title="802.11 Networks"></a>802.11 Networks</h3><p>从<a href="/The-Network-Access-Layer/">The Network Access Layer</a>中得知，物理网络的细节驻留在TCPIP协议栈的Network Access layer。<strong>IEEE 802.11</strong>规范为网络接入层的无线网络提供了模型。</p>
+<p><img src="https://i.cthee.cyou/489b1c2f1eea41f1.svg" alt="489b1c2f1eea41f1.svg"></p>
+<p>因为802.11与IEEE 802.3以太网标准相似且兼容，802.11经常称为无线以太网。<br>物理层的不同选项表示不同的无线广播格式，frequency-hopping spread spectrum (FHSS)，direct-sequence spread spectrum（DSSS），othogonal frequency-division multiplexing（OFDM）以及 high-rate direct-sequence spread spectrum multiplexing（HR&#x2F;DSSS）。<br>无线网络与有线网络不同的一个品质是结点是移动的。换句话说，网络能够响应连接设备的位置改变。</p>
+<h4 id="802-11-Family"><a href="#802-11-Family" class="headerlink" title="802.11 Family"></a>802.11 Family</h4><p>802.11是一些列标准的集合名字。</p>
+<table>
+<thead>
+<tr>
+<th align="left">标准</th>
+<th align="left">频率范围</th>
+<th align="left">传输速度高达</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">初始版本802.11</td>
+<td align="left">2.4GHz</td>
+<td align="left">2Mbps</td>
+</tr>
+<tr>
+<td align="left">802.11a</td>
+<td align="left">5GHz</td>
+<td align="left">54Mbps</td>
+</tr>
+<tr>
+<td align="left">802.11b</td>
+<td align="left">2.4Ghz</td>
+<td align="left">5.5Mbps&amp;11Mbps</td>
+</tr>
+</tbody></table>
+<p>还有802.11g（2003年采用），802.11n (2009年采用)，还有其他版本。802.11ac作为高速选项不断受到喜爱。</p>
+<h4 id="Independent-and-Infrastructure-Networks"><a href="#Independent-and-Infrastructure-Networks" class="headerlink" title="Independent and Infrastructure Networks"></a>Independent and Infrastructure Networks</h4><p>最简单的无线网络形式有两个或更多携带有无线网卡的设备直接与彼此进行通信。这种类型的网络正式地被称为<strong>独立基本服务集合（independent BSS，或IBSS）</strong>，更常见的名称是自组网络。适用于紧凑空间内少部分计算机之间的通信。Independent BSS网络是有局限性的，因为它依赖参与通信的计算之间的接近，没有基础设施用于管理连接以及没有办法和更大的网络进行连接，比如本地局域网或者互联网。</p>
+<p><img src="https://i.cthee.cyou/ccb646f6530a4edb.svg" alt="ccb646f6530a4edb.svg"></p>
+<p>另一种无线网络形式，称为<strong>基础设施基本服务集合（infrastructure BSS)<strong>，在团体网络以及公共机构环境中更常见，并且由于新一代的便宜的无线路由设备，使得它成为家庭以及咖啡店的受欢迎的网络选项。Infrastructure BSS依赖一个称为</strong>接入点（access point，AP）</strong>的固定设备来促成无线设备之间的通信。一个接入点通过无线广播与无线网络进行通信并且通过传统的连接连接到普通的以太网网络。无线设备通过接入点进行通信。无线设备通过发送一个帧到接入点并让接入点传输消息到目的地来完成与同一区域的其他无线设备的通信。</p>
+<p><img src="https://i.cthee.cyou/878a9878e6014e7c.svg" alt="878a9878e6014e7c.svg"></p>
+<p>通过多个接入点服务更大的区域：</p>
+<p><img src="https://i.cthee.cyou/808959b6286540ac.svg" alt="808959b6286540ac.svg"></p>
+<p>802.11帧提供四个地址：</p>
+<ul>
+<li>目的地址：帧到达的目的设备</li>
+<li>源地址：发送帧的设备</li>
+<li>接收器地址：应该处理802.11帧的无线设备。如果帧发送给的是一个无线设备，接收器地址和目的地址一样。如果帧发送到的设备超出无线网络，接收器地址是接收并转发帧到以太网分布式网络中的接入点的地址。</li>
+<li>传输器地址：转发帧到无线网络上的设备的地址。</li>
+</ul>
+<p>802.11帧格式中的一些重要字段：</p>
+<ul>
+<li>Frame control： 描述用于翻译帧内容的协议版本，帧类型以及其他必要值的更小字段的集合。</li>
+<li>Duration&#x2F;ID：提供评估大约传输持续多长时间的字段。这个字段可能也从接入点请求缓存的帧。</li>
+<li>Address fields：48-bit物理地址字段。根据帧的类型，这个字段的使用也不同。第一个字段通常是接收器的并且第二字段通常是传输器的。</li>
+<li>Sequence control：分片编号（用于分片重组）以及帧的序列号。</li>
+<li>Frame body：与帧一起传输的数据。当然，和帧一起传输还包含有上层的协议头部。</li>
+<li>Frame Check Sequence (FCS)：环形冗余校验，用于检查传输错误以及验证帧在传输过程中没有被修改。</li>
+</ul>
+<p><img src="https://i.cthee.cyou/e06f0810ddec4b44.svg" alt="e06f0810ddec4b44.svg"></p>
+<p>因为802.11是一个网络接入层的协议集合，因此802.11帧使用的地址是48-bit的物理地址，而不是IP地址。</p>
+<h4 id="Securiry"><a href="#Securiry" class="headerlink" title="Securiry"></a>Securiry</h4><p>为了解决无线网络中窃听问题，IEEE开发了与802.11相伴的可选的安全协议标准。**Wired Equivalent Privacy (WEP)**标准被设计用于提供和常规网络隐私等同的隐私级别。WEP的目标是：</p>
+<ul>
+<li>Confidentiality：防止窃听</li>
+<li>Integrity：确保数据不会被修改</li>
+<li>Authentication：确保通信的双方都是它们说的是它们自己，并且它们有必要的授权在网络上通信。</li>
+</ul>
+<p>WEP通过使用RC4算法加密来处理confidentiality以及integrity目标。发送设备生成一个完整性的校验值（Integrity Check Value，ICV）。ICV是一个根据帧内容进行计算而得到的值。然后ICV使用RC4进行加密并传输到接收器。接收设备对帧进行解密并且计算ICV。如果计算得出的ICV值和帧一起传送的值相等，帧并未发生改变。</p>
+<p>不幸的是，WEP遭到了一些安全专家的反对。其中有反对者反对使用RC4加密算法。WEP理论上使用64-bit的key，但却使用24bits的key来初始化。只有40 bits的key用做shared secret。还指出key管理系统的问题。</p>
+<p>WEP2提高了初始化向量到128bits并且添加了身份验证来管理secret keys的使用以及分发。然而，WEP2并未解决所有的WEP的问题。还有其他协议，比如Extensible Authentication Protocol（EAP）也表示担忧WEP。称为Wi-Fi Protectedd Access II（WPA2）的新方式使用了AES块计算加密而不是RC4，并且带来了更安全的验证以及key分发过程。</p>
+<h3 id="Mobile-IP"><a href="#Mobile-IP" class="headerlink" title="Mobile IP"></a>Mobile IP</h3><p>为了维护一个TCP连接，设备必须有一个固定的IP地址，意味着漫游的设备不能仅仅使用有最近传输器分配的IP地址。重要的是，这个问题与互联网地址有关，不能严格地在网络接入层进行解决并且需要扩展Internetc层的IP协议。阅读<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc3220">Mobile IP扩展</a>。移动IP通过关联第二个永久的IP地址的地址来解决地址问题。</p>
+<p>移动IP环境描述图：</p>
+<p><img src="https://i.cthee.cyou/f761c1aea1c04266.svg" alt="f761c1aea1c04266.svg"></p>
+<h3 id="Bluetooth"><a href="#Bluetooth" class="headerlink" title="Bluetooth"></a>Bluetooth</h3><p>Bluetooth 标准定义的事OSI 数据链路层以及物理层（等同于TCPIP的网络接入层）。Bluetooth商标由一个称为蓝牙特殊爱好组（Special Interest Group，SIG）来控制。蓝牙专注于为短距离（10米）范围内无线设备提供一个可靠并高性能的通信环境。<br>蓝牙使用一个接入点来连接无线网络到常规网络。（接入点在蓝牙术语中，又称为网络接入点，或NAP）。蓝牙封装协议封装TCPP&#x2F;IP包通过蓝牙网络进行分发传输。<br>当然了，如果一个蓝牙设备通过互联网访问，它必须通过TCPIP访问。厂商想象一类通过一个蓝牙功能网桥访问网络即用型的蓝牙设备。一个蓝牙NAP充当网桥，接收进来的TCPIP传输并且使用蓝牙网络接入协议替换进来的网络接入层用于传输到一个等待的设备。</p>
+<p><img src="https://i.cthee.cyou/5a8301d4dce84f7a.svg" alt="5a8301d4dce84f7a.svg"></p>
+<h2 id="Dial-Up-Networking"><a href="#Dial-Up-Networking" class="headerlink" title="Dial-Up Networking"></a>Dial-Up Networking</h2><p>大多数的拨号解决方案使用一个调制解调器连接。调制解调器的目的是将来自计算机的数字信号变换成能够通过电话系统接口的模拟信号以及将从电话线收到的模拟信号变换成接收计算机能够理解的数字信号。<br>在电话线两端的两台计算机不需要与另一台计算机竞争传输媒介，它们彼此之间共享传输媒介。这种类型的连接称为<strong>点对点（point-to-point）</strong>连接。</p>
+<p><img src="https://i.cthee.cyou/974b94aa11324d90.svg" alt="974b94aa11324d90.svg"></p>
+<p>相比基于局域网的配置，点对点链接要更简单。因为没必要提供多计算机共享传输媒介的方式。与此同时，通过电话线连接的最大局限性之一是通过电话连接的传输速率要比通过基于局域网，比如以太网的速率要更慢。<br>早期的调制解调器仅仅是用于通过电话线传递信息，并在这种情况中，TCPIP的逻辑地址和网络错误控制不是必需或者甚至是需要的。后来随着本地网络以及互联网的到来，工程师们开始想着使用拨号连接作为网络接入的方式。单拨服务器给远程计算机提供连接本地网络的方法。</p>
+<p><img src="https://i.cthee.cyou/d71676dfff9a4261.svg" alt="d71676dfff9a4261.svg"></p>
+<p>拨号服务器负责更多的网络任务职责，并且充当一个路由器：</p>
+<p><img src="https://i.cthee.cyou/08790b9071514ee3.svg" alt="08790b9071514ee3.svg"></p>
+<p>来自拨号领域中最受欢迎的拨号网络协议是点对点（PPP）协议。PPP替换早期称为串行线路网络协议（SLIP）。</p>
+<p>当前PPP标准是RFC 1661。RFC 1661分割PPP组成成三种大致分类：</p>
+<ul>
+<li><strong>封闭议数据报的方法</strong>： SLIP 和 PPP都接受数据报，并且为互联网准备数据报。但PPP不像SLIP，它必须准备接收来自不只一个协议系统的的数据报。</li>
+<li><strong>用于建立，配置以及测试连接的连接控制协议（LCP）</strong>：PPP处理配置设置并且因此消除了与SLIP连接时的兼容性问题。</li>
+<li>支持更上层协议系统的一族网络控制协议（NCPs）：PPP可以包含有给TCPIP和备用网络协议提供单独接口的单独子层。</li>
+</ul>
+<h3 id="PPP-Data"><a href="#PPP-Data" class="headerlink" title="PPP Data"></a>PPP Data</h3><p>PPP（还有SLIP）最初的目的是转发数据报。这些数据报不只是一种类型的数据报，可以是IP数据报，或是OSI的网络层数据报。</p>
+<h4 id="Packets"><a href="#Packets" class="headerlink" title="Packets"></a>Packets</h4><p>PPP RFCs 使用术语<em>包</em>来描述在帧中被传输的一堆数据。并不是所有PPP数据包都是数据报，因此和RFCs中保持一致。</p>
+<p>PPP 必须也转发含有和自己建立以及管理调制解调器连接协议相关信息的数据。通信设备通过PPP连接交换几种类型的信息和请求。通信计算机必须交换用于建立，管理以及关闭连接的LCP packets；支持PPP可选的验证协议的验证包；以及PPP与不同协议集交互的NCP packets。</p>
+<p>PPP 帧的数据格式图：</p>
+<p><img src="https://i.cthee.cyou/a4dd636674604251.svg" alt="a4dd636674604251.svg"></p>
+<p>字段说明：</p>
+<ul>
+<li>Protocol：提供用于识别封闭的包的协议类型的识别码的1或2字节的字段。可能的类型包含LCP包，NCP包，IP包或是OSI网络层协议包。ICANN维护各种协议类型的标准识别码列表。</li>
+<li>Enclosed data (zero or more bytes)：和帧一起被传输的控制包或更上层的数据报。</li>
+<li>Padding (optional and variable length)：在协议字段中协议设计需要的额外的字节。每个协议负责决定如何从封闭的数据报区分padding。</li>
+</ul>
+<h3 id="PPP-Connections"><a href="#PPP-Connections" class="headerlink" title="PPP Connections"></a>PPP Connections</h3><p>PPP连接的生命周期：</p>
+<ol>
+<li>使用LCP协商过程来建立连接</li>
+<li>如果步骤1中的协商过程指定用于验证的配置选项，通信计算机输入验证码。RFC提供密码验证协议（PAP）以及挑战握手验证协议（Challenge Handshake Authentication Protocol，CHAP）。也支持额外的验证协议。</li>
+<li>PPP使用NCP包来为每个支持的协议指定协议特定的配置信息。</li>
+<li>PPP传输从上层协议接收来的数据报。如果步骤1中的协商过程中包含有用于连接质量监控空的配置选项，那么监控协议将会传输监控信息。NCP不管具体的协议而可能传输信息。</li>
+<li>PPP通过LCP终止包的交换来关闭连接</li>
+</ol>
+<h2 id="Connectivity-Devices"><a href="#Connectivity-Devices" class="headerlink" title="Connectivity Devices"></a>Connectivity Devices</h2><h3 id="Bridges"><a href="#Bridges" class="headerlink" title="Bridges"></a>Bridges</h3><p><strong>网桥</strong>是通过物理地址过滤以及转发的连接设备。网桥在OSI的数据链路层工作（与TCPIP四层中网络接入层相对应）。尽管网桥不是一个路由器，网桥依然使用一个转发表作为传输信息的源头。这个以物理地址为基本的路由表与路由表使用使用的表十分不同并且更简单一些。</p>
+<p>网桥监听它连接的网络的每个网络段并且建立一个表明物理地址在哪个网络段的表。当数据在其中一个网络段传输的时候，网桥检查数据的目的地址并且查询转发表。如果目的地址是数据来源所在的网络段，则网桥忽略之。如果如果目的地址在不同的网络段，网桥转发数据到适当的网络段。如果目的地址不再转发表中，网桥将数据转发到除了数据来源网络段之外的所有网络段。</p>
+<p>因为网桥只使用网络接入层的物理地址并且不测试IP数据报头部中可用的逻辑地址信息，因此网桥对于连接不相似的网络无用。网桥不能为大型网络上IP路由以及传输方案提供帮助，比如国际互联网。</p>
+<h3 id="Hubs"><a href="#Hubs" class="headerlink" title="Hubs"></a>Hubs</h3><p>使用集线器的以太网网络：</p>
+<p><img src="https://i.cthee.cyou/d4f3f2f6bb0348b0.svg" alt="d4f3f2f6bb0348b0.svg"></p>
+<p>回想起<a href="/The-Network-Access-Layer/">The Network Access Layer</a>，经典以太网概念要求所有的计算机共享传输媒介。每一次传输都能够被所有的网络适配器监听到。网络设备的一个以太网集线器从它的所有端口其中一个收到传输信号并且回应那个传输信号到它的其他剩下的端口。换句话说就是，该网络表现得就好像是所有的计算机通过一根连续的网线连接在一起了一样。集线器不过滤或路由任何数据。而是，集线器仅仅接收并重新传输信号。</p>
+<p>更多的复杂的集线器，又称为智能集线器提供额外的特性，比如检测网线问题以及封闭端口。目前大部分集线器被交换机所代替。</p>
+<h3 id="Switches"><a href="#Switches" class="headerlink" title="Switches"></a>Switches</h3><p>使用集线器的网络依然面临一个以太网的主要责任：随着流量增加，性能下降问题。除非网线是处于非占用状态，否则没有计算机能够传输。更重要的是，每个网络适配器必须接收并处理每个在以太网上的帧。交换机比起集线器更智能的地方在于发送接收到的数据通过它的所有端口之一。大多数交换机将它的每个端口与连接那个端口的适配器的物理地址关联起来。<strong>交换机只往应该接收某个数据帧的适配器发送它。</strong>（只要交换机识别数据帧的目的地址。）交换机减少了多余的传输并且因此提同网络的性能。</p>
+<p><img src="https://i.cthee.cyou/d4f3f2f6bb0348b0.svg" alt="d4f3f2f6bb0348b0.svg"></p>
+<p><strong>刚刚描述的交换机操作的是<a href="/The-Network-Access-Layer/">物理地址</a>，不是IP地址。</strong>交换机不是路由器，实际上他更像是一个网桥——或着更准确地讲，是多个网桥集中到一起。</p>
+<p>交换机隔离每个网络连接：</p>
+<p><img src="https://i.cthee.cyou/79aaa77967a44019.svg" alt="79aaa77967a44019.svg"></p>
+<p>两种最常见的交换方法：</p>
+<ul>
+<li><strong>Cut-through</strong>： 一旦获得目的地址，交换机即开始转发数据帧。</li>
+<li><strong>Store and forward</strong>： 交换机在重新转发之前接收先接收完整的数据帧。这一方法减缓了重新转发的过程，但是有时候因为交换机过滤掉碎片以及其他无效的数据帧，从而提高了整体的性能。</li>
+</ul>
+<p>到目前为止，这里所说的交换机工作在OSI的数据链路层，又称该交换机为二层交换机。工作在OSI的网络层并且根据IP地址信息转发数据的交换机称之为三层交换机。</p>
+<h2 id="Switching-Versus-Routing"><a href="#Switching-Versus-Routing" class="headerlink" title="Switching Versus Routing"></a>Switching Versus Routing</h2><p>本地网络中，逐渐使用交换机代替路由器在本地网络中管理流量。在高流量容量中，以太网变得低效，并且交换机提供一种用于过滤网络流量的方式，为的是所有设备没必要监听所有的传输。</p>
+<p><img src="https://i.cthee.cyou/3fec73782b8b4160.svg" alt="3fec73782b8b4160.svg"></p>
+<p>像路由分割网络上路由器，交换机阻止建筑B中的计算机监听限于建筑A的本地流量。事实上，交换机做了更近一步的工作——甚至建筑A中的其他计算机不会监听从计算机1发送的以太网数据帧并且通过一个交换机端口转发到计算机B。）<br>交换机场景提供了优于使用路由器以及IP子网划分一个网络的旧方法的优点。路由器必须在物理和逻辑地址之间进行翻译，但是一个交换机使用在网络接入层的物理（MAC）地址执行所有的它的功能。交换机有更少工作要做，因此它能够更高效地运行以及更低的延迟。</p>
+<p>交换机在网络接入层运行并且不理解物理地址，因此不能够充当网络的接口——或是在逻辑上独立的地址空间的另一个网络。现代的场景是使用路由器来连接网络并且有策略地在网络内放置交换机来管理以及最小换流量。</p>
+<p>多数家庭以及办公室网络标准布局配置。一个路由器（经常充当防火墙，DHCP 服务器以及网络地址翻译设备）提供网络接口并且放置在路由器的之后的交换机为以太网线缆通向本地网络上的连接设备提供便捷的连接点。</p>
+<p><img src="https://i.cthee.cyou/a606c7c371b644b8.svg" alt="a606c7c371b644b8.svg"></p>
+<h2 id="小小的总结"><a href="#小小的总结" class="headerlink" title="小小的总结"></a>小小的总结</h2><ul>
+<li>独立基本服务集合（Independent BSS）又称自组网络。</li>
+<li>基础设施基本服务集合（Infrastructure BSS）依赖于无线AP来促成无线设备之间的通信。</li>
+<li>802.11帧的四个地址：目的地址，源地址，接收器地址，传输器地址</li>
+<li>802.11帧格式中一些重要字段：Frame control，Duration&#x2F;ID，address fields，Sequence control，Frame body，Frame Check Sequence。</li>
+<li>两种无线安全加密选项，WEP（Wired Equivalent Privacy，理论上使用64bit）&#x2F;WEP2，WPA2（使用AES块计算加密）。</li>
+<li>移动设备中的IP有两个地址，一个永久的主网络的IP地址，以及漫游的外部网络地址。主网络将永久IP地址与设备位置信息绑定起来。移动设备漫游时，漫游网络的代理将移动设备的位置信息发送该给主网络的代理来更新它设备信息绑定表。</li>
+<li>连接设备：网桥（网络接入层，数据链路层），集线器（网络接入层，数据链路层），交换机（网络接入层，数据链路层，控制流量）。</li>
+<li>交换机交换方法：cut-through, store and forward。</li>
+</ul>
+<p><a href="/Routing">上一篇</a></p>
+<p><a href="/Name-Resolution">下一篇</a></p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cable-Broadband"><span class="toc-number">1.</span> <span class="toc-text">Cable Broadband</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Digital-Subscriber-Line"><span class="toc-number">2.</span> <span class="toc-text">Digital Subscriber Line</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide-Are-Networks"><span class="toc-number">3.</span> <span class="toc-text">Wide Are Networks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Wireless-Networking"><span class="toc-number">4.</span> <span class="toc-text">Wireless Networking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#802-11-Networks"><span class="toc-number">4.1.</span> <span class="toc-text">802.11 Networks</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#802-11-Family"><span class="toc-number">4.1.1.</span> <span class="toc-text">802.11 Family</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Independent-and-Infrastructure-Networks"><span class="toc-number">4.1.2.</span> <span class="toc-text">Independent and Infrastructure Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Securiry"><span class="toc-number">4.1.3.</span> <span class="toc-text">Securiry</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mobile-IP"><span class="toc-number">4.2.</span> <span class="toc-text">Mobile IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bluetooth"><span class="toc-number">4.3.</span> <span class="toc-text">Bluetooth</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dial-Up-Networking"><span class="toc-number">5.</span> <span class="toc-text">Dial-Up Networking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#PPP-Data"><span class="toc-number">5.1.</span> <span class="toc-text">PPP Data</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Packets"><span class="toc-number">5.1.1.</span> <span class="toc-text">Packets</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPP-Connections"><span class="toc-number">5.2.</span> <span class="toc-text">PPP Connections</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Connectivity-Devices"><span class="toc-number">6.</span> <span class="toc-text">Connectivity Devices</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bridges"><span class="toc-number">6.1.</span> <span class="toc-text">Bridges</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hubs"><span class="toc-number">6.2.</span> <span class="toc-text">Hubs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Switches"><span class="toc-number">6.3.</span> <span class="toc-text">Switches</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Switching-Versus-Routing"><span class="toc-number">7.</span> <span class="toc-text">Switching Versus Routing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">小小的总结</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/Getting-Connected/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/Getting-Connected/&text=Getting Connected"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/Getting-Connected/&title=Getting Connected"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/Getting-Connected/&is_video=false&description=Getting Connected"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Getting Connected&body=Check out this article: https://www.cthee.cyou/Getting-Connected/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/Getting-Connected/&title=Getting Connected"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/Getting-Connected/&title=Getting Connected"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/Getting-Connected/&title=Getting Connected"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/Getting-Connected/&title=Getting Connected"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/Getting-Connected/&name=Getting Connected&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+

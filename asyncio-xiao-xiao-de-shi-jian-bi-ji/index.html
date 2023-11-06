@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="本文将对Python的asyncio进行小小的实践后的一丢丢笔记。 asyncio包，使用事件循环驱动的协程实现并发。 线程与协程对比1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950#!&#x2F;usr&#x2F;bin&#x2F;env python3&#x27;&#x27;&#x27;us">
+<meta property="og:type" content="article">
+<meta property="og:title" content="asyncio 小小的实践笔记">
+<meta property="og:url" content="https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/">
+<meta property="og:site_name" content="leollon">
+<meta property="og:description" content="本文将对Python的asyncio进行小小的实践后的一丢丢笔记。 asyncio包，使用事件循环驱动的协程实现并发。 线程与协程对比1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950#!&#x2F;usr&#x2F;bin&#x2F;env python3&#x27;&#x27;&#x27;us">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-10-04T04:53:36.000Z">
+<meta property="article:modified_time" content="2023-11-06T15:06:04.205Z">
+<meta property="article:author" content="leollon">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Notes">
+<meta property="article:tag" content="asyncio">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>asyncio 小小的实践笔记</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 7.0.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/The-Internet-A-Closer-Look/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/Classic-Services/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&text=asyncio 小小的实践笔记"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&title=asyncio 小小的实践笔记"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&is_video=false&description=asyncio 小小的实践笔记"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=asyncio 小小的实践笔记&body=Check out this article: https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&title=asyncio 小小的实践笔记"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&title=asyncio 小小的实践笔记"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&title=asyncio 小小的实践笔记"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&title=asyncio 小小的实践笔记"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&name=asyncio 小小的实践笔记&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%8D%8F%E7%A8%8B%E5%AF%B9%E6%AF%94"><span class="toc-number">1.</span> <span class="toc-text">线程与协程对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8asyncio%E5%92%8Caiohttp%E4%B8%8B%E8%BD%BD"><span class="toc-number">2.</span> <span class="toc-text">使用asyncio和aiohttp下载</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index my4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        asyncio 小小的实践笔记
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">leollon</span>
+      </span>
+      
+    <div class="postdate">
+        <time datetime="2019-10-04T04:53:36.000Z" itemprop="datePublished">2019-10-04</time>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Notes/" rel="tag">Notes</a>, <a class="tag-link-link" href="/tags/Python/" rel="tag">Python</a>, <a class="tag-link-link" href="/tags/asyncio/" rel="tag">asyncio</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>本文将对Python的<code>asyncio</code>进行小小的实践后的一丢丢笔记。</p>
+<p><code>asyncio</code>包，使用事件循环驱动的协程实现并发。</p>
+<h2 id="线程与协程对比"><a href="#线程与协程对比" class="headerlink" title="线程与协程对比"></a>线程与协程对比</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;using thread</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Signal</span>:</span><br><span class="line">    go = <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">spin</span>(<span class="params">msg, signal</span>):</span><br><span class="line">    write, flush = sys.stdout.write, sys.stdout.flush</span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> itertools.cycle(<span class="string">&#x27;|/-\\&#x27;</span>): <span class="comment">#  infinite loop</span></span><br><span class="line">        status = char + <span class="string">&#x27; &#x27;</span> + msg</span><br><span class="line">        write(status)</span><br><span class="line">        flush()</span><br><span class="line">        write(<span class="string">&#x27;\x08&#x27;</span> * <span class="built_in">len</span>(status)) <span class="comment">#  使用退格符将光标移回来</span></span><br><span class="line">        time.sleep(<span class="number">0.15</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> signal.go:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    write(<span class="string">&#x27; &#x27;</span> * <span class="built_in">len</span>(status) + <span class="string">&#x27;\x08&#x27;</span> * <span class="built_in">len</span>(status))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">slow_function</span>():</span><br><span class="line">    <span class="comment"># pretend to wait for I/O for a while</span></span><br><span class="line">    time.sleep(<span class="number">3</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">42</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">supervisor</span>():</span><br><span class="line">    signal = Signal()</span><br><span class="line">    spinner = threading.Thread(target=spin,</span><br><span class="line">        args=(<span class="string">&#x27;thinking!&#x27;</span>, signal))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;spinner object:&#x27;</span>, spinner)</span><br><span class="line">    spinner.start()</span><br><span class="line">    result = slow_function()</span><br><span class="line">    signal.go = <span class="literal">False</span>  <span class="comment"># send message to subordinate thread, so as to terminate slave thread.</span></span><br><span class="line">    spinner.join()</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    result = supervisor()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Answer:&#x27;</span>, result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;using asyncio</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">import</span> itertools</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">spin</span>(<span class="params">msg</span>):</span><br><span class="line">    write, flush = sys.stdout.write, sys.stdout.flush</span><br><span class="line">    <span class="keyword">for</span> char <span class="keyword">in</span> itertools.cycle(<span class="string">&#x27;|/-\\&#x27;</span>):</span><br><span class="line">        status = char + <span class="string">&#x27; &#x27;</span> + msg</span><br><span class="line">        write(status)</span><br><span class="line">        flush()</span><br><span class="line">        write(<span class="string">&#x27;\b&#x27;</span> * <span class="built_in">len</span>(status))</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">await</span> asyncio.sleep(<span class="number">.15</span>)</span><br><span class="line">        <span class="keyword">except</span> asyncio.CancelledError:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    write(<span class="string">&#x27; &#x27;</span> * <span class="built_in">len</span>(status) + <span class="string">&#x27;\b&#x27;</span> * <span class="built_in">len</span>(status))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">slow_function</span>():</span><br><span class="line">    <span class="comment"># coroutine function</span></span><br><span class="line">    <span class="comment"># pretend to wait for I/O for a while</span></span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(<span class="number">3</span>)  <span class="comment"># Block for delay seconds</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">42</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">supervisor</span>():</span><br><span class="line">    spinner = asyncio.create_task(coro=spin(<span class="string">&#x27;thinking!&#x27;</span>))  <span class="comment"># Return a task object. drive the coroutine.</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;spinner object:&#x27;</span>, spinner)</span><br><span class="line">    result = <span class="keyword">await</span> slow_function()</span><br><span class="line">    spinner.cancel()  <span class="comment"># Request the Task to be cancelled.</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    loop = asyncio.get_event_loop()</span><br><span class="line">    result = loop.run_until_complete(supervisor())</span><br><span class="line">    loop.close()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;Answer:&#x27;</span>, result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用asyncio和aiohttp下载"><a href="#使用asyncio和aiohttp下载" class="headerlink" title="使用asyncio和aiohttp下载"></a>使用asyncio和aiohttp下载</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;Download flags of top 20 countries by population</span></span><br><span class="line"><span class="string">Sequential version</span></span><br><span class="line"><span class="string">Sample run::</span></span><br><span class="line"><span class="string">    $ python3 flags.py</span></span><br><span class="line"><span class="string">    BD BR CD CN DE EG ET FR ID IN IR JP MX NG PH PK RU TR US VN</span></span><br><span class="line"><span class="string">    20 flags downloaded in 5.49s</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="comment"># BEGIN FLAGS_PY</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests  <span class="comment"># &lt;1&gt;</span></span><br><span class="line"></span><br><span class="line">POP20_CC = (<span class="string">&#x27;CN IN US ID BR PK NG BD RU JP &#x27;</span></span><br><span class="line">            <span class="string">&#x27;MX PH VN ET EG DE IR TR CD FR&#x27;</span>).split()  <span class="comment"># &lt;2&gt;</span></span><br><span class="line"></span><br><span class="line">BASE_URL = <span class="string">&#x27;http://flupy.org/data/flags&#x27;</span>  <span class="comment"># &lt;3&gt;</span></span><br><span class="line"></span><br><span class="line">DEST_DIR = <span class="string">&#x27;downloads/&#x27;</span>  <span class="comment"># &lt;4&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">save_flag</span>(<span class="params">img, filename</span>):  <span class="comment"># &lt;5&gt;</span></span><br><span class="line">    path = os.path.join(DEST_DIR, filename)</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(path, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> fp:</span><br><span class="line">        fp.write(img)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_flag</span>(<span class="params">cc</span>):  <span class="comment"># &lt;6&gt;</span></span><br><span class="line">    url = <span class="string">&#x27;&#123;&#125;/&#123;cc&#125;/&#123;cc&#125;.gif&#x27;</span>.<span class="built_in">format</span>(BASE_URL, cc=cc.lower())</span><br><span class="line">    resp = requests.get(url)</span><br><span class="line">    <span class="keyword">return</span> resp.content</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">show</span>(<span class="params">text</span>):  <span class="comment"># &lt;7&gt;</span></span><br><span class="line">    <span class="built_in">print</span>(text, end=<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">    sys.stdout.flush()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">download_many</span>(<span class="params">cc_list</span>):  <span class="comment"># &lt;8&gt;</span></span><br><span class="line">    <span class="keyword">for</span> cc <span class="keyword">in</span> <span class="built_in">sorted</span>(cc_list):  <span class="comment"># &lt;9&gt;</span></span><br><span class="line">        image = get_flag(cc)</span><br><span class="line">        show(cc)</span><br><span class="line">        save_flag(image, cc.lower() + <span class="string">&#x27;.gif&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">len</span>(cc_list)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>(<span class="params">func</span>):  <span class="comment"># &lt;10&gt;</span></span><br><span class="line">    t0 = time.time()</span><br><span class="line">    count = func(POP20_CC)</span><br><span class="line">    elapsed = time.time() - t0</span><br><span class="line">    msg = <span class="string">&#x27;\n&#123;&#125; flags downloaded in &#123;:.2f&#125;s&#x27;</span></span><br><span class="line">    <span class="built_in">print</span>(msg.<span class="built_in">format</span>(count, elapsed))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main(func=download_many)</span><br><span class="line"><span class="comment"># END FLAGS_PY</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;using asyncio</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">import</span> aiohttp</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flags <span class="keyword">import</span> BASE_URL, save_flag, show, main</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">get_flag</span>(<span class="params">cc</span>):</span><br><span class="line">    url = <span class="string">&#x27;&#123;&#125;/&#123;cc&#125;/&#123;cc&#125;.gif&#x27;</span>.<span class="built_in">format</span>(BASE_URL, cc=cc.lower())</span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">with</span> aiohttp.request(<span class="string">&#x27;GET&#x27;</span>, url) <span class="keyword">as</span> resp:</span><br><span class="line">        <span class="comment"># https://github.com/aio-libs/aiohttp/issues/4065</span></span><br><span class="line">        image = <span class="keyword">await</span> resp.read()</span><br><span class="line">    <span class="keyword">return</span> image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">download_one</span>(<span class="params">cc</span>):</span><br><span class="line">    image = <span class="keyword">await</span> get_flag(cc)</span><br><span class="line">    show(cc)</span><br><span class="line">    save_flag(image, cc.lower() + <span class="string">&#x27;.gif&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> cc</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">download_many</span>(<span class="params">cc_list</span>):</span><br><span class="line">    loop = asyncio.get_event_loop()</span><br><span class="line">    to_do = [download_one(cc) <span class="keyword">for</span> cc <span class="keyword">in</span> <span class="built_in">sorted</span>(cc_list)]</span><br><span class="line">    wait_coro = asyncio.wait(to_do)</span><br><span class="line">    res, _ = loop.run_until_complete(wait_coro)</span><br><span class="line">    loop.close()</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">len</span>(res)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main(func=download_many)</span><br></pre></td></tr></table></figure>
+
+
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+    </div>
+    
+      <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E4%B8%8E%E5%8D%8F%E7%A8%8B%E5%AF%B9%E6%AF%94"><span class="toc-number">1.</span> <span class="toc-text">线程与协程对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8asyncio%E5%92%8Caiohttp%E4%B8%8B%E8%BD%BD"><span class="toc-number">2.</span> <span class="toc-text">使用asyncio和aiohttp下载</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&text=asyncio 小小的实践笔记"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&title=asyncio 小小的实践笔记"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&is_video=false&description=asyncio 小小的实践笔记"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=asyncio 小小的实践笔记&body=Check out this article: https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&title=asyncio 小小的实践笔记"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&title=asyncio 小小的实践笔记"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&title=asyncio 小小的实践笔记"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&title=asyncio 小小的实践笔记"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.cthee.cyou/asyncio-xiao-xiao-de-shi-jian-bi-ji/&name=asyncio 小小的实践笔记&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+    
+    <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2023 leollon
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/leollon">Projects</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+</body>
+</html>
+<!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+<!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-153067783-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'tuxfans';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+
